@@ -1,6 +1,6 @@
 # Climate Portal
 
-A React App that displays a list of retired Carbon Tokens
+A React App for managing climate tokens
 
 ## Quickstart
 
