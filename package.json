@@ -10,7 +10,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@manaflair/redux-batch": "^1.0.0",
-    "@mui/material": "^5.0.6",
+    "@mui/material": "^5.9.2",
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
