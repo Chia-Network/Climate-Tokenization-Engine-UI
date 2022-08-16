@@ -7,7 +7,7 @@
     "node": ">=14.17.0"
   },
   "dependencies": {
-    "@emotion/react": "^11.5.0",
+    "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.3.0",
     "@manaflair/redux-batch": "^1.0.0",
     "@mui/material": "^5.0.6",
