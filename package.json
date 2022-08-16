@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.5.0",
-    "@emotion/styled": "^11.3.0",
+    "@emotion/styled": "^11.9.3",
     "@manaflair/redux-batch": "^1.0.0",
     "@mui/material": "^5.0.6",
     "@reduxjs/toolkit": "^1.8.1",
