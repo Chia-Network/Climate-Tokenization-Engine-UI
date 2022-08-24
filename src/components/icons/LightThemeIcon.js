@@ -4,7 +4,7 @@ import { withTheme } from 'styled-components';
 
 const LightThemeIcon = withTheme(
   ({ color, width = 24, height = 24, theme, cursor = 'unset' }) => {
-    const appStore = useSelector(state => state.app);
+    const appStore = useSelector(state => state);
 
     return (
       <div style={{ cursor }}>

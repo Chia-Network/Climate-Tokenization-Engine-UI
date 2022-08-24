@@ -1,19 +1,30 @@
-# Climate Portal
+# Climate Warehouse Auxillery App
 
-A React App for managing climate tokens
+Auxillery App for the Climate Warehouse
 
 ## Quickstart
 
 ### Installation
 
 ```
-git clone git@github.com:Chia-Network/Climate-Portal-UI.git
-cd carbon-asset-token
-nvm install 14.17.0
-nvm use 14.17.0
+npm install -g react-scripts
+git clone git@github.com:Chia-Network/Climate-Portal-UI
+cd Climate-Portal-Ui
+nvm install 16.0.0
+nvm use 16.0.0
+npm install foreman -g
 npm install -g husky
-npm install -g yarn
-yarn
+npm install -g prettier
+npm install -g lint-staged
+npm install -g git-authors-cli
+npm set-script prepare "husky install"
+npm run prepare
+
+// If you are on linux or mac run
+chmod ug+x .husky/*
+chmod ug+x .git/hooks/*
+
+npm run start
 ```
 
 ### Prerequisites
@@ -25,17 +36,9 @@ You'll need:
 
   This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
 
-- [yarn](https://yarnpkg.com/lang/en/)
-
-  This app uses `yarn` as an alternative to `npm`. The precise version you have doesn't matter (so long as it is `>1.0`).
-
 ## Contributing
 
 Upon your first commit, you will automatically be added to the package.json file as a contributor.
-
-## Releasing
-
-This app uses a combination of terraform and github actions to automatically deploy the latest pushed tag to AWS production environment.
 
 ## Commiting
 
@@ -54,6 +57,7 @@ The first part of this is the commit "type". The most common types are "feat" fo
 - `refactor` is for changes to code which should not be detectable by users or testers
 - `test` is for changes which only touch test files or related tooling
 - `build` is for changes which only touch our develop/release tools
+- `chore` is for housekeeping tasks such as hydrating from another branch
 
 After the type and scope there should be a colon.
 

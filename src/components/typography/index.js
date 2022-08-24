@@ -5,6 +5,7 @@ export * from './H4';
 export * from './Subtitle';
 export * from './MenuText';
 export * from './TableCellHeaderText';
+export * from './TableCellText';
 export * from './ButtonText';
 export * from './TableCellLinkText';
 export * from './Body';
