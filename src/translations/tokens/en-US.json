@@ -13,10 +13,10 @@
   "create-tokens": "Create Tokens",
   "create-token": "Create Token",
   "revert-tokens": "Revert Tokens",
-  "retirements": "Retirements",
   "existing-tokens": "Existing Tokens",
   "no-existing-tokens": "There are no existing tokens.",
   "untokenized-units": "Untokenized Units",
   "untokenized-units-not-loaded": "Your untokenized units could not be loaded.",
-  "no-untokenized-units": "There are no untokenized units."
+  "no-untokenized-units": "There are no untokenized units.",
+  "actions": "Actions"
 }

@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+} from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -11,8 +17,10 @@ import {
   DownloadIcon,
   H3,
   SelectCreatable,
+  DataTable,
 } from '../components';
 import { getUntokenizedUnits } from '../store/actions/appActions';
+import constants from '../constants';
 
 const StyledSectionContainer = styled('div')`
   display: flex;
@@ -63,17 +71,18 @@ const StyledCSVOperationsContainer = styled('div')`
 `;
 
 const CreateTokens = () => {
-  const [tabValue, setTabValue] = useState(0);
-  const pageContainerRef = useRef(null);
   const intl = useIntl();
   const dispatch = useDispatch();
+
+  const pageContainerRef = useRef(null);
+  const [tabValue, setTabValue] = useState(0);
   const { untokenizedUnits } = useSelector(store => store);
 
   useEffect(() => {
     dispatch(
       getUntokenizedUnits({
         page: 1,
-        resultsLimit: 5,
+        resultsLimit: constants.TABLE_ROWS,
         searchQuery: 'testing',
         isRequestMocked: true,
       }),
@@ -87,7 +96,28 @@ const CreateTokens = () => {
     [setTabValue],
   );
 
-  console.log('untokenizedUnits: ', untokenizedUnits);
+  const untokenizedUnitsKeysToBeDisplayed = useMemo(
+    () => [
+      'unitOwner',
+      'countryJurisdictionOfOwner',
+      'assetId',
+      'serialNumberBlock',
+      'unitBlockStart',
+      'unitBlockEnd',
+      'unitCount',
+    ],
+    [],
+  );
+
+  const untokenizedUnitsActions = useMemo(
+    () => [
+      {
+        label: intl.formatMessage({ id: 'create-token' }),
+        action: item => console.log('this is my item: ', item),
+      },
+    ],
+    [],
+  );
 
   return (
     <>
@@ -121,11 +151,19 @@ const CreateTokens = () => {
         </StyledSubHeaderContainer>
         <StyledBodyContainer>
           <TabPanel value={tabValue} index={0}>
-            <NoDataMessageContainer>
-              <H3>
-                <FormattedMessage id="no-untokenized-units" />
-              </H3>
-            </NoDataMessageContainer>
+            {untokenizedUnits?.length > 0 ? (
+              <DataTable
+                headings={untokenizedUnitsKeysToBeDisplayed}
+                data={untokenizedUnits}
+                actions={untokenizedUnitsActions}
+              />
+            ) : (
+              <NoDataMessageContainer>
+                <H3>
+                  <FormattedMessage id="no-untokenized-units" />
+                </H3>
+              </NoDataMessageContainer>
+            )}
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
             <NoDataMessageContainer>

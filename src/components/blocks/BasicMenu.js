@@ -9,6 +9,7 @@ const BasicMenu = ({
     { label: 'item 1', action: () => console.log('click on item 1') },
     { label: 'item 1', action: () => console.log('click on item 2') },
   ],
+  item,
   children = <EllipsisMenuIcon />,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,7 +51,7 @@ const BasicMenu = ({
           options.map((option, index) => (
             <MenuItem
               onClick={() => {
-                option.action();
+                item ? option.action(item) : option.action();
                 handleClose();
               }}
               key={index}>

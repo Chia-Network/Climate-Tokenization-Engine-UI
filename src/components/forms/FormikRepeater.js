@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { FieldArray, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';

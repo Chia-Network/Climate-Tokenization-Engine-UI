@@ -15,3 +15,4 @@ export * from './TableDrawer';
 export * from './Tag';
 export * from './ToolTip';
 export * from './ToolTipContainer';
+export * from './DataTable';

@@ -127,7 +127,13 @@ export const getUntokenizedUnits = ({
 
       const failedMessageId = 'untokenized-units-not-loaded';
 
-      const responseStub = getUntokenizedUnitsStub;
+      const randomResponseStubArrayIndex = Math.floor(
+        Math.random() * (getUntokenizedUnitsStub.length - resultsLimit),
+      );
+      const responseStub = getUntokenizedUnitsStub.slice(
+        randomResponseStubArrayIndex,
+        randomResponseStubArrayIndex + resultsLimit,
+      );
 
       dispatch(
         fetchWrapper({

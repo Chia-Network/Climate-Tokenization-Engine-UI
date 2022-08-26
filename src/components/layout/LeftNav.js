@@ -62,12 +62,6 @@ const LeftNav = withTheme(({ children }) => {
           to={constants.ROUTES.revertTokens}>
           <FormattedMessage id="revert-tokens" />
         </MenuItem>
-        <div></div>
-        <MenuItem
-          selected={location.pathname.includes(constants.ROUTES.retirements)}
-          to={constants.ROUTES.retirements}>
-          <FormattedMessage id="retirements" />
-        </MenuItem>
       </NavContainer>
       {children}
       <StyledAppVersion>
