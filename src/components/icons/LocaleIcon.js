@@ -4,7 +4,7 @@ import {withTheme} from 'styled-components';
 
 const LocaleIcon = withTheme(
   ({width = 24, height = 24, theme, cursor = 'unset', style}) => {
-    const appStore = useSelector(state => state.app);
+    const appStore = useSelector(state => state);
 
     return (
       <div style={{cursor, width, height, ...style}}>

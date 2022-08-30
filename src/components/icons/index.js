@@ -1,4 +1,3 @@
-export * from './ChiaLogo';
 export * from './LightThemeIcon';
 export * from './DarkThemeIcon';
 export * from './MagnifyGlassIcon';
@@ -35,3 +34,5 @@ export * from './LinkIcon';
 export * from './ReloadIcon';
 export * from './AscendingClockIcon';
 export * from './DescendingClockIcon';
+export * from './EditIcon';
+export * from './RemoveIcon';
