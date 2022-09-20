@@ -4,7 +4,7 @@ import styled, { withTheme, css } from 'styled-components';
 
 import { TableCellHeaderText, TableCellText } from '../typography';
 import { convertPascalCaseToSentenceCase } from '../../utils/stringUtils';
-import { BasicMenu } from '..';
+import { BasicMenu, PrimaryButton } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
 
@@ -114,7 +114,7 @@ const StyledScalableContainer = styled('div')`
     `}
 `;
 
-const DataTable = withTheme(({ headings, data, actions }) => {
+const DataTable = withTheme(({ headings, data, actions, buttonConfig }) => {
   const { theme } = useSelector(state => state);
   const ref = React.useRef(null);
   const [height, setHeight] = React.useState(0);
@@ -167,7 +167,13 @@ const DataTable = withTheme(({ headings, data, actions }) => {
                 ))}
 
                 <Td style={{ cursor: 'pointer' }} selectedTheme={theme} sticky>
-                  <BasicMenu options={actions} item={record} />
+                  {actions && <BasicMenu options={actions} item={record} />}
+                  {buttonConfig && (
+                    <PrimaryButton
+                      label={buttonConfig.label}
+                      onClick={() => buttonConfig.action(record)}
+                    />
+                  )}
                 </Td>
               </Tr>
             ))}

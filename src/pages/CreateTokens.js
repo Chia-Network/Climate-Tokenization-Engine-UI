@@ -109,13 +109,11 @@ const CreateTokens = () => {
     [],
   );
 
-  const untokenizedUnitsActions = useMemo(
-    () => [
-      {
-        label: intl.formatMessage({ id: 'create-token' }),
-        action: item => console.log('this is my item: ', item),
-      },
-    ],
+  const tokenizeUnitButtonConfig = useMemo(
+    () => ({
+      label: intl.formatMessage({ id: 'create-token' }),
+      action: item => console.log('this is my item: ', item),
+    }),
     [],
   );
 
@@ -155,7 +153,7 @@ const CreateTokens = () => {
               <DataTable
                 headings={untokenizedUnitsKeysToBeDisplayed}
                 data={untokenizedUnits}
-                actions={untokenizedUnitsActions}
+                buttonConfig={tokenizeUnitButtonConfig}
               />
             ) : (
               <NoDataMessageContainer>
