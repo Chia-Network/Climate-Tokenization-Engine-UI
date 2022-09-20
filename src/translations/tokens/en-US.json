@@ -20,6 +20,9 @@
   "existing-tokens": "Existing Tokens",
   "no-existing-tokens": "There are no existing tokens.",
   "untokenized-units": "Untokenized Units",
+  "org-uid": "Organization UID",
+  "add-valid-server-address": "Add a valid server address",
+  "add-valid-api-key": "Add a valid Api key",
   "untokenized-units-not-loaded": "Your untokenized units could not be loaded.",
   "no-untokenized-units": "There are no untokenized units.",
   "actions": "Actions"
