@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {
   useState,
   useCallback,
@@ -121,21 +122,21 @@ const CreateTokens = () => {
     <>
       <StyledSectionContainer ref={pageContainerRef}>
         <StyledHeaderContainer>
-          <StyledSearchContainer>
+          {/* <StyledSearchContainer>
             <SearchInput
               size="large"
               onChange={() => console.log('search')}
               outline
             />
-          </StyledSearchContainer>
+          </StyledSearchContainer> */}
 
-          <StyledFiltersContainer>
+          {/* <StyledFiltersContainer>
             <SelectCreatable
               options={['Ken', 'Craig', 'Michael']}
               selected={'Craig'}
               onChange={val => console.log(val)}
             />
-          </StyledFiltersContainer>
+          </StyledFiltersContainer> */}
         </StyledHeaderContainer>
 
         <StyledSubHeaderContainer>
