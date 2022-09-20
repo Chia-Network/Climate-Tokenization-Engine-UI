@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { LocaleSwitcher, ClimateWarehouseLogo } from '..';
+import Connect from '../blocks/Connect';
 
 const AppHeaderContainer = styled('div')`
   width: 100%;
@@ -23,10 +24,11 @@ const LogoContainer = styled('div')`
 const AppHeader = () => {
   return (
     <AppHeaderContainer>
-        <LogoContainer>
-          <ClimateWarehouseLogo width="100%" height="100%" />
-        </LogoContainer>
-        <LocaleSwitcher />
+      <LogoContainer>
+        <ClimateWarehouseLogo width="100%" height="100%" />
+      </LogoContainer>
+      <Connect />
+      <LocaleSwitcher />
     </AppHeaderContainer>
   );
 };

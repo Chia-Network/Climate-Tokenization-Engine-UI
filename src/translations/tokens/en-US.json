@@ -1,5 +1,9 @@
 {
   "climate-portal": "Climate Portal",
+  "connect-to-cw": "Connect To Climate Warehouse",
+  "connect": "Connect",
+  "server-address": "Server address",
+  "api-key": "Api Key",
   "storybook": "Storybook",
   "hello-world": "Welcome To Climate Portal",
   "ok": "Ok",
