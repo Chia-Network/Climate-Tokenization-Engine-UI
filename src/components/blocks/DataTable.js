@@ -49,15 +49,6 @@ const Th = styled('th')`
 const Tr = styled('tr')`
   color: ${props => props.theme.colors[props.selectedTheme].onSurface};
   background-color: ${props => props.theme.colors.default.onButton};
-
-  :hover {
-    cursor: zoom-in;
-    background-color: ${props =>
-      props.theme.hexToRgba(
-        props.theme.colors[props.selectedTheme].secondary,
-        0.3,
-      )};
-  }
 `;
 
 const Td = styled('td')`
@@ -67,7 +58,7 @@ const Td = styled('td')`
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
-  max-width: 100px;
+  max-width: 200px;
   :nth-child(1) {
     display: none;
   }
@@ -177,10 +168,7 @@ const DataTable = withTheme(
                     </Td>
                   ))}
 
-                  <Td
-                    style={{ cursor: 'pointer' }}
-                    selectedTheme={theme}
-                    sticky>
+                  <Td selectedTheme={theme} sticky>
                     {actions && <BasicMenu options={actions} item={record} />}
                     {buttonConfig && (
                       <PrimaryButton
