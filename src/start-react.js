@@ -5,6 +5,8 @@ const port = process.env.PORT ? process.env.PORT - 100 : 3001;
 
 process.env.ELECTRON_START_URL = `http://localhost:${port}`;
 
+const client = new net.Socket();
+
 let startedElectron = false;
 const tryConnection = () => {
   client.connect({ port }, () => {

@@ -77,18 +77,19 @@ const CreateTokens = () => {
 
   const pageContainerRef = useRef(null);
   const [tabValue, setTabValue] = useState(0);
-  const { untokenizedUnits } = useSelector(store => store);
+  const [page, setPage] = useState(0);
+  const { untokenizedUnits, paginationNrOfPages } = useSelector(store => store);
 
   useEffect(() => {
     dispatch(
       getUntokenizedUnits({
-        page: 1,
+        page: page,
         resultsLimit: constants.TABLE_ROWS,
         searchQuery: 'testing',
         isRequestMocked: true,
       }),
     );
-  }, []);
+  }, [page]);
 
   const handleTabChange = useCallback(
     (event, newValue) => {
@@ -155,6 +156,9 @@ const CreateTokens = () => {
                 headings={untokenizedUnitsKeysToBeDisplayed}
                 data={untokenizedUnits}
                 buttonConfig={tokenizeUnitButtonConfig}
+                changePageTo={page => setPage(page)}
+                currentPage={page}
+                numberOfPages={paginationNrOfPages}
               />
             ) : (
               <NoDataMessageContainer>

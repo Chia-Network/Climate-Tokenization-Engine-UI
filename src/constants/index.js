@@ -9,7 +9,7 @@ export default {
       ? 'http://localhost:31310/v1'
       : 'https://api.climatewarehouse.chia.net/v1',
   HEADER_HEIGHT: 64, // Needed to be used to calculate max height for body components,
-  TABLE_ROWS: 10,
+  TABLE_ROWS: 7,
   THEME: {
     DEFAULT: 'default',
   },
