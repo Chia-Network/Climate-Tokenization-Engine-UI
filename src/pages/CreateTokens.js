@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, {
   useState,
   useCallback,
@@ -11,13 +10,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
-  SearchInput,
   Tab,
   Tabs,
   TabPanel,
   DownloadIcon,
   H3,
-  SelectCreatable,
   DataTable,
 } from '../components';
 import { getUntokenizedUnits } from '../store/actions/appActions';
@@ -35,13 +32,13 @@ const StyledHeaderContainer = styled('div')`
   padding: 30px 24px 14px 16px;
 `;
 
-const StyledSearchContainer = styled('div')`
-  max-width: 25.1875rem;
-`;
+// const StyledSearchContainer = styled('div')`
+//   max-width: 25.1875rem;
+// `;
 
-const StyledFiltersContainer = styled('div')`
-  margin: 0rem 1.2813rem;
-`;
+// const StyledFiltersContainer = styled('div')`
+//   margin: 0rem 1.2813rem;
+// `;
 
 const StyledSubHeaderContainer = styled('div')`
   display: flex;
