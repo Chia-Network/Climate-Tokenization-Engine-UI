@@ -116,8 +116,6 @@ export const getUntokenizedUnits = ({
   isRequestMocked,
 }) => {
   return async dispatch => {
-    console.log('page', page);
-
     const areRequestDetailsValid =
       typeof page === 'number' && typeof resultsLimit === 'number';
 
