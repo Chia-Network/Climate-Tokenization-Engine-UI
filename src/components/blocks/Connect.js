@@ -19,7 +19,7 @@ import {
   Tabs,
 } from '..';
 import { validateUrl } from '../../utils/urlUtils';
-import { signIn } from '../../store/actions/appActions';
+import { importHomeOrg, signIn } from '../../store/actions/appActions';
 
 const ConnectContainer = styled('button')`
   width: 18.75rem;
@@ -29,6 +29,7 @@ const ConnectContainer = styled('button')`
   color: black;
   border: 0.0625rem solid black;
   border-radius: 0.625rem;
+  cursor: pointer;
 `;
 
 const StyledContainer = styled('div')`
@@ -54,6 +55,10 @@ const Connect = () => {
       setServerAddress(null);
       setApiKey(null);
       setIsConnectModalOpen(false);
+    }
+
+    if (orgUid) {
+      dispatch(importHomeOrg(orgUid));
     }
   };
 
