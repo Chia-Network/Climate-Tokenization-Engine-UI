@@ -18,6 +18,7 @@ export const actions = keyMirror(
   'SET_NOTIFICATION',
   'REFRESH_APP',
   'SET_UNTOKENIZED_UNITS',
+  'SIGN_USER_IN',
 );
 
 export const refreshApp = render => ({
@@ -100,6 +101,37 @@ export const setLocale = locale => {
   return {
     type: actions.SET_LOCALE,
     payload: localeToSet,
+  };
+};
+
+export const signIn = ({ apiKey, serverAddress }) => {
+  return async dispatch => {
+    if (apiKey && serverAddress) {
+      localStorage.setItem('apiKey', apiKey);
+      localStorage.setItem('serverAddress', serverAddress);
+      dispatch({
+        type: actions.SIGN_USER_IN,
+        payload: {
+          apiKey,
+          serverAddress,
+        },
+      });
+      dispatch(refreshApp(true));
+    }
+  };
+};
+
+export const signOut = () => {
+  return async dispatch => {
+    localStorage.removeItem('apiKey');
+    localStorage.removeItem('serverAddress');
+    dispatch({
+      type: actions.SIGN_USER_OUT,
+      payload: {
+        apiKey: null,
+        serverAddress: null,
+      },
+    });
   };
 };
 

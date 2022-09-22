@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Modal } from '.';
@@ -18,6 +19,7 @@ import {
   Tabs,
 } from '..';
 import { validateUrl } from '../../utils/urlUtils';
+import { signIn } from '../../store/actions/appActions';
 
 const ConnectContainer = styled('button')`
   width: 18.75rem;
@@ -39,11 +41,21 @@ const StyledContainer = styled('div')`
 
 const Connect = () => {
   const intl = useIntl();
+  const dispatch = useDispatch();
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [apiKey, setApiKey] = useState(null);
   const [orgUid, setOrgUid] = useState('');
   const [serverAddress, setServerAddress] = useState('');
   const [tabValue, setTabValue] = useState(0);
+
+  const signUserIn = () => {
+    if (serverAddress && apiKey && validateUrl(serverAddress)) {
+      dispatch(signIn({ apiKey, serverAddress }));
+      setServerAddress(null);
+      setApiKey(null);
+      setIsConnectModalOpen(false);
+    }
+  };
 
   const handleTabChange = useCallback(
     (event, newValue) => {
@@ -60,6 +72,7 @@ const Connect = () => {
       {isConnectModalOpen && (
         <Modal
           modalType="basic"
+          onOk={signUserIn}
           title={
             <Tabs value={tabValue} onChange={handleTabChange}>
               <Tab label={intl.formatMessage({ id: 'connect' })} />
