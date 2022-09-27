@@ -12,6 +12,8 @@ const initialState = {
   notification: null,
   refresh: false,
   untokenizedUnits: null,
+  apiKey: null,
+  serverAddress: null,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -64,8 +66,8 @@ const appReducer = (state = initialState, action) => {
     case appActions.SIGN_USER_IN:
       return u(
         {
-          apiKey: action.payload.apiKey,
-          serverAddress: action.payload.serverAddress,
+          apiKey: action.payload.insertedApiKey,
+          serverAddress: action.payload.insertedServerAddress,
         },
         state,
       );

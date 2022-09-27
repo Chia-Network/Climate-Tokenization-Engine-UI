@@ -1,9 +1,9 @@
 import React from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Modal } from '.';
 import {
   Body,
@@ -19,17 +19,40 @@ import {
   Tabs,
 } from '..';
 import { validateUrl } from '../../utils/urlUtils';
-import { importHomeOrg, signIn } from '../../store/actions/appActions';
+import {
+  importHomeOrg,
+  refreshApp,
+  signIn,
+  signOut,
+} from '../../store/actions/appActions';
 
 const ConnectContainer = styled('button')`
-  width: 18.75rem;
-  height: 3.125rem;
   align-self: center;
   background: none;
-  color: black;
-  border: 0.0625rem solid black;
-  border-radius: 0.625rem;
+  color: ${props => props.theme.colors.default.onSurface};
+  border: none;
   cursor: pointer;
+`;
+
+const ConnectedStyle = styled('button')`
+  width: 21rem;
+  height: 3.125rem;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  border: none;
+  background: none;
+`;
+
+const DisonnectButton = styled('button')`
+  width: 21rem;
+  height: 3.125rem;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  cursor: pointer;
+  border: none;
+  background: none;
 `;
 
 const StyledContainer = styled('div')`
@@ -40,20 +63,25 @@ const StyledContainer = styled('div')`
   align-items: center;
 `;
 
-const Connect = () => {
+const Connect = withTheme(({ theme }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const { serverAddress } = useSelector(store => store);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
-  const [apiKey, setApiKey] = useState(null);
+  const [insertedApiKey, setInsertedApiKey] = useState(null);
   const [orgUid, setOrgUid] = useState('');
-  const [serverAddress, setServerAddress] = useState('');
+  const [insertedServerAddress, setInsertedServerAddress] = useState('');
   const [tabValue, setTabValue] = useState(0);
 
   const signUserIn = () => {
-    if (serverAddress && apiKey && validateUrl(serverAddress)) {
-      dispatch(signIn({ apiKey, serverAddress }));
-      setServerAddress(null);
-      setApiKey(null);
+    if (
+      insertedServerAddress &&
+      insertedApiKey &&
+      validateUrl(insertedServerAddress)
+    ) {
+      dispatch(signIn({ insertedApiKey, insertedServerAddress }));
+      setInsertedServerAddress(null);
+      setInsertedApiKey(null);
       setIsConnectModalOpen(false);
     }
 
@@ -71,9 +99,30 @@ const Connect = () => {
 
   return (
     <>
-      <ConnectContainer onClick={() => setIsConnectModalOpen(true)}>
-        <FormattedMessage id="connect-to-cw" />
-      </ConnectContainer>
+      {serverAddress ? (
+        <ConnectedStyle>
+          <Body>
+            <FormattedMessage id="connected" />:
+          </Body>
+          <Body color={theme.colors.default.status.ok.primary}>
+            {serverAddress}
+          </Body>
+          <DisonnectButton
+            onClick={() => {
+              dispatch(signOut());
+              dispatch(refreshApp(true));
+            }}
+          >
+            <Body>
+              <FormattedMessage id="disconnect" />
+            </Body>
+          </DisonnectButton>
+        </ConnectedStyle>
+      ) : (
+        <ConnectContainer onClick={() => setIsConnectModalOpen(true)}>
+          <FormattedMessage id="connect-to-cw" />
+        </ConnectContainer>
+      )}
       {isConnectModalOpen && (
         <Modal
           modalType="basic"
@@ -99,13 +148,13 @@ const Connect = () => {
                       <StandardInput
                         size={InputVariantEnum.large}
                         variant={InputVariantEnum.default}
-                        value={serverAddress}
-                        onChange={value => setServerAddress(value)}
+                        value={insertedServerAddress}
+                        onChange={value => setInsertedServerAddress(value)}
                         placeholderText="http://0.0.0.0:31310"
                       />
                     </InputContainer>
-                    {(serverAddress === null ||
-                      validateUrl(serverAddress) === false) && (
+                    {(insertedServerAddress === null ||
+                      validateUrl(insertedServerAddress) === false) && (
                       <Body size="Small" color="red">
                         {intl.formatMessage({
                           id: 'add-valid-server-address',
@@ -123,12 +172,12 @@ const Connect = () => {
                       <StandardInput
                         size={InputSizeEnum.large}
                         variant={InputVariantEnum.default}
-                        value={apiKey}
-                        onChange={value => setApiKey(value)}
+                        value={insertedApiKey}
+                        onChange={value => setInsertedApiKey(value)}
                         placeholderText="xxxxxxx-xxxxxx-xxxxxx"
                       />
                     </InputContainer>
-                    {apiKey === null && (
+                    {insertedApiKey === null && (
                       <Body size="Small" color="red">
                         {intl.formatMessage({
                           id: 'add-valid-api-key',
@@ -164,6 +213,6 @@ const Connect = () => {
       )}
     </>
   );
-};
+});
 
 export default Connect;
