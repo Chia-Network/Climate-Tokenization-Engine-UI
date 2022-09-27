@@ -73,6 +73,37 @@ const Connect = withTheme(({ theme }) => {
   const [insertedServerAddress, setInsertedServerAddress] = useState('');
   const [tabValue, setTabValue] = useState(0);
 
+  const isElectron = () => {
+    // Renderer process
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.process === 'object' &&
+      window.process.type === 'renderer'
+    ) {
+      return true;
+    }
+
+    // Main process
+    if (
+      typeof process !== 'undefined' &&
+      typeof process.versions === 'object' &&
+      !!process.versions.electron
+    ) {
+      return true;
+    }
+
+    // Detect the user agent when the `nodeIntegration` option is set to true
+    if (
+      typeof navigator === 'object' &&
+      typeof navigator.userAgent === 'string' &&
+      navigator.userAgent.indexOf('Electron') >= 0
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const signUserIn = () => {
     if (
       insertedServerAddress &&
@@ -130,7 +161,9 @@ const Connect = withTheme(({ theme }) => {
           title={
             <Tabs value={tabValue} onChange={handleTabChange}>
               <Tab label={intl.formatMessage({ id: 'connect' })} />
-              <Tab label={intl.formatMessage({ id: 'import' })} />
+              {isElectron() && (
+                <Tab label={intl.formatMessage({ id: 'import' })} />
+              )}
             </Tabs>
           }
           onClose={() => setIsConnectModalOpen(false)}
@@ -187,26 +220,28 @@ const Connect = withTheme(({ theme }) => {
                   </StyledFieldContainer>
                 </StyledContainer>
               </TabPanel>
-              <TabPanel value={tabValue} index={1}>
-                <StyledContainer>
-                  <StyledFieldContainer>
-                    <StyledLabelContainer>
-                      <Body>
-                        *<FormattedMessage id="org-uid" />
-                      </Body>
-                    </StyledLabelContainer>
-                    <InputContainer>
-                      <StandardInput
-                        size={InputSizeEnum.large}
-                        variant={InputVariantEnum.default}
-                        value={orgUid}
-                        onChange={value => setOrgUid(value)}
-                        placeholderText="Org Uid"
-                      />
-                    </InputContainer>
-                  </StyledFieldContainer>
-                </StyledContainer>
-              </TabPanel>
+              {isElectron() && (
+                <TabPanel value={tabValue} index={1}>
+                  <StyledContainer>
+                    <StyledFieldContainer>
+                      <StyledLabelContainer>
+                        <Body>
+                          *<FormattedMessage id="org-uid" />
+                        </Body>
+                      </StyledLabelContainer>
+                      <InputContainer>
+                        <StandardInput
+                          size={InputSizeEnum.large}
+                          variant={InputVariantEnum.default}
+                          value={orgUid}
+                          onChange={value => setOrgUid(value)}
+                          placeholderText="Org Uid"
+                        />
+                      </InputContainer>
+                    </StyledFieldContainer>
+                  </StyledContainer>
+                </TabPanel>
+              )}
             </ModalFormContainerStyle>
           }
         />
