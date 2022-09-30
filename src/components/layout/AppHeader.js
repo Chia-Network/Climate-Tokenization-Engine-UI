@@ -23,10 +23,10 @@ const LogoContainer = styled('div')`
 const AppHeader = () => {
   return (
     <AppHeaderContainer>
-        <LogoContainer>
-          <ClimateWarehouseLogo width="100%" height="100%" />
-        </LogoContainer>
-        <LocaleSwitcher />
+      <LogoContainer>
+        <ClimateWarehouseLogo width="100%" height="100%" />
+      </LogoContainer>
+      <LocaleSwitcher />
     </AppHeaderContainer>
   );
 };

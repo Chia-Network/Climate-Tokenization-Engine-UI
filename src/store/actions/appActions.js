@@ -18,6 +18,8 @@ export const actions = keyMirror(
   'SET_NOTIFICATION',
   'REFRESH_APP',
   'SET_UNTOKENIZED_UNITS',
+  'SIGN_USER_IN',
+  'SIGN_USER_OUT',
   'SET_PAGINATION_NR_OF_PAGES',
 );
 
@@ -106,6 +108,82 @@ export const setLocale = locale => {
   return {
     type: actions.SET_LOCALE,
     payload: localeToSet,
+  };
+};
+
+export const signIn = ({ insertedApiKey, insertedServerAddress }) => {
+  return async dispatch => {
+    if (insertedApiKey && insertedServerAddress) {
+      localStorage.setItem('apiKey', insertedApiKey);
+      localStorage.setItem('serverAddress', insertedServerAddress);
+      dispatch({
+        type: actions.SIGN_USER_IN,
+        payload: {
+          insertedApiKey,
+          insertedServerAddress,
+        },
+      });
+      dispatch(refreshApp(true));
+    }
+  };
+};
+
+export const signOut = () => {
+  return async dispatch => {
+    localStorage.removeItem('apiKey');
+    localStorage.removeItem('serverAddress');
+    dispatch({
+      type: actions.SIGN_USER_OUT,
+      payload: {
+        apiKey: null,
+        serverAddress: null,
+      },
+    });
+  };
+};
+
+export const importHomeOrg = orgUid => {
+  return async dispatch => {
+    try {
+      dispatch(activateProgressIndicator);
+
+      const url = `${constants.API_HOST}/organizations`;
+
+      const payload = {
+        method: 'PUT',
+        body: JSON.stringify({ orgUid }),
+      };
+
+      const response = await fetchWrapper(url, payload);
+
+      if (response.ok) {
+        dispatch(setConnectionCheck(true));
+        dispatch(
+          setNotificationMessage(
+            NotificationMessageTypeEnum.success,
+            'organization-created',
+          ),
+        );
+      } else {
+        const errorResponse = await response.json();
+        dispatch(
+          setNotificationMessage(
+            NotificationMessageTypeEnum.error,
+            formatApiErrorResponse(errorResponse, 'organization-not-created'),
+          ),
+        );
+      }
+    } catch {
+      dispatch(setConnectionCheck(false));
+      dispatch(
+        setNotificationMessage(
+          NotificationMessageTypeEnum.error,
+          'organization-not-created',
+        ),
+      );
+    } finally {
+      dispatch(deactivateProgressIndicator);
+    }
   };
 };
 

@@ -12,6 +12,8 @@ const initialState = {
   notification: null,
   refresh: false,
   untokenizedUnits: null,
+  apiKey: null,
+  serverAddress: null,
   paginationNrOfPages: null,
 };
 
@@ -64,6 +66,24 @@ const appReducer = (state = initialState, action) => {
 
     case appActions.SET_NOTIFICATION:
       return u({ notification: action.payload }, state);
+
+    case appActions.SIGN_USER_IN:
+      return u(
+        {
+          apiKey: action.payload.insertedApiKey,
+          serverAddress: action.payload.insertedServerAddress,
+        },
+        state,
+      );
+
+    case appActions.SIGN_USER_OUT:
+      return u(
+        {
+          apiKey: null,
+          serverAddress: null,
+        },
+        state,
+      );
 
     default:
       return state;

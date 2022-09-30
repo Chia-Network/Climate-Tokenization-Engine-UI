@@ -8,6 +8,7 @@ process.env.ELECTRON_START_URL = `http://localhost:${port}`;
 const client = new net.Socket();
 
 let startedElectron = false;
+
 const tryConnection = () => {
   client.connect({ port }, () => {
     client.end();
