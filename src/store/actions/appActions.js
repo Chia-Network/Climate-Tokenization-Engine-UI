@@ -18,11 +18,17 @@ export const actions = keyMirror(
   'SET_NOTIFICATION',
   'REFRESH_APP',
   'SET_UNTOKENIZED_UNITS',
+  'SET_PAGINATION_NR_OF_PAGES',
 );
 
 export const refreshApp = render => ({
   type: actions.REFRESH_APP,
   payload: render,
+});
+
+export const setPaginationNrOfPages = number => ({
+  type: actions.SET_PAGINATION_NR_OF_PAGES,
+  payload: number,
 });
 
 export const activateProgressIndicator = {
@@ -119,11 +125,13 @@ export const getUntokenizedUnits = ({
         url += `&search=${encodeURIComponent(searchQuery)}`;
       }
 
-      const onSuccessHandler = results =>
+      const onSuccessHandler = results => {
         dispatch({
           type: 'SET_UNTOKENIZED_UNITS',
           payload: results,
         });
+        dispatch(setPaginationNrOfPages(25));
+      };
 
       const failedMessageId = 'untokenized-units-not-loaded';
 
