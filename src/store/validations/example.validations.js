@@ -73,3 +73,17 @@ export const splitUnitsValidationSchema = yup.object().shape({
     }),
   ),
 });
+
+export const tokenSchema = yup.object().shape({
+  quantityOfCredits: yup.number().required(),
+  projectName: yup.string().required(),
+  projectId: yup.string().required(),
+  vintage: yup.string().required(),
+  projectLink: yup.string().required(),
+  unitOwner: yup.string().required(),
+  accountHolderWalletAddress: yup.string().required(),
+  existingMarketplaceIdentifiers: yup.string().required(),
+  unitBlockStart: yup.string().required(),
+  unitBlockEnd: yup.string().required(),
+  quantity: yup.number().required(),
+});
