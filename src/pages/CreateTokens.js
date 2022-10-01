@@ -10,13 +10,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
-  SearchInput,
   Tab,
   Tabs,
   TabPanel,
   DownloadIcon,
   H3,
-  SelectCreatable,
   DataTable,
 } from '../components';
 import { getUntokenizedUnits } from '../store/actions/appActions';
@@ -34,13 +32,13 @@ const StyledHeaderContainer = styled('div')`
   padding: 30px 24px 14px 16px;
 `;
 
-const StyledSearchContainer = styled('div')`
-  max-width: 25.1875rem;
-`;
+// const StyledSearchContainer = styled('div')`
+//   max-width: 25.1875rem;
+// `;
 
-const StyledFiltersContainer = styled('div')`
-  margin: 0rem 1.2813rem;
-`;
+// const StyledFiltersContainer = styled('div')`
+//   margin: 0rem 1.2813rem;
+// `;
 
 const StyledSubHeaderContainer = styled('div')`
   display: flex;
@@ -76,18 +74,19 @@ const CreateTokens = () => {
 
   const pageContainerRef = useRef(null);
   const [tabValue, setTabValue] = useState(0);
-  const { untokenizedUnits } = useSelector(store => store);
+  const [page, setPage] = useState(0);
+  const { untokenizedUnits, paginationNrOfPages } = useSelector(store => store);
 
   useEffect(() => {
     dispatch(
       getUntokenizedUnits({
-        page: 1,
+        page: page,
         resultsLimit: constants.TABLE_ROWS,
         searchQuery: 'testing',
         isRequestMocked: true,
       }),
     );
-  }, []);
+  }, [page]);
 
   const handleTabChange = useCallback(
     (event, newValue) => {
@@ -109,13 +108,11 @@ const CreateTokens = () => {
     [],
   );
 
-  const untokenizedUnitsActions = useMemo(
-    () => [
-      {
-        label: intl.formatMessage({ id: 'create-token' }),
-        action: item => console.log('this is my item: ', item),
-      },
-    ],
+  const tokenizeUnitButtonConfig = useMemo(
+    () => ({
+      label: intl.formatMessage({ id: 'create-token' }),
+      action: item => console.log('this is my item: ', item),
+    }),
     [],
   );
 
@@ -123,21 +120,21 @@ const CreateTokens = () => {
     <>
       <StyledSectionContainer ref={pageContainerRef}>
         <StyledHeaderContainer>
-          <StyledSearchContainer>
+          {/* <StyledSearchContainer>
             <SearchInput
               size="large"
               onChange={() => console.log('search')}
               outline
             />
-          </StyledSearchContainer>
+          </StyledSearchContainer> */}
 
-          <StyledFiltersContainer>
+          {/* <StyledFiltersContainer>
             <SelectCreatable
               options={['Ken', 'Craig', 'Michael']}
               selected={'Craig'}
               onChange={val => console.log(val)}
             />
-          </StyledFiltersContainer>
+          </StyledFiltersContainer> */}
         </StyledHeaderContainer>
 
         <StyledSubHeaderContainer>
@@ -155,7 +152,10 @@ const CreateTokens = () => {
               <DataTable
                 headings={untokenizedUnitsKeysToBeDisplayed}
                 data={untokenizedUnits}
-                actions={untokenizedUnitsActions}
+                buttonConfig={tokenizeUnitButtonConfig}
+                changePageTo={page => setPage(page)}
+                currentPage={page}
+                numberOfPages={paginationNrOfPages}
               />
             ) : (
               <NoDataMessageContainer>

@@ -11,13 +11,19 @@ const initialState = {
   connectionCheck: true,
   notification: null,
   refresh: false,
-  untokenizedUnits: null
+  untokenizedUnits: null,
+  apiKey: null,
+  serverAddress: null,
+  paginationNrOfPages: null,
 };
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case appActions.SET_UNTOKENIZED_UNITS:
       return u({ untokenizedUnits: action.payload }, state);
+
+    case appActions.SET_PAGINATION_NR_OF_PAGES:
+      return u({ paginationNrOfPages: action.payload }, state);
 
     case appActions.REFRESH_APP:
       return u({ refresh: action.payload }, state);
@@ -60,6 +66,24 @@ const appReducer = (state = initialState, action) => {
 
     case appActions.SET_NOTIFICATION:
       return u({ notification: action.payload }, state);
+
+    case appActions.SIGN_USER_IN:
+      return u(
+        {
+          apiKey: action.payload.insertedApiKey,
+          serverAddress: action.payload.insertedServerAddress,
+        },
+        state,
+      );
+
+    case appActions.SIGN_USER_OUT:
+      return u(
+        {
+          apiKey: null,
+          serverAddress: null,
+        },
+        state,
+      );
 
     default:
       return state;
