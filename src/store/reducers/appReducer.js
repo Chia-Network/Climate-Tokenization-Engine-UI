@@ -12,6 +12,7 @@ const initialState = {
   notification: null,
   refresh: false,
   untokenizedUnits: null,
+  tokens: null,
   apiKey: null,
   serverAddress: null,
   paginationNrOfPages: null,
@@ -21,6 +22,9 @@ const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case appActions.SET_UNTOKENIZED_UNITS:
       return u({ untokenizedUnits: action.payload }, state);
+
+    case appActions.SET_TOKENS:
+      return u({ tokens: action.payload }, state);
 
     case appActions.SET_PAGINATION_NR_OF_PAGES:
       return u({ paginationNrOfPages: action.payload }, state);

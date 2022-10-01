@@ -17,7 +17,7 @@ import {
   H3,
   DataTable,
 } from '../components';
-import { getUntokenizedUnits } from '../store/actions/appActions';
+import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
 
 const StyledSectionContainer = styled('div')`
@@ -75,22 +75,36 @@ const CreateTokens = () => {
   const pageContainerRef = useRef(null);
   const [tabValue, setTabValue] = useState(0);
   const [page, setPage] = useState(0);
-  const { untokenizedUnits, paginationNrOfPages } = useSelector(store => store);
+  const { untokenizedUnits, paginationNrOfPages, tokens } = useSelector(
+    store => store,
+  );
 
   useEffect(() => {
-    dispatch(
-      getUntokenizedUnits({
-        page: page,
-        resultsLimit: constants.TABLE_ROWS,
-        searchQuery: 'testing',
-        isRequestMocked: true,
-      }),
-    );
-  }, [page]);
+    if (tabValue === 0) {
+      dispatch(
+        getUntokenizedUnits({
+          page: page,
+          resultsLimit: constants.TABLE_ROWS,
+          searchQuery: 'testing',
+          isRequestMocked: false,
+        }),
+      );
+    } else if (tabValue === 1) {
+      dispatch(
+        getTokens({
+          page: page,
+          resultsLimit: constants.TABLE_ROWS,
+          searchQuery: 'testing',
+          isRequestMocked: false,
+        }),
+      );
+    }
+  }, [page, tabValue]);
 
   const handleTabChange = useCallback(
     (event, newValue) => {
       setTabValue(newValue);
+      setPage(0);
     },
     [setTabValue],
   );
@@ -99,11 +113,11 @@ const CreateTokens = () => {
     () => [
       'unitOwner',
       'countryJurisdictionOfOwner',
-      'assetId',
       'serialNumberBlock',
       'unitBlockStart',
       'unitBlockEnd',
       'unitCount',
+      'unitStatus',
     ],
     [],
   );
@@ -166,11 +180,21 @@ const CreateTokens = () => {
             )}
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <NoDataMessageContainer>
-              <H3>
-                <FormattedMessage id="no-existing-tokens" />
-              </H3>
-            </NoDataMessageContainer>
+            {tokens?.length > 0 ? (
+              <DataTable
+                headings={untokenizedUnitsKeysToBeDisplayed}
+                data={tokens}
+                changePageTo={page => setPage(page)}
+                currentPage={page}
+                numberOfPages={paginationNrOfPages}
+              />
+            ) : (
+              <NoDataMessageContainer>
+                <H3>
+                  <FormattedMessage id="no-existing-tokens" />
+                </H3>
+              </NoDataMessageContainer>
+            )}
           </TabPanel>
         </StyledBodyContainer>
       </StyledSectionContainer>
