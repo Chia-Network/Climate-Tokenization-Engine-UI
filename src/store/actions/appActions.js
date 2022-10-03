@@ -34,6 +34,16 @@ export const setPaginationNrOfPages = number => ({
   payload: number,
 });
 
+export const setUntokenizedUnits = units => ({
+  type: 'SET_UNTOKENIZED_UNITS',
+  payload: units,
+});
+
+export const setTokens = tokens => ({
+  type: 'SET_TOKENS',
+  payload: tokens,
+});
+
 export const activateProgressIndicator = {
   type: actions.ACTIVATE_PROGRESS_INDICATOR,
 };
@@ -189,9 +199,9 @@ export const importHomeOrg = orgUid => {
 };
 
 export const getUntokenizedUnits = ({
-  // page,
+  page,
   resultsLimit,
-  // searchQuery,
+  searchQuery,
   isRequestMocked,
 }) => {
   return async dispatch => {
@@ -199,18 +209,16 @@ export const getUntokenizedUnits = ({
     // typeof page === 'number' && typeof resultsLimit === 'number';
 
     if (areRequestDetailsValid) {
-      // let url = `${constants.API_HOST}/units?page=${page}&limit=${resultsLimit}`;
-      // if (searchQuery && typeof searchQuery === 'string') {
-      // url += `&search=${encodeURIComponent(searchQuery)}`;
-      // }
-      const url = `${constants.API_HOST}/units/untokenized`;
+      let url = `${constants.API_HOST}/units/untokenized?page=${
+        page + 1
+      }&limit=${resultsLimit}`;
+      if (searchQuery && typeof searchQuery === 'string') {
+        url += `&search=${encodeURIComponent(searchQuery)}`;
+      }
 
       const onSuccessHandler = results => {
-        dispatch({
-          type: 'SET_UNTOKENIZED_UNITS',
-          payload: results,
-        });
-        // dispatch(setPaginationNrOfPages(25));
+        dispatch(setUntokenizedUnits(results.data));
+        dispatch(setPaginationNrOfPages(results.pageCount));
       };
 
       const failedMessageId = 'untokenized-units-not-loaded';
@@ -237,28 +245,26 @@ export const getUntokenizedUnits = ({
 };
 
 export const getTokens = ({
-  // page,
+  page,
   resultsLimit,
-  // searchQuery,
+  searchQuery,
   isRequestMocked,
 }) => {
   return async dispatch => {
     const areRequestDetailsValid = true;
-    // typeof page === 'number' && typeof resultsLimit === 'number';
+    typeof page === 'number' && typeof resultsLimit === 'number';
 
     if (areRequestDetailsValid) {
-      // let url = `${constants.API_HOST}/units?page=${page}&limit=${resultsLimit}`;
-      // if (searchQuery && typeof searchQuery === 'string') {
-      // url += `&search=${encodeURIComponent(searchQuery)}`;
-      // }
-      const url = `${constants.API_HOST}/units/tokenized`;
+      let url = `${constants.API_HOST}/units/tokenized?page=${
+        page + 1
+      }&limit=${resultsLimit}`;
+      if (searchQuery && typeof searchQuery === 'string') {
+        url += `&search=${encodeURIComponent(searchQuery)}`;
+      }
 
       const onSuccessHandler = results => {
-        dispatch({
-          type: 'SET_TOKENS',
-          payload: results,
-        });
-        // dispatch(setPaginationNrOfPages(25));
+        dispatch(setTokens(results.data));
+        dispatch(setPaginationNrOfPages(results.pageCount));
       };
 
       const failedMessageId = 'tokens-not-loaded';

@@ -85,7 +85,7 @@ const CreateTokens = () => {
         getUntokenizedUnits({
           page: page,
           resultsLimit: constants.TABLE_ROWS,
-          searchQuery: 'testing',
+          // searchQuery: 'testing',
           isRequestMocked: false,
         }),
       );
@@ -94,7 +94,7 @@ const CreateTokens = () => {
         getTokens({
           page: page,
           resultsLimit: constants.TABLE_ROWS,
-          searchQuery: 'testing',
+          // searchQuery: 'testing',
           isRequestMocked: false,
         }),
       );
