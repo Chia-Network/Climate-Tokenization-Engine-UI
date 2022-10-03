@@ -1,4 +1,3 @@
-import _ from 'lodash';
 
 export default {
   API_HOST: 'http://localhost:31311',
