@@ -115,13 +115,14 @@ const CreateTokens = () => {
 
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
-      'countryJurisdictionOfOwner',
       'unitOwner',
+      'countryJurisdictionOfOwner',
       'serialNumberBlock',
       'unitBlockStart',
       'unitBlockEnd',
       'unitCount',
       'unitStatus',
+      'unitType',
     ],
     [],
   );
@@ -182,10 +183,10 @@ const CreateTokens = () => {
               <DataTable
                 headings={untokenizedUnitsKeysToBeDisplayed}
                 data={untokenizedUnits}
-                buttonConfig={tokenizeUnitButtonConfig}
                 changePageTo={page => setPage(page)}
                 currentPage={page}
                 numberOfPages={paginationNrOfPages}
+                buttonConfig={tokenizeUnitButtonConfig}
               />
             ) : (
               <NoDataMessageContainer>
