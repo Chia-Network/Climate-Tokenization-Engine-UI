@@ -15,6 +15,7 @@ const Table = styled('table')`
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
+  overflow-x: scroll;
 `;
 
 const THead = styled('thead')`
@@ -33,9 +34,6 @@ const Th = styled('th')`
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
-  :nth-child(1) {
-    display: none;
-  }
 
   ${props =>
     props.stick &&
@@ -59,9 +57,6 @@ const Td = styled('td')`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   max-width: 200px;
-  :nth-child(1) {
-    display: none;
-  }
   ${props =>
     props.sticky &&
     css`
@@ -139,11 +134,13 @@ const DataTable = withTheme(
                     </TableCellHeaderText>
                   </Th>
                 ))}
-                <Th selectedTheme={theme} key={'action'} sticky>
-                  <TableCellHeaderText>
-                    <FormattedMessage id="actions" />
-                  </TableCellHeaderText>
-                </Th>
+                {(actions || buttonConfig) && (
+                  <Th selectedTheme={theme} key={'action'} sticky>
+                    <TableCellHeaderText>
+                      <FormattedMessage id="actions" />
+                    </TableCellHeaderText>
+                  </Th>
+                )}
               </tr>
             </THead>
             <tbody style={{ position: 'relative' }}>
@@ -168,15 +165,17 @@ const DataTable = withTheme(
                     </Td>
                   ))}
 
-                  <Td selectedTheme={theme} sticky>
-                    {actions && <BasicMenu options={actions} item={record} />}
-                    {buttonConfig && (
-                      <PrimaryButton
-                        label={buttonConfig.label}
-                        onClick={() => buttonConfig.action(record)}
-                      />
-                    )}
-                  </Td>
+                  {(actions || buttonConfig) && (
+                    <Td selectedTheme={theme} sticky>
+                      {actions && <BasicMenu options={actions} item={record} />}
+                      {buttonConfig && (
+                        <PrimaryButton
+                          label={buttonConfig.label}
+                          onClick={() => buttonConfig.action(record)}
+                        />
+                      )}
+                    </Td>
+                  )}
                 </Tr>
               ))}
             </tbody>

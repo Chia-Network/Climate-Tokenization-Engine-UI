@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, {
   useState,
   useCallback,
@@ -16,6 +17,7 @@ import {
   DownloadIcon,
   H3,
   DataTable,
+  SearchInput,
 } from '../components';
 import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
@@ -31,10 +33,6 @@ const StyledHeaderContainer = styled('div')`
   align-items: center;
   padding: 30px 24px 14px 16px;
 `;
-
-// const StyledSearchContainer = styled('div')`
-//   max-width: 25.1875rem;
-// `;
 
 // const StyledFiltersContainer = styled('div')`
 //   margin: 0rem 1.2813rem;
@@ -68,13 +66,18 @@ const StyledCSVOperationsContainer = styled('div')`
   }
 `;
 
+const StyledSearchContainer = styled('div')`
+  max-width: 25.1875rem;
+`;
+
 const CreateTokens = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-
   const pageContainerRef = useRef(null);
+
   const [tabValue, setTabValue] = useState(0);
   const [page, setPage] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
   const { untokenizedUnits, paginationNrOfPages, tokens } = useSelector(
     store => store,
   );
@@ -85,7 +88,7 @@ const CreateTokens = () => {
         getUntokenizedUnits({
           page: page,
           resultsLimit: constants.TABLE_ROWS,
-          // searchQuery: 'testing',
+          searchQuery: searchQuery,
           isRequestMocked: false,
         }),
       );
@@ -94,17 +97,18 @@ const CreateTokens = () => {
         getTokens({
           page: page,
           resultsLimit: constants.TABLE_ROWS,
-          // searchQuery: 'testing',
+          searchQuery: searchQuery,
           isRequestMocked: false,
         }),
       );
     }
-  }, [page, tabValue]);
+  }, [page, tabValue, searchQuery]);
 
   const handleTabChange = useCallback(
     (event, newValue) => {
       setTabValue(newValue);
       setPage(0);
+      setSearchQuery('');
     },
     [setTabValue],
   );
@@ -118,6 +122,7 @@ const CreateTokens = () => {
       'unitBlockEnd',
       'unitCount',
       'unitStatus',
+      'unitType',
     ],
     [],
   );
@@ -130,17 +135,29 @@ const CreateTokens = () => {
     [],
   );
 
+  const onSearch = useMemo(
+    () => _.debounce(event => setSearchQuery(event.target.value), 300),
+    [dispatch, location],
+  );
+
+  useEffect(() => {
+    return () => {
+      onSearch.cancel();
+    };
+  }, []);
+
   return (
     <>
       <StyledSectionContainer ref={pageContainerRef}>
         <StyledHeaderContainer>
-          {/* <StyledSearchContainer>
+          <StyledSearchContainer>
             <SearchInput
+              key={tabValue}
               size="large"
-              onChange={() => console.log('search')}
+              onChange={onSearch}
               outline
             />
-          </StyledSearchContainer> */}
+          </StyledSearchContainer>
 
           {/* <StyledFiltersContainer>
             <SelectCreatable
@@ -166,10 +183,10 @@ const CreateTokens = () => {
               <DataTable
                 headings={untokenizedUnitsKeysToBeDisplayed}
                 data={untokenizedUnits}
-                buttonConfig={tokenizeUnitButtonConfig}
                 changePageTo={page => setPage(page)}
                 currentPage={page}
                 numberOfPages={paginationNrOfPages}
+                buttonConfig={tokenizeUnitButtonConfig}
               />
             ) : (
               <NoDataMessageContainer>
