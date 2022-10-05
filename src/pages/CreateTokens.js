@@ -34,10 +34,6 @@ const StyledHeaderContainer = styled('div')`
   padding: 30px 24px 14px 16px;
 `;
 
-// const StyledSearchContainer = styled('div')`
-//   max-width: 25.1875rem;
-// `;
-
 // const StyledFiltersContainer = styled('div')`
 //   margin: 0rem 1.2813rem;
 // `;
@@ -154,7 +150,12 @@ const CreateTokens = () => {
       <StyledSectionContainer ref={pageContainerRef}>
         <StyledHeaderContainer>
           <StyledSearchContainer>
-            <SearchInput size="large" onChange={onSearch} outline />
+            <SearchInput
+              key={tabValue}
+              size="large"
+              onChange={onSearch}
+              outline
+            />
           </StyledSearchContainer>
 
           {/* <StyledFiltersContainer>
