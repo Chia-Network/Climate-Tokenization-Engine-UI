@@ -27,6 +27,7 @@
   "add-valid-api-key": "Add a valid Api key",
   "untokenized-units-not-loaded": "Untokenized units could not be loaded.",
   "tokens-not-loaded": "Tokens could not be loaded.",
+  "projects-not-loaded": "Projects could not be loaded.",
   "no-untokenized-units": "There are no untokenized units.",
   "actions": "Actions"
 }
