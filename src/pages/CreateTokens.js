@@ -21,6 +21,7 @@ import {
 } from '../components';
 import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
+import CreateTokenModal from '../components/forms/CreateTokenModal';
 
 const StyledSectionContainer = styled('div')`
   display: flex;
@@ -73,6 +74,7 @@ const StyledSearchContainer = styled('div')`
 const CreateTokens = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const [unitToBeTokenized, setUnitToBeTokenized] = useState(null);
   const pageContainerRef = useRef(null);
 
   const [tabValue, setTabValue] = useState(0);
@@ -115,7 +117,7 @@ const CreateTokens = () => {
 
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
-      'unitOwner',
+      'vintage',
       'countryJurisdictionOfOwner',
       'serialNumberBlock',
       'unitBlockStart',
@@ -130,7 +132,7 @@ const CreateTokens = () => {
   const tokenizeUnitButtonConfig = useMemo(
     () => ({
       label: intl.formatMessage({ id: 'create-token' }),
-      action: item => console.log('this is my item: ', item),
+      action: item => setUnitToBeTokenized(item),
     }),
     [],
   );
@@ -214,6 +216,7 @@ const CreateTokens = () => {
             )}
           </TabPanel>
         </StyledBodyContainer>
+        {!unitToBeTokenized && <CreateTokenModal data={unitToBeTokenized} />}
       </StyledSectionContainer>
     </>
   );

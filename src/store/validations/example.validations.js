@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-import { labelSchema, issuanceSchema } from '.';
 
 export const unitsSchema = yup.object().shape({
   projectLocationId: yup.string().optional(),
@@ -37,8 +36,6 @@ export const unitsSchema = yup.object().shape({
   correspondingAdjustmentStatus: yup
     .string()
     .required('yup-validation-field-required'),
-  issuance: issuanceSchema,
-  labels: yup.array().of(labelSchema).optional(),
 });
 
 export const splitUnitsValidationSchema = yup.object().shape({
