@@ -223,13 +223,16 @@ export const getUntokenizedUnits = ({
 
       const failedMessageId = 'untokenized-units-not-loaded';
 
-      const randomResponseStubArrayIndex = Math.floor(
-        Math.random() * (getUntokenizedUnitsStub.length - resultsLimit),
-      );
-      const responseStub = getUntokenizedUnitsStub.slice(
-        randomResponseStubArrayIndex,
-        randomResponseStubArrayIndex + resultsLimit,
-      );
+      let responseStub = null;
+      if (isRequestMocked) {
+        const randomResponseStubArrayIndex = Math.floor(
+          Math.random() * (untokenizedUnitsStub.length - resultsLimit),
+        );
+        responseStub = untokenizedUnitsStub.slice(
+          randomResponseStubArrayIndex,
+          randomResponseStubArrayIndex + resultsLimit,
+        );
+      }
 
       dispatch(
         fetchWrapper({
@@ -269,13 +272,16 @@ export const getTokens = ({
 
       const failedMessageId = 'tokens-not-loaded';
 
-      const randomResponseStubArrayIndex = Math.floor(
-        Math.random() * (getUntokenizedUnitsStub.length - resultsLimit),
-      );
-      const responseStub = getUntokenizedUnitsStub.slice(
-        randomResponseStubArrayIndex,
-        randomResponseStubArrayIndex + resultsLimit,
-      );
+      let responseStub = null;
+      if (isRequestMocked) {
+        const randomResponseStubArrayIndex = Math.floor(
+          Math.random() * (untokenizedUnitsStub.length - resultsLimit),
+        );
+        responseStub = untokenizedUnitsStub.slice(
+          randomResponseStubArrayIndex,
+          randomResponseStubArrayIndex + resultsLimit,
+        );
+      }
 
       dispatch(
         fetchWrapper({
