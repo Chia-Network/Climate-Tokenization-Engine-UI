@@ -1,6 +1,6 @@
-# Climate Warehouse Auxillery App
+# Climate Portal Auxillery App
 
-Auxillery App for the Climate Warehouse
+Auxillery App for the Climate Portal
 
 ## Quickstart
 
