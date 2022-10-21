@@ -4,7 +4,7 @@ import constants from '../../constants';
 import { keyMirror } from '../store-functions';
 import { LANGUAGE_CODES } from '../../translations';
 
-import { getUntokenizedUnitsStub } from '../mocks';
+import { untokenizedUnitsStub } from '../mocks';
 
 export const actions = keyMirror(
   'ACTIVATE_PROGRESS_INDICATOR',
@@ -225,13 +225,15 @@ export const getUntokenizedUnits = ({
 
       let responseStub = null;
       if (isRequestMocked) {
+        responseStub = {};
         const randomResponseStubArrayIndex = Math.floor(
           Math.random() * (untokenizedUnitsStub.length - resultsLimit),
         );
-        responseStub = untokenizedUnitsStub.slice(
+        responseStub.data = untokenizedUnitsStub.slice(
           randomResponseStubArrayIndex,
           randomResponseStubArrayIndex + resultsLimit,
         );
+        responseStub.pageCount = 3;
       }
 
       dispatch(
