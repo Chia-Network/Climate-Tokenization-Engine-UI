@@ -4,7 +4,7 @@ import constants from '../../constants';
 import { keyMirror } from '../store-functions';
 import { LANGUAGE_CODES } from '../../translations';
 
-import { getUntokenizedUnitsStub } from '../mocks';
+import { untokenizedUnitsStub } from '../mocks';
 
 export const actions = keyMirror(
   'ACTIVATE_PROGRESS_INDICATOR',
@@ -223,13 +223,18 @@ export const getUntokenizedUnits = ({
 
       const failedMessageId = 'untokenized-units-not-loaded';
 
-      const randomResponseStubArrayIndex = Math.floor(
-        Math.random() * (getUntokenizedUnitsStub.length - resultsLimit),
-      );
-      const responseStub = getUntokenizedUnitsStub.slice(
-        randomResponseStubArrayIndex,
-        randomResponseStubArrayIndex + resultsLimit,
-      );
+      let responseStub = null;
+      if (isRequestMocked) {
+        responseStub = {};
+        const randomResponseStubArrayIndex = Math.floor(
+          Math.random() * (untokenizedUnitsStub.length - resultsLimit),
+        );
+        responseStub.data = untokenizedUnitsStub.slice(
+          randomResponseStubArrayIndex,
+          randomResponseStubArrayIndex + resultsLimit,
+        );
+        responseStub.pageCount = 3;
+      }
 
       dispatch(
         fetchWrapper({
@@ -269,13 +274,16 @@ export const getTokens = ({
 
       const failedMessageId = 'tokens-not-loaded';
 
-      const randomResponseStubArrayIndex = Math.floor(
-        Math.random() * (getUntokenizedUnitsStub.length - resultsLimit),
-      );
-      const responseStub = getUntokenizedUnitsStub.slice(
-        randomResponseStubArrayIndex,
-        randomResponseStubArrayIndex + resultsLimit,
-      );
+      let responseStub = null;
+      if (isRequestMocked) {
+        const randomResponseStubArrayIndex = Math.floor(
+          Math.random() * (untokenizedUnitsStub.length - resultsLimit),
+        );
+        responseStub = untokenizedUnitsStub.slice(
+          randomResponseStubArrayIndex,
+          randomResponseStubArrayIndex + resultsLimit,
+        );
+      }
 
       dispatch(
         fetchWrapper({
