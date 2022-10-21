@@ -4,7 +4,7 @@ import constants from '../../constants';
 import { keyMirror } from '../store-functions';
 import { LANGUAGE_CODES } from '../../translations';
 
-import { untokenizedUnitsStub } from '../mocks';
+import { untokenizedUnitsStub, projectsStub } from '../mocks';
 
 export const actions = keyMirror(
   'ACTIVATE_PROGRESS_INDICATOR',
@@ -22,6 +22,7 @@ export const actions = keyMirror(
   'SIGN_USER_OUT',
   'SET_PAGINATION_NR_OF_PAGES',
   'SET_TOKENS',
+  'SET_PROJECTS',
 );
 
 export const refreshApp = render => ({
@@ -37,6 +38,11 @@ export const setPaginationNrOfPages = number => ({
 export const setUntokenizedUnits = units => ({
   type: 'SET_UNTOKENIZED_UNITS',
   payload: units,
+});
+
+export const setProjects = projects => ({
+  type: 'SET_PROJECTS',
+  payload: projects,
 });
 
 export const setTokens = tokens => ({
@@ -217,8 +223,13 @@ export const getUntokenizedUnits = ({
       }
 
       const onSuccessHandler = results => {
-        dispatch(setUntokenizedUnits(results.data));
         dispatch(setPaginationNrOfPages(results.pageCount));
+        dispatch(
+          addProjectDetailsToUntokenizedUnits({
+            units: results.data,
+            isRequestMocked,
+          }),
+        );
       };
 
       const failedMessageId = 'untokenized-units-not-loaded';
@@ -246,6 +257,105 @@ export const getUntokenizedUnits = ({
         }),
       );
     }
+  };
+};
+
+export const addProjectDetailsToUntokenizedUnits = ({
+  units,
+  isRequestMocked,
+}) => {
+  return async dispatch => {
+    let url = `${constants.API_HOST}/projects?`;
+
+    const projectsIdsNeededSearchQuery = units.reduce(
+      (projectIdsQuery, currentUnit) => {
+        const hasUnitProjectDetails = currentUnit?.issuance?.warehouseProjectId;
+        if (hasUnitProjectDetails) {
+          const isProjectIdNotAdded = !projectIdsQuery.includes(
+            currentUnit?.issuance?.warehouseProjectId,
+          );
+          if (isProjectIdNotAdded) {
+            return (
+              projectIdsQuery +
+              `projectIds=${currentUnit?.issuance?.warehouseProjectId}`
+            );
+          }
+        }
+
+        return projectIdsQuery;
+      },
+      '',
+    );
+
+    if (projectsIdsNeededSearchQuery.length > 0) {
+      url += projectsIdsNeededSearchQuery;
+    }
+
+    const failedMessageId = 'projects-not-loaded';
+
+    const onSuccessHandler = results => {
+      const projectsHashmap = results.reduce((accumulator, currentProject) => {
+        return {
+          ...accumulator,
+          [currentProject.warehouseProjectId]: currentProject,
+        };
+      }, {});
+
+      const unitsEnrichedWithProjectDetails = units.map(unitItem => {
+        if (unitItem.issuance) {
+          if (projectsHashmap[unitItem.issuance?.warehouseProjectId]) {
+            return {
+              ...unitItem,
+              projectName:
+                projectsHashmap[unitItem.issuance?.warehouseProjectId]
+                  .projectName,
+            };
+          }
+        }
+        return unitItem;
+      });
+
+      dispatch(setUntokenizedUnits(unitsEnrichedWithProjectDetails));
+    };
+
+    dispatch(
+      fetchWrapper({
+        url,
+        failedMessageId,
+        onSuccessHandler,
+        isRequestMocked,
+        projectsStub,
+      }),
+    );
+  };
+};
+
+export const getProjects = ({ searchQuery, orgUid, isRequestMocked }) => {
+  return async dispatch => {
+    let url = `${constants.API_HOST}/projects?`;
+
+    if (searchQuery) {
+      url += `search=${searchQuery}`;
+    }
+    if (orgUid) {
+      url += `orgUid=${orgUid}`;
+    }
+
+    const failedMessageId = 'projects-not-loaded';
+
+    const onSuccessHandler = results => {
+      dispatch(setProjects(results));
+    };
+
+    dispatch(
+      fetchWrapper({
+        url,
+        failedMessageId,
+        onSuccessHandler,
+        isRequestMocked,
+        projectsStub,
+      }),
+    );
   };
 };
 

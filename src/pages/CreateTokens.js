@@ -121,6 +121,7 @@ console.log('untokenizedUnits', untokenizedUnits);
     () => [
       'vintage',
       'projectName',
+      'unitOwner',
       'countryJurisdictionOfOwner',
       'serialNumberBlock',
       'unitBlockStart',
@@ -141,8 +142,12 @@ console.log('untokenizedUnits', untokenizedUnits);
   );
 
   const onSearch = useMemo(
-    () => _.debounce(event => setSearchQuery(event.target.value), 300),
-    [dispatch, location],
+    () =>
+      _.debounce(event => {
+        setSearchQuery(event.target.value);
+        setPage(0);
+      }, 300),
+    [setSearchQuery, setPage],
   );
 
   useEffect(() => {
