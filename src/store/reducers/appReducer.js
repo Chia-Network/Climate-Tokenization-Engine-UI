@@ -16,10 +16,14 @@ const initialState = {
   apiKey: null,
   serverAddress: null,
   paginationNrOfPages: null,
+  projects: null,
 };
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
+    case appActions.SET_PROJECTS:
+      return u({ projects: action.payload }, state);
+
     case appActions.SET_UNTOKENIZED_UNITS:
       return u({ untokenizedUnits: action.payload }, state);
 

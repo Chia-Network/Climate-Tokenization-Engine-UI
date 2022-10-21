@@ -115,6 +115,7 @@ const CreateTokens = () => {
 
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
+      'projectName',
       'unitOwner',
       'countryJurisdictionOfOwner',
       'serialNumberBlock',
@@ -136,8 +137,12 @@ const CreateTokens = () => {
   );
 
   const onSearch = useMemo(
-    () => _.debounce(event => setSearchQuery(event.target.value), 300),
-    [dispatch, location],
+    () =>
+      _.debounce(event => {
+        setSearchQuery(event.target.value);
+        setPage(0);
+      }, 300),
+    [setSearchQuery, setPage],
   );
 
   useEffect(() => {
