@@ -8,7 +8,6 @@ import {
   InputContainer,
   InputSizeEnum,
   InputStateEnum,
-  InputVariantEnum,
   LabelContainer,
   ModalFormContainerStyle,
   StandardInput,
@@ -19,11 +18,11 @@ import {
 } from '..';
 
 const CreateTokenModal = ({ data, onClose }) => {
-  const { values, errors, touched, handleBlur, handleChange } = useFormik({
+  const { values } = useFormik({
     initialValues: {
-      quantityOfCredits: data?.unitCount,
-      projectName: null,
-      projectId: data?.issuance?.warehouseProjectId,
+      quantityOfCredits: data?.unitCount ?? 0,
+      projectName: data?.projectName ?? '',
+      projectId: data?.issuance?.warehouseProjectId ?? '',
       vintage: data?.vintageYear,
       projectLink: data?.projectLink ?? '',
       unitOwner: data?.unitOwner ?? '',
@@ -31,7 +30,6 @@ const CreateTokenModal = ({ data, onClose }) => {
       existingMarketplaceIdentifiers: data?.marketplaceIdentifier ?? '',
       unitBlockStart: data?.unitBlockStart ?? '',
       unitBlockEnd: data?.unitBlockEnd ?? '',
-      quantity: null,
     },
   });
   const intl = useIntl();
@@ -53,30 +51,17 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="quantity-of-credits" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-start-date-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.quantityOfCredits &&
-                      touched?.quantityOfCredits &&
-                      InputVariantEnum.error
-                    }
                     type="number"
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'quantity-of-credits',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.quantityOfCredits}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="quantityOfCredits"
                   />
                 </InputContainer>
@@ -87,30 +72,17 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="project-name" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'project-name',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.projectName &&
-                      touched?.projectName &&
-                      InputVariantEnum.error
-                    }
+                    state={InputStateEnum.disabled}
                     type="text"
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
-                      id: 'quantity-of-credits',
+                      id: 'project-name',
                     })}
-                    state={InputStateEnum.default}
                     value={values.projectName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="projectName"
                   />
                 </InputContainer>
@@ -121,30 +93,17 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="project-id" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-body-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.projectId &&
-                      touched?.projectId &&
-                      InputVariantEnum.error
-                    }
                     type="text"
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'project-id',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.projectId}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="projectId"
                   />
                 </InputContainer>
@@ -155,30 +114,17 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="vintage" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-report-date-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.vintage &&
-                      touched?.vintage &&
-                      InputVariantEnum.error
-                    }
                     type="text"
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'vintage',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.vintage}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="vintage"
                   />
                 </InputContainer>
@@ -189,30 +135,17 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="project-link" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'id',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.projectLink &&
-                      touched?.projectLink &&
-                      InputVariantEnum.error
-                    }
                     type="text"
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'projectLink',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.projectLink}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="projectLink"
                   />
                 </InputContainer>
@@ -223,29 +156,16 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="unit-owner" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-approach-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.unitOwner &&
-                      touched?.unitOwner &&
-                      InputVariantEnum.error
-                    }
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'unit-owner',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.unitOwner}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="unitOwner"
                   />
                 </InputContainer>
@@ -256,29 +176,16 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="unit-block-start" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-approach-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.unitBlockStart &&
-                      touched?.unitBlockStart &&
-                      InputVariantEnum.error
-                    }
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'unit-block-start',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.unitBlockStart}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="unitBlockStart"
                   />
                 </InputContainer>
@@ -289,29 +196,16 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="unit-block-end" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-approach-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.unitBlockEnd &&
-                      touched?.unitBlockEnd &&
-                      InputVariantEnum.error
-                    }
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'unit-block-end',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.unitBlockEnd}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="unitBlockEnd"
                   />
                 </InputContainer>
@@ -322,29 +216,16 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="account-holder-wallet-address" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-approach-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.accountHolderWalletAddress &&
-                      touched?.accountHolderWalletAddress &&
-                      InputVariantEnum.error
-                    }
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'account-holder-wallet-address',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.accountHolderWalletAddress}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="accountHolderWalletAddress"
                   />
                 </InputContainer>
@@ -355,29 +236,16 @@ const CreateTokenModal = ({ data, onClose }) => {
                     <LabelContainer>
                       *<FormattedMessage id="existing-marketplace-identifier" />
                     </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-approach-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
                   </Body>
                 </StyledLabelContainer>
                 <InputContainer>
                   <StandardInput
-                    variant={
-                      errors?.existingMarketplaceIdentifiers &&
-                      touched?.existingMarketplaceIdentifiers &&
-                      InputVariantEnum.error
-                    }
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'existing-marketplace-identifier',
                     })}
-                    state={InputStateEnum.default}
+                    state={InputStateEnum.disabled}
                     value={values.accountHolderWalletAddress}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                     name="existingMarketplaceIdentifier"
                   />
                 </InputContainer>

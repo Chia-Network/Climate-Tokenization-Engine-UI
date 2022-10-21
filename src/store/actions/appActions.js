@@ -309,6 +309,9 @@ export const addProjectDetailsToUntokenizedUnits = ({
               projectName:
                 projectsHashmap[unitItem.issuance?.warehouseProjectId]
                   .projectName,
+              projectLink:
+                projectsHashmap[unitItem.issuance?.warehouseProjectId]
+                  .projectLink,
             };
           }
         }
