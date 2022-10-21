@@ -84,8 +84,6 @@ const CreateTokens = () => {
     store => store,
   );
 
-console.log('untokenizedUnits', untokenizedUnits);
-
   useEffect(() => {
     if (tabValue === 0) {
       dispatch(

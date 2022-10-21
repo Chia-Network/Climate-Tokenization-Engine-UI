@@ -411,6 +411,28 @@ export const getTokens = ({
   };
 };
 
+export const tokenizeUnit = data => {
+  console.log('tokenizeUnit', data);
+
+  return async dispatch => {
+    let url = `${constants.API_HOST}/tokenize`;
+    const failedMessageId = 'unit-not-tokenized';
+    const successMessageId = 'unit-was-tokenized';
+    const payload = {
+      body: JSON.stringify(data),
+    };
+
+    dispatch(
+      fetchWrapper({
+        url,
+        payload,
+        failedMessageId,
+        successMessageId,
+      }),
+    );
+  };
+};
+
 // encapsulates error handling, network failure, loader toggling and on success or failed handlers
 const fetchWrapper = ({
   url,
@@ -427,6 +449,11 @@ const fetchWrapper = ({
       onSuccessHandler(responseStub);
     } else {
       try {
+        console.log('fetch initiated to url', url);
+        console.log('payload', payload);
+        console.log('successMessageId', successMessageId);
+        console.log('failedMessageId', failedMessageId);
+
         dispatch(activateProgressIndicator);
         const response = await fetch(url, payload);
 

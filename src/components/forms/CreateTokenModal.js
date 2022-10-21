@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
+
 import {
   Body,
   BodyContainer,
@@ -16,8 +18,10 @@ import {
   modalTypeEnum,
   Modal,
 } from '..';
+import { tokenizeUnit } from '../../store/actions/appActions';
 
 const CreateTokenModal = ({ data, onClose }) => {
+  const dispatch = useDispatch();
   const { values } = useFormik({
     initialValues: {
       quantityOfCredits: data?.unitCount ?? 0,
@@ -32,14 +36,29 @@ const CreateTokenModal = ({ data, onClose }) => {
       unitBlockEnd: data?.unitBlockEnd ?? '',
     },
   });
+
+  const onSubmitForm = () => {
+    const submitData = {
+      org_uid: data?.orgUid,
+      warehouse_project_id: data?.issuance?.warehouseProjectId,
+      vintage_year: data?.vintageYear,
+      sequence_num: 0,
+      warehouseUnitId: data?.warehouseUnitId,
+    };
+
+    dispatch(tokenizeUnit(submitData));
+    onClose();
+  };
+
   const intl = useIntl();
-  console.log(data);
+
   return (
     <Modal
       modalType={modalTypeEnum.basic}
       title={intl.formatMessage({
         id: 'create-token',
       })}
+      onOk={onSubmitForm}
       onClose={onClose}
       body={
         <ModalFormContainerStyle>
