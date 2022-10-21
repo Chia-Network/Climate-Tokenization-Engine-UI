@@ -91,7 +91,7 @@ const CreateTokens = () => {
           page: page,
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
-          isRequestMocked: false,
+          isRequestMocked: true,
         }),
       );
     } else if (tabValue === 1) {
@@ -100,7 +100,7 @@ const CreateTokens = () => {
           page: page,
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
-          isRequestMocked: false,
+          isRequestMocked: true,
         }),
       );
     }
@@ -216,7 +216,12 @@ const CreateTokens = () => {
             )}
           </TabPanel>
         </StyledBodyContainer>
-        {!unitToBeTokenized && <CreateTokenModal data={unitToBeTokenized} />}
+        {unitToBeTokenized && (
+          <CreateTokenModal
+            onClose={() => setUnitToBeTokenized(null)}
+            data={unitToBeTokenized}
+          />
+        )}
       </StyledSectionContainer>
     </>
   );

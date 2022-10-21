@@ -19,7 +19,7 @@ import {
 } from '..';
 import { tokenSchema } from '../../store/validations';
 
-const CreateTokenModal = ({ data }) => {
+const CreateTokenModal = ({ data, onClose }) => {
   const { values, errors, touched, handleBlur, handleChange } = useFormik({
     initialValues: {
       quantityOfCredits: null,
@@ -44,6 +44,7 @@ const CreateTokenModal = ({ data }) => {
       title={intl.formatMessage({
         id: 'create-token',
       })}
+      onClose={onClose}
       body={
         <ModalFormContainerStyle>
           <FormContainerStyle>
