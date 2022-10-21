@@ -84,6 +84,8 @@ const CreateTokens = () => {
     store => store,
   );
 
+console.log('untokenizedUnits', untokenizedUnits);
+
   useEffect(() => {
     if (tabValue === 0) {
       dispatch(
@@ -91,7 +93,7 @@ const CreateTokens = () => {
           page: page,
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
-          isRequestMocked: true,
+          isRequestMocked: false,
         }),
       );
     } else if (tabValue === 1) {
@@ -100,7 +102,7 @@ const CreateTokens = () => {
           page: page,
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
-          isRequestMocked: true,
+          isRequestMocked: false,
         }),
       );
     }
@@ -118,6 +120,7 @@ const CreateTokens = () => {
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
       'vintage',
+      'projectName',
       'countryJurisdictionOfOwner',
       'serialNumberBlock',
       'unitBlockStart',

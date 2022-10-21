@@ -17,24 +17,22 @@ import {
   modalTypeEnum,
   Modal,
 } from '..';
-import { tokenSchema } from '../../store/validations';
 
 const CreateTokenModal = ({ data, onClose }) => {
   const { values, errors, touched, handleBlur, handleChange } = useFormik({
     initialValues: {
-      quantityOfCredits: null,
+      quantityOfCredits: data?.unitCount,
       projectName: null,
-      projectId: null,
-      vintage: null,
-      projectLink: null,
-      unitOwner: null,
-      accountHolderWalletAddress: null,
-      existingMarketplaceIdentifiers: null,
-      unitBlockStart: null,
-      unitBlockEnd: null,
+      projectId: data?.issuance?.warehouseProjectId,
+      vintage: data?.vintageYear,
+      projectLink: data?.projectLink ?? '',
+      unitOwner: data?.unitOwner ?? '',
+      accountHolderWalletAddress: data?.accountHolderWalletAddress ?? '',
+      existingMarketplaceIdentifiers: data?.marketplaceIdentifier ?? '',
+      unitBlockStart: data?.unitBlockStart ?? '',
+      unitBlockEnd: data?.unitBlockEnd ?? '',
       quantity: null,
     },
-    validationSchema: tokenSchema,
   });
   const intl = useIntl();
   console.log(data);
@@ -315,39 +313,6 @@ const CreateTokenModal = ({ data, onClose }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     name="unitBlockEnd"
-                  />
-                </InputContainer>
-              </StyledFieldContainer>
-              <StyledFieldContainer>
-                <StyledLabelContainer>
-                  <Body>
-                    <LabelContainer>
-                      *<FormattedMessage id="unit-block-start" />
-                    </LabelContainer>
-                    {/* <ToolTipContainer
-                  tooltip={intl.formatMessage({
-                    id: 'issuances-verification-approach-description',
-                  })}>
-                  <DescriptionIcon height="14" width="14" />
-                </ToolTipContainer> */}
-                  </Body>
-                </StyledLabelContainer>
-                <InputContainer>
-                  <StandardInput
-                    variant={
-                      errors?.unitBlockStart &&
-                      touched?.unitBlockStart &&
-                      InputVariantEnum.error
-                    }
-                    size={InputSizeEnum.large}
-                    placeholderText={intl.formatMessage({
-                      id: 'unit-block-start',
-                    })}
-                    state={InputStateEnum.default}
-                    value={values.unitBlockStart}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    name="unitBlockStart"
                   />
                 </InputContainer>
               </StyledFieldContainer>
