@@ -1,5 +1,16 @@
 {
   "climate-portal": "Climate Portal",
+  "quantity-of-credits": "Quantity Of Credits",
+  "project-id": "Project ID",
+  "project-name": "Project Name",
+  "vintage": "Vintage",
+  "project-link": "Project Link",
+  "unit-owner": "Unit Owner",
+  "unit-block-start": "Unit Block Start",
+  "unit-block-end": "Unit Block End",
+  "quantity": "Quantity",
+  "account-holder-wallet-address": "Account Holder Wallet Address",
+  "existing-marketplace-identifier": "Existing Marketplace Identifiers",
   "connect-to-cw": "Connect To Climate Warehouse",
   "connect": "Connect",
   "server-address": "Server address",
@@ -29,5 +40,9 @@
   "tokens-not-loaded": "Tokens could not be loaded.",
   "projects-not-loaded": "Projects could not be loaded.",
   "no-untokenized-units": "There are no untokenized units.",
-  "actions": "Actions"
+  "actions": "Actions",
+  "unit-was-tokenized": "Unit tokenization process started. Please get back in 5 minutes.",
+  "unit-not-tokenized": "Unit could not be tokenized.",
+  "projectLink": "Project link",
+  "cancel": "Cancel"
 }

@@ -87,7 +87,8 @@ const Pagination = withTheme(
           isBackButton={true}
           onClick={() =>
             !backButtonIsDisabled && changeCurrentPageTo(currentPageNumber - 1)
-          }>
+          }
+        >
           <ArrowDownIcon height={12} width={12} />
         </ControlsContainer>
         {displayedPages &&
@@ -97,7 +98,8 @@ const Pagination = withTheme(
               isActive={currentPageNumber === element}
               onClick={() =>
                 currentPageNumber !== element && changeCurrentPageTo(element)
-              }>
+              }
+            >
               {element}
             </PagesContainer>
           ))}
@@ -107,7 +109,8 @@ const Pagination = withTheme(
             <>
               <ThreeDotsIcon width={10} height={10} />
               <PagesContainer
-                onClick={() => changeCurrentPageTo(numberOfPages)}>
+                onClick={() => changeCurrentPageTo(numberOfPages)}
+              >
                 {numberOfPages}
               </PagesContainer>
             </>
@@ -117,7 +120,8 @@ const Pagination = withTheme(
           isNextButton
           onClick={() =>
             !nextButtonIsDisabled && changeCurrentPageTo(currentPageNumber + 1)
-          }>
+          }
+        >
           <ArrowDownIcon height={12} width={12} />
         </ControlsContainer>
       </PaginationContainer>

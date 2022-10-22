@@ -154,7 +154,8 @@ const DataTable = withTheme(
                           `${convertPascalCaseToSentenceCase(key)}: ${record[
                             key
                           ].toString()}`
-                        }>
+                        }
+                      >
                         {record[key] === 'null' ||
                         record[key] === '' ||
                         record[key] === null ||

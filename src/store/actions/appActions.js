@@ -309,6 +309,9 @@ export const addProjectDetailsToUntokenizedUnits = ({
               projectName:
                 projectsHashmap[unitItem.issuance?.warehouseProjectId]
                   .projectName,
+              projectLink:
+                projectsHashmap[unitItem.issuance?.warehouseProjectId]
+                  .projectLink,
             };
           }
         }
@@ -405,6 +408,37 @@ export const getTokens = ({
         }),
       );
     }
+  };
+};
+
+export const tokenizeUnit = data => {
+  return async dispatch => {
+    let url = `${constants.API_HOST}/tokenize`;
+
+    const payload = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const failedMessageId = 'unit-not-tokenized';
+    const successMessageId = 'unit-was-tokenized';
+
+    const onSuccessHandler = results => {
+      console.log('results', results);
+    };
+
+    dispatch(
+      fetchWrapper({
+        url,
+        payload,
+        successMessageId,
+        failedMessageId,
+        onSuccessHandler,
+      }),
+    );
   };
 };
 
