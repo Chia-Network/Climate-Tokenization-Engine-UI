@@ -412,22 +412,31 @@ export const getTokens = ({
 };
 
 export const tokenizeUnit = data => {
-  console.log('tokenizeUnit', data);
-
   return async dispatch => {
     let url = `${constants.API_HOST}/tokenize`;
+
+    const payload = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
     const failedMessageId = 'unit-not-tokenized';
     const successMessageId = 'unit-was-tokenized';
-    const payload = {
-      body: JSON.stringify(data),
+
+    const onSuccessHandler = results => {
+      console.log('results', results);
     };
 
     dispatch(
       fetchWrapper({
         url,
         payload,
-        failedMessageId,
         successMessageId,
+        failedMessageId,
+        onSuccessHandler,
       }),
     );
   };
@@ -449,11 +458,6 @@ const fetchWrapper = ({
       onSuccessHandler(responseStub);
     } else {
       try {
-        console.log('fetch initiated to url', url);
-        console.log('payload', payload);
-        console.log('successMessageId', successMessageId);
-        console.log('failedMessageId', failedMessageId);
-
         dispatch(activateProgressIndicator);
         const response = await fetch(url, payload);
 
