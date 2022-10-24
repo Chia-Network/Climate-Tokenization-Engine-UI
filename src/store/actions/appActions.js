@@ -426,17 +426,12 @@ export const tokenizeUnit = data => {
     const failedMessageId = 'unit-not-tokenized';
     const successMessageId = 'unit-was-tokenized';
 
-    const onSuccessHandler = results => {
-      console.log('results', results);
-    };
-
     dispatch(
       fetchWrapper({
         url,
         payload,
         successMessageId,
         failedMessageId,
-        onSuccessHandler,
       }),
     );
   };
@@ -460,6 +455,8 @@ const fetchWrapper = ({
       try {
         dispatch(activateProgressIndicator);
         const response = await fetch(url, payload);
+
+        console.log('response', response);
 
         if (response.ok) {
           dispatch(setConnectionCheck(true));
