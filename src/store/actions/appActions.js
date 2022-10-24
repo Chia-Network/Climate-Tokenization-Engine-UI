@@ -161,46 +161,22 @@ export const signOut = () => {
 
 export const importHomeOrg = orgUid => {
   return async dispatch => {
-    try {
-      dispatch(activateProgressIndicator);
+    const url = `${constants.API_HOST}/connect`;
 
-      const url = `${constants.API_HOST}/organizations`;
+    const payload = {
+      method: 'POST',
+      body: JSON.stringify({ orgUid }),
+      headers: { 'Content-Type': 'application/json' },
+    };
 
-      const payload = {
-        method: 'PUT',
-        body: JSON.stringify({ orgUid }),
-      };
-
-      const response = await fetchWrapper(url, payload);
-
-      if (response.ok) {
-        dispatch(setConnectionCheck(true));
-        dispatch(
-          setNotificationMessage(
-            NotificationMessageTypeEnum.success,
-            'organization-created',
-          ),
-        );
-      } else {
-        const errorResponse = await response.json();
-        dispatch(
-          setNotificationMessage(
-            NotificationMessageTypeEnum.error,
-            formatApiErrorResponse(errorResponse, 'organization-not-created'),
-          ),
-        );
-      }
-    } catch {
-      dispatch(setConnectionCheck(false));
-      dispatch(
-        setNotificationMessage(
-          NotificationMessageTypeEnum.error,
-          'organization-not-created',
-        ),
-      );
-    } finally {
-      dispatch(deactivateProgressIndicator);
-    }
+    dispatch(
+      fetchWrapper({
+        url,
+        payload,
+        successMessageId: 'organization-created',
+        failedMessageId: 'organization-not-created',
+      }),
+    );
   };
 };
 
