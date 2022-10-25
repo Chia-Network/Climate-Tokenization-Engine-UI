@@ -432,7 +432,10 @@ const fetchWrapper = ({
         dispatch(activateProgressIndicator);
         const response = await fetch(url, payload);
 
-        console.log('response', response);
+        const headers = response?.headers;
+        if (headers.has('x-org-uid')) {
+          console.log(headers.get('x-org-uid'));
+        }
 
         if (response.ok) {
           dispatch(setConnectionCheck(true));
