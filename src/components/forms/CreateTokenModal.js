@@ -1,5 +1,4 @@
-import { useFormik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
@@ -10,6 +9,7 @@ import {
   InputContainer,
   InputSizeEnum,
   InputStateEnum,
+  InputVariantEnum,
   LabelContainer,
   ModalFormContainerStyle,
   StandardInput,
@@ -23,8 +23,7 @@ import { tokenizeUnit } from '../../store/actions/appActions';
 const CreateTokenModal = ({ data, onClose }) => {
   const dispatch = useDispatch();
   const intl = useIntl();
-
-  const { values } = useFormik({
+  const [formValues, setFormValues] = useState({
     initialValues: {
       quantityOfCredits: data?.unitCount ?? 0,
       projectName: data?.projectName ?? '',
@@ -32,25 +31,39 @@ const CreateTokenModal = ({ data, onClose }) => {
       vintage: data?.vintageYear,
       projectLink: data?.projectLink ?? '',
       unitOwner: data?.unitOwner ?? '',
-      accountHolderWalletAddress: data?.accountHolderWalletAddress ?? '',
+      accountHolderWalletAddress: '',
       existingMarketplaceIdentifiers: data?.marketplaceIdentifier ?? '',
       unitBlockStart: data?.unitBlockStart ?? '',
       unitBlockEnd: data?.unitBlockEnd ?? '',
     },
   });
+  const [isValidationOn, setIsValidationOn] = useState(false);
+
+  const isWalletAddressValid =
+    formValues?.accountHolderWalletAddress?.length > 0;
 
   const onSubmitForm = () => {
-    const submitData = {
-      org_uid: data?.orgUid,
-      warehouse_project_id: data?.issuance?.warehouseProjectId,
-      vintage_year: data?.vintageYear,
-      sequence_num: 0,
-      warehouseUnitId: data?.warehouseUnitId,
-    };
+    setIsValidationOn(true);
 
-    dispatch(tokenizeUnit(submitData));
-    onClose();
+    if (isWalletAddressValid) {
+      const submitData = {
+        org_uid: data?.orgUid,
+        warehouse_project_id: data?.issuance?.warehouseProjectId,
+        vintage_year: data?.vintageYear,
+        sequence_num: 0,
+        warehouseUnitId: data?.warehouseUnitId,
+        to_address: formValues?.accountHolderWalletAddress,
+      };
+      dispatch(tokenizeUnit(submitData));
+      onClose();
+    }
   };
+
+  const updateWalletAddress = newAddress =>
+    setFormValues(prevValues => ({
+      ...prevValues,
+      accountHolderWalletAddress: newAddress,
+    }));
 
   return (
     <Modal
@@ -80,7 +93,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'quantity-of-credits',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.quantityOfCredits}
+                    value={formValues.quantityOfCredits}
                     name="quantityOfCredits"
                   />
                 </InputContainer>
@@ -101,7 +114,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                     placeholderText={intl.formatMessage({
                       id: 'project-name',
                     })}
-                    value={values.projectName}
+                    value={formValues.projectName}
                     name="projectName"
                   />
                 </InputContainer>
@@ -122,7 +135,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'project-id',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.projectId}
+                    value={formValues.projectId}
                     name="projectId"
                   />
                 </InputContainer>
@@ -143,7 +156,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'vintage',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.vintage}
+                    value={formValues.vintage}
                     name="vintage"
                   />
                 </InputContainer>
@@ -164,7 +177,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'projectLink',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.projectLink}
+                    value={formValues.projectLink}
                     name="projectLink"
                   />
                 </InputContainer>
@@ -184,7 +197,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'unit-owner',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.unitOwner}
+                    value={formValues.unitOwner}
                     name="unitOwner"
                   />
                 </InputContainer>
@@ -204,7 +217,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'unit-block-start',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.unitBlockStart}
+                    value={formValues.unitBlockStart}
                     name="unitBlockStart"
                   />
                 </InputContainer>
@@ -224,7 +237,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'unit-block-end',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.unitBlockEnd}
+                    value={formValues.unitBlockEnd}
                     name="unitBlockEnd"
                   />
                 </InputContainer>
@@ -240,14 +253,25 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <InputContainer>
                   <StandardInput
                     size={InputSizeEnum.large}
+                    variant={
+                      isValidationOn &&
+                      !isWalletAddressValid &&
+                      InputVariantEnum.error
+                    }
                     placeholderText={intl.formatMessage({
                       id: 'account-holder-wallet-address',
                     })}
-                    state={InputStateEnum.disabled}
-                    value={values.accountHolderWalletAddress}
+                    state={InputStateEnum.default}
+                    value={formValues.accountHolderWalletAddress}
                     name="accountHolderWalletAddress"
+                    onChange={updateWalletAddress}
                   />
                 </InputContainer>
+                {isValidationOn && !isWalletAddressValid && (
+                  <Body size="Small" color="red">
+                    Add valid wallet address
+                  </Body>
+                )}
               </StyledFieldContainer>
               <StyledFieldContainer>
                 <StyledLabelContainer>
@@ -264,7 +288,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                       id: 'existing-marketplace-identifier',
                     })}
                     state={InputStateEnum.disabled}
-                    value={values.accountHolderWalletAddress}
+                    value={formValues.existingMarketplaceIdentifiers}
                     name="existingMarketplaceIdentifier"
                   />
                 </InputContainer>
