@@ -70,3 +70,8 @@ export const splitUnitsValidationSchema = yup.object().shape({
     }),
   ),
 });
+
+export const validateDetokenizeUnitSchema = yup.object().shape({
+  fileUpload: yup.string().required('Required'),
+  password: yup.string().required('Required'),
+});

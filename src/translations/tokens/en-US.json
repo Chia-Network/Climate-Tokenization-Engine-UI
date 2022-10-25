@@ -1,8 +1,13 @@
 {
   "climate-portal": "Climate Portal",
   "quantity-of-credits": "Quantity Of Credits",
+  "detokenized-units": "Detokenized Units",
+  "detokenize": "Detokenize",
   "project-id": "Project ID",
   "project-name": "Project Name",
+  "upload": "Upload",
+  "file-upload": "File Upload",
+  "password": "Password",
   "vintage": "Vintage",
   "project-link": "Project Link",
   "unit-owner": "Unit Owner",
