@@ -45,5 +45,7 @@
   "unit-not-tokenized": "Unit could not be tokenized.",
   "projectLink": "Project link",
   "cancel": "Cancel",
-  "token-creation-pending": "Token Creation Pending"
+  "token-creation-pending": "Token Creation Pending",
+  "update": "Update",
+  "import": "Import"
 }

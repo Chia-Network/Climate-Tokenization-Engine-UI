@@ -440,7 +440,10 @@ const fetchWrapper = ({
 
         const headers = response?.headers;
         if (headers.has('x-org-uid')) {
-          console.log(headers.get('x-org-uid'));
+          const homeOrg = headers.get('x-org-uid');
+          dispatch(setHomeOrg(homeOrg));
+        } else {
+          dispatch(setHomeOrg(null));
         }
 
         if (response.ok) {

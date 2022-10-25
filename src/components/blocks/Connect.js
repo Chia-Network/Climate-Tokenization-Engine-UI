@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 import { Modal } from '.';
@@ -40,7 +40,8 @@ const Connect = withTheme(() => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
-  const [orgUid, setOrgUid] = useState('');
+  const { homeOrgUid } = useSelector(state => state);
+  const [orgUid, setOrgUid] = useState(homeOrgUid || '');
   const [tabValue, setTabValue] = useState(0);
 
   const handleTabChange = useCallback(
@@ -55,15 +56,25 @@ const Connect = withTheme(() => {
     setIsConnectModalOpen(false);
   };
 
+  useEffect(() => {
+    setOrgUid(homeOrgUid);
+  }, [homeOrgUid]);
+
   return (
     <>
       <ConnectContainer onClick={() => setIsConnectModalOpen(true)}>
-        <FormattedMessage id="connect-to-cw" />
+        {!homeOrgUid && <FormattedMessage id="connect-to-cw" />}
+        {homeOrgUid && <FormattedMessage id="connected" />}
       </ConnectContainer>
 
       {isConnectModalOpen && (
         <Modal
           modalType="basic"
+          label={
+            homeOrgUid
+              ? intl.formatMessage({ id: 'update' })
+              : intl.formatMessage({ id: 'import' })
+          }
           onOk={connectToHomeOrg}
           title={
             <Tabs value={tabValue} onChange={handleTabChange}>
