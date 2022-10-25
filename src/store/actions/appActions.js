@@ -23,11 +23,17 @@ export const actions = keyMirror(
   'SET_PAGINATION_NR_OF_PAGES',
   'SET_TOKENS',
   'SET_PROJECTS',
+  'SET_HOME_ORG',
 );
 
 export const refreshApp = render => ({
   type: actions.REFRESH_APP,
   payload: render,
+});
+
+export const setHomeOrg = homeOrg => ({
+  type: actions.SET_HOME_ORG,
+  payload: homeOrg,
 });
 
 export const setPaginationNrOfPages = number => ({
