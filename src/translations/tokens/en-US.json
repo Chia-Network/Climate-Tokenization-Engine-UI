@@ -49,5 +49,6 @@
   "unit-was-tokenized": "Unit tokenization process started. Please get back in 5 minutes.",
   "unit-not-tokenized": "Unit could not be tokenized.",
   "projectLink": "Project link",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "token-creation-pending": "Token Creation Pending"
 }

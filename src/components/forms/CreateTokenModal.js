@@ -22,6 +22,8 @@ import { tokenizeUnit } from '../../store/actions/appActions';
 
 const CreateTokenModal = ({ data, onClose }) => {
   const dispatch = useDispatch();
+  const intl = useIntl();
+
   const { values } = useFormik({
     initialValues: {
       quantityOfCredits: data?.unitCount ?? 0,
@@ -49,8 +51,6 @@ const CreateTokenModal = ({ data, onClose }) => {
     dispatch(tokenizeUnit(submitData));
     onClose();
   };
-
-  const intl = useIntl();
 
   return (
     <Modal

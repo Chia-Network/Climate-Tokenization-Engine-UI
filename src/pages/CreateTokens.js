@@ -20,6 +20,8 @@ import {
   SearchInput,
   Body,
   DetokenizeModal,
+  modalTypeEnum,
+  Modal,
 } from '../components';
 import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
@@ -99,9 +101,12 @@ const CreateTokens = () => {
   const [tabValue, setTabValue] = useState(0);
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const { untokenizedUnits, paginationNrOfPages, tokens } = useSelector(
-    store => store,
-  );
+  const { untokenizedUnits, paginationNrOfPages, tokens, notification } =
+    useSelector(store => store);
+  const [
+    isTokenCreationPendingModalVisible,
+    setIsTokenCreationPendingModalVisible,
+  ] = useState(false);
 
   useEffect(() => {
     if (tabValue === 0) {
@@ -172,6 +177,14 @@ const CreateTokens = () => {
       onSearch.cancel();
     };
   }, []);
+
+  const isTokenCreationPending =
+    notification && notification.id === 'unit-was-tokenized';
+  useEffect(() => {
+    if (isTokenCreationPending) {
+      setIsTokenCreationPendingModalVisible(true);
+    }
+  }, [notification]);
 
   return (
     <>
@@ -264,6 +277,19 @@ const CreateTokens = () => {
           />
         )}
       </StyledSectionContainer>
+      {isTokenCreationPendingModalVisible && (
+        <Modal
+          title={intl.formatMessage({
+            id: 'token-creation-pending',
+          })}
+          body={intl.formatMessage({
+            id: 'unit-was-tokenized',
+          })}
+          modalType={modalTypeEnum.confirmation}
+          onClose={() => setIsTokenCreationPendingModalVisible(false)}
+          hideButtons
+        />
+      )}
     </>
   );
 };
