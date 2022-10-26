@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
-import { LocaleSwitcher, ClimateWarehouseLogo } from '..';
+import {
+  LocaleSwitcher,
+  ClimateWarehouseLogo,
+  Connect,
+} from '../../components';
 
 const AppHeaderContainer = styled('div')`
   width: 100%;
@@ -20,13 +25,30 @@ const LogoContainer = styled('div')`
   height: 100%;
 `;
 
+const ButtonsContainer = styled('div')`
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  align-items: center;
+
+  .MuiSelect-root,
+  .MuiSvgIcon-root {
+    color: ${props => props.theme.colors[props.selectedTheme].onSurface};
+  }
+`;
+
 const AppHeader = () => {
+  const appStore = useSelector(state => state);
+
   return (
     <AppHeaderContainer>
       <LogoContainer>
         <ClimateWarehouseLogo width="100%" height="100%" />
       </LogoContainer>
-      <LocaleSwitcher />
+      <ButtonsContainer selectedTheme={appStore.theme}>
+        <Connect />
+        <LocaleSwitcher />
+      </ButtonsContainer>
     </AppHeaderContainer>
   );
 };

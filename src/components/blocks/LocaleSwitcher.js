@@ -1,21 +1,9 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
+import { withTheme } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select, MenuItem } from '@mui/material';
 import { LANGUAGE_CODES } from '../../translations';
 import { setLocale } from '../../store/actions/appActions';
-import Connect from './Connect';
-
-const Container = styled('div')`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  .MuiSelect-root,
-  .MuiSvgIcon-root {
-    color: ${props => props.theme.colors[props.selectedTheme].onSurface};
-  }
-`;
 
 const LocaleSwitcher = withTheme(() => {
   const dispatch = useDispatch();
@@ -26,8 +14,6 @@ const LocaleSwitcher = withTheme(() => {
   };
 
   return (
-    <Container selectedTheme={appStore.theme}>
-      <Connect />
       <Select value={appStore.locale} onChange={handleLocaleChange}>
         {Object.keys(LANGUAGE_CODES).map(key => (
           <MenuItem key={LANGUAGE_CODES[key]} value={LANGUAGE_CODES[key]}>
@@ -35,7 +21,6 @@ const LocaleSwitcher = withTheme(() => {
           </MenuItem>
         ))}
       </Select>
-    </Container>
   );
 });
 

@@ -11,12 +11,12 @@
   "quantity": "Quantity",
   "account-holder-wallet-address": "Account Holder Wallet Address",
   "existing-marketplace-identifier": "Existing Marketplace Identifiers",
-  "connect-to-cw": "Connect To Climate Warehouse",
+  "connect-to-cw": "Connect to Climate Warehouse",
   "connect": "Connect",
   "server-address": "Server address",
   "api-key": "Api Key",
   "storybook": "Storybook",
-  "hello-world": "Welcome To Climate Portal",
+  "hello-world": "Welcome to Climate Portal",
   "ok": "Ok",
   "search": "Search",
   "select": "Select",
@@ -45,5 +45,9 @@
   "unit-not-tokenized": "Unit could not be tokenized.",
   "projectLink": "Project link",
   "cancel": "Cancel",
-  "token-creation-pending": "Token Creation Pending"
+  "token-creation-pending": "Token Creation Pending",
+  "update": "Update",
+  "import": "Import",
+  "import-home-org": "Import Home",
+  "update-home-org": "Home Update"
 }
