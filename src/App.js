@@ -3,28 +3,22 @@ import { ThemeProvider } from 'styled-components';
 import { IntlProvider } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setLocale, setThemeFromLocalStorage, getAlbums } from './features/application/appSlice';
-import { loadLocaleData } from './translations';
+import { setLocale, setThemeFromLocalStorage } from './store/actions/appActions';
 
+import { loadLocaleData } from './translations';
+import { AppNavigator } from './navigation';
 import theme from './theme';
 
 import { IndeterminateProgressOverlay } from './components';
 
 const App = () => {
   const dispatch = useDispatch();
-  const appStore = useSelector(state => state.application);
+  const appStore = useSelector(state => state);
   const [translationTokens, setTranslationTokens] = useState();
 
-  useEffect(() => {
-    dispatch(setThemeFromLocalStorage)
-  }, [setThemeFromLocalStorage]
-  );
-
   useEffect(
-    () => {
-      dispatch(getAlbums())
-    },
-    [getAlbums]
+    () => dispatch(setThemeFromLocalStorage),
+    [setThemeFromLocalStorage],
   );
 
   useEffect(() => {
@@ -49,10 +43,7 @@ const App = () => {
         locale="en"
         defaultLocale="en"
         messages={translationTokens.default}>
-        <>
-          <h1>Albums</h1>
-          {appStore.albums.map(({ id, title }) => <div key={id}>{`${id} ${title}`}</div>)}
-        </>
+        <AppNavigator />
       </IntlProvider>
     </ThemeProvider>
   );

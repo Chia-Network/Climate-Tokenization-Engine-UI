@@ -1,0 +1,31 @@
+{
+  "env": {
+    "browser": true,
+    "amd": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:mocha/recommended"
+  ],
+  "rules": {
+    "react/prop-types": "off",
+    "mocha/no-mocha-arrows": 0
+  },
+  "plugins": [
+    "react",
+    "mocha"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

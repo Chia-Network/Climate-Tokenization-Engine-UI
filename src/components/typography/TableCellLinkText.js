@@ -13,7 +13,7 @@ const Text = styled('h1')`
 `;
 
 const TableCellLinkText = withTheme(({ children, color }) => {
-  const appStore = useSelector(state => state.app);
+  const appStore = useSelector(state => state);
   return (
     <Text color={color} selectedTheme={appStore.theme}>
       {children}

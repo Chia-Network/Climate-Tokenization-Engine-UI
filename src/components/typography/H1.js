@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled, { withTheme } from 'styled-components';
 
 const Text = styled('h1')`
-  color: ${props => props.color || '#000000'};
+  color: ${props => props.color || props.theme.colors.default.onSurface};
   font-size: 3.375rem;
   font-family: ${props => props.theme.typography.primary.extraBold};
   font-style: normal;
@@ -13,7 +13,7 @@ const Text = styled('h1')`
 `;
 
 const H1 = withTheme(({ children, color }) => {
-  const appStore = useSelector(state => state.app);
+  const appStore = useSelector(state => state);
   return (
     <Text color={color} selectedTheme={appStore.theme}>
       {children}

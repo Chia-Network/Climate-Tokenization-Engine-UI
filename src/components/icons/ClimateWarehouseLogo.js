@@ -39,8 +39,11 @@ const ClimateWarehouseLogo = withTheme(({ width = 198, height = 45 }) => {
           fill="black"
         />
       </svg>
+      
     </>
   );
 });
 
 export { ClimateWarehouseLogo };
+
+
