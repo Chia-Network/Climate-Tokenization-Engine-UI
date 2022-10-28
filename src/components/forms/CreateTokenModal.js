@@ -24,18 +24,16 @@ const CreateTokenModal = ({ data, onClose }) => {
   const dispatch = useDispatch();
   const intl = useIntl();
   const [formValues, setFormValues] = useState({
-    initialValues: {
-      quantityOfCredits: data?.unitCount ?? 0,
-      projectName: data?.projectName ?? '',
-      projectId: data?.issuance?.warehouseProjectId ?? '',
-      vintage: data?.vintageYear,
-      projectLink: data?.projectLink ?? '',
-      unitOwner: data?.unitOwner ?? '',
-      accountHolderWalletAddress: '',
-      existingMarketplaceIdentifiers: data?.marketplaceIdentifier ?? '',
-      unitBlockStart: data?.unitBlockStart ?? '',
-      unitBlockEnd: data?.unitBlockEnd ?? '',
-    },
+    quantityOfCredits: data?.unitCount ?? 0,
+    projectName: data?.projectName ?? '',
+    projectId: data?.issuance?.warehouseProjectId ?? '',
+    vintage: data?.vintageYear,
+    projectLink: data?.projectLink ?? '',
+    unitOwner: data?.unitOwner ?? '',
+    accountHolderWalletAddress: '',
+    existingMarketplaceIdentifiers: data?.marketplaceIdentifier ?? '',
+    unitBlockStart: data?.unitBlockStart ?? '',
+    unitBlockEnd: data?.unitBlockEnd ?? '',
   });
   const [isValidationOn, setIsValidationOn] = useState(false);
 
