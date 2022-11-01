@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIntl, FormattedMessage } from 'react-intl';
+
 import {
   Body,
   BodyContainer,
@@ -15,43 +18,45 @@ import {
   StandardInput,
   StyledFieldContainer,
   StyledLabelContainer,
+  UploadFileInput,
 } from '..';
-import { useIntl, FormattedMessage } from 'react-intl';
-import { validateDetokenizeUnitSchema } from '../../store/validations';
-import styled from 'styled-components';
-import { useFormik } from 'formik';
-
-const FileUploadContainer = styled('div')`
-  display: flex;
-  height: 100%;
-  width: 100%;
-`;
-
-const FileSelectButton = styled('input')`
-  border-radius: 5%;
-  background: none;
-  cursor: pointer;
-`;
+import { detokenizeUnit } from '../../store/actions/appActions';
 
 const DetokenizeModal = ({ onClose }) => {
+  const { notification } = useSelector(app => app);
+  const dispatch = useDispatch();
   const intl = useIntl();
-  const {
-    values,
-    handleBlur,
-    setFieldValue,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-  } = useFormik({
-    initialValues: {
-      password: '',
-      fileUpload: '',
-    },
-
-    onSubmit: values => console.log(values),
-    validationSchema: validateDetokenizeUnitSchema,
+  const [isValidationOn, setIsValidationOn] = useState(false);
+  const [formData, setFormData] = useState({
+    password: '',
+    file: '',
   });
+
+  const onSubmit = () => {
+    setIsValidationOn(true);
+    if (isPasswordValid && isFileValid) dispatch(detokenizeUnit(formData));
+  };
+
+  const isPasswordValid = useMemo(
+    () => formData.password !== '' && formData.password.indexOf(' ') === -1,
+    [formData],
+  );
+
+  const isFileValid = useMemo(
+    () =>
+      formData.file !== '' &&
+      formData.file.size > 0 &&
+      formData.file.name.endsWith('.zip'),
+    [formData],
+  );
+
+  const wasDetokFileParsedSuccessfully =
+    notification && notification.id === 'detok-file-parsed';
+  useEffect(() => {
+    if (wasDetokFileParsedSuccessfully) {
+      onClose();
+    }
+  }, [notification]);
 
   return (
     <Modal
@@ -60,7 +65,7 @@ const DetokenizeModal = ({ onClose }) => {
         id: 'detokenize',
       })}
       onClose={onClose}
-      onOk={handleSubmit}
+      onOk={onSubmit}
       body={
         <ModalFormContainerStyle>
           <FormContainerStyle>
@@ -75,16 +80,17 @@ const DetokenizeModal = ({ onClose }) => {
                     </Body>
                   </StyledLabelContainer>
 
-                  <FileUploadContainer>
-                    <FileSelectButton
-                      type="file"
-                      placeholder={intl.formatMessage({ id: 'select' })}
-                      onChange={handleChange}
-                      value={values.fileUpload}
-                      name="fileUpload"
-                    />
-                  </FileUploadContainer>
-                  <Body color="red">{errors?.fileUpload}</Body>
+                  <UploadFileInput
+                    file={formData.file}
+                    onChange={file =>
+                      setFormData(prevData => ({ ...prevData, file }))
+                    }
+                  />
+                  {isValidationOn && !isFileValid && (
+                    <Body color="red">
+                      {intl.formatMessage({ id: 'add-valid-detok-file' })}
+                    </Body>
+                  )}
                 </StyledFieldContainer>
               </SpanTwoColumnsContainer>
               <StyledFieldContainer>
@@ -98,23 +104,27 @@ const DetokenizeModal = ({ onClose }) => {
                 <InputContainer>
                   <StandardInput
                     variant={
-                      errors.password && touched.password
-                        ? InputVariantEnum.error
-                        : undefined
+                      isValidationOn &&
+                      !isPasswordValid &&
+                      InputVariantEnum.error
                     }
                     type="password"
                     size={InputSizeEnum.large}
                     placeholderText={intl.formatMessage({
                       id: 'password',
                     })}
-                    value={values?.password}
+                    value={formData.password}
                     state={InputStateEnum.basic}
-                    onChange={e => setFieldValue('password', e)}
-                    onBlur={handleBlur}
-                    name="password"
+                    onChange={password =>
+                      setFormData(prevData => ({ ...prevData, password }))
+                    }
                   />
                 </InputContainer>
-                <Body color="red">{touched.password && errors.password}</Body>
+                {isValidationOn && !isPasswordValid && (
+                  <Body color="red">
+                    {intl.formatMessage({ id: 'add-valid-detok-password' })}
+                  </Body>
+                )}
               </StyledFieldContainer>
             </BodyContainer>
           </FormContainerStyle>
