@@ -18,8 +18,6 @@ import {
   H3,
   DataTable,
   SearchInput,
-  Body,
-  DetokenizeModal,
   modalTypeEnum,
   Modal,
 } from '../components';
@@ -37,22 +35,6 @@ const StyledHeaderContainer = styled('div')`
   display: flex;
   align-items: center;
   padding: 30px 24px 14px 16px;
-`;
-
-const DetokenizeContainer = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const DetokenizeButton = styled('button')`
-  height: 50px;
-  width: 100px;
-  border-radius: 5%;
-  background: none;
-  border: 1px solid black;
 `;
 
 // const StyledFiltersContainer = styled('div')`
@@ -95,7 +77,6 @@ const CreateTokens = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const [unitToBeTokenized, setUnitToBeTokenized] = useState(null);
-  const [isDetokenizeModalOpen, setIsDetokenizeModalOpen] = useState(false);
   const pageContainerRef = useRef(null);
 
   const [tabValue, setTabValue] = useState(0);
@@ -212,7 +193,6 @@ const CreateTokens = () => {
           <Tabs value={tabValue} onChange={handleTabChange}>
             <Tab label={intl.formatMessage({ id: 'untokenized-units' })} />
             <Tab label={intl.formatMessage({ id: 'existing-tokens' })} />
-            <Tab label={intl.formatMessage({ id: 'detokenized-units' })} />
           </Tabs>
           <StyledCSVOperationsContainer>
             <DownloadIcon width={20} height={20} />
@@ -254,22 +234,7 @@ const CreateTokens = () => {
               </NoDataMessageContainer>
             )}
           </TabPanel>
-          <TabPanel value={tabValue} index={2}>
-            <DetokenizeContainer>
-              <DetokenizeButton onClick={() => setIsDetokenizeModalOpen(true)}>
-                <Body>
-                  <FormattedMessage id="upload" />
-                </Body>
-              </DetokenizeButton>
-            </DetokenizeContainer>
-          </TabPanel>
         </StyledBodyContainer>
-        {isDetokenizeModalOpen && (
-          <DetokenizeModal
-            onClose={() => setIsDetokenizeModalOpen(false)}
-            data={unitToBeTokenized}
-          />
-        )}
         {unitToBeTokenized && (
           <CreateTokenModal
             onClose={() => setUnitToBeTokenized(null)}
