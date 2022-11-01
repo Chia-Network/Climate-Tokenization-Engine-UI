@@ -24,6 +24,7 @@ export const actions = keyMirror(
   'SET_TOKENS',
   'SET_PROJECTS',
   'SET_HOME_ORG',
+  'SET_UNIT_TO_BE_DETOKENIZED',
 );
 
 export const refreshApp = render => ({
