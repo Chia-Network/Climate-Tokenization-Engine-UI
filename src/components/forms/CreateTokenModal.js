@@ -51,6 +51,7 @@ const CreateTokenModal = ({ data, onClose }) => {
         sequence_num: 0,
         warehouseUnitId: data?.warehouseUnitId,
         to_address: formValues?.accountHolderWalletAddress,
+        amount: data?.unitCount,
       };
       dispatch(tokenizeUnit(submitData));
       onClose();
