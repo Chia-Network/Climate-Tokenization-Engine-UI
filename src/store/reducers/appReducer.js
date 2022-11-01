@@ -17,10 +17,14 @@ const initialState = {
   serverAddress: null,
   paginationNrOfPages: null,
   projects: null,
+  homeOrgUid: null,
 };
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
+    case appActions.SET_HOME_ORG:
+      return u({ homeOrgUid: action.payload }, state);
+
     case appActions.SET_PROJECTS:
       return u({ projects: action.payload }, state);
 

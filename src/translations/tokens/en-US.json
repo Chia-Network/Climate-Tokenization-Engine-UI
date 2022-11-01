@@ -16,12 +16,12 @@
   "quantity": "Quantity",
   "account-holder-wallet-address": "Account Holder Wallet Address",
   "existing-marketplace-identifier": "Existing Marketplace Identifiers",
-  "connect-to-cw": "Connect To Climate Warehouse",
+  "connect-to-cw": "Connect to Climate Warehouse",
   "connect": "Connect",
   "server-address": "Server address",
   "api-key": "Api Key",
   "storybook": "Storybook",
-  "hello-world": "Welcome To Climate Portal",
+  "hello-world": "Welcome to Climate Portal",
   "ok": "Ok",
   "search": "Search",
   "select": "Select",
@@ -54,5 +54,9 @@
   "detok-file-parsed": "Detok file was successfully parsed.",
   "detok-file-not-parsed": "Detok could not be parsed.",
   "add-valid-detok-file": "Add valid detok file.",
-  "add-valid-detok-password": "Add valid detok password."
+  "add-valid-detok-password": "Add valid detok password.",
+  "update": "Update",
+  "import": "Import",
+  "import-home-org": "Import Home",
+  "update-home-org": "Home Update"
 }

@@ -70,6 +70,10 @@ const Td = styled('td')`
     `
   text-align: center;
   `}
+
+  button {
+    white-space: nowrap;
+  }
 `;
 
 export const StyledPaginationContainer = styled('div')`

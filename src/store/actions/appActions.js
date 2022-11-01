@@ -23,11 +23,17 @@ export const actions = keyMirror(
   'SET_PAGINATION_NR_OF_PAGES',
   'SET_TOKENS',
   'SET_PROJECTS',
+  'SET_HOME_ORG',
 );
 
 export const refreshApp = render => ({
   type: actions.REFRESH_APP,
   payload: render,
+});
+
+export const setHomeOrg = homeOrg => ({
+  type: actions.SET_HOME_ORG,
+  payload: homeOrg,
 });
 
 export const setPaginationNrOfPages = number => ({
@@ -462,7 +468,13 @@ const fetchWrapper = ({
         dispatch(activateProgressIndicator);
         const response = await fetch(url, payload);
 
-        console.log('response', response);
+        const headers = response?.headers;
+        if (headers.has('x-org-uid')) {
+          const homeOrg = headers.get('x-org-uid');
+          dispatch(setHomeOrg(homeOrg));
+        } else {
+          dispatch(setHomeOrg(null));
+        }
 
         if (response.ok) {
           dispatch(setConnectionCheck(true));

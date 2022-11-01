@@ -122,7 +122,7 @@ const CreateTokens = () => {
 
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
-      'vintage',
+      'vintageYear',
       'projectName',
       'unitOwner',
       'countryJurisdictionOfOwner',
