@@ -419,6 +419,36 @@ export const tokenizeUnit = data => {
   };
 };
 
+export const detokenizeUnit = data => {
+  return async dispatch => {
+    let url = `${constants.API_HOST}/parse-detok-file`;
+    const formData = new FormData();
+    formData.append('file', data.file);
+    formData.append('password', data.password);
+    const payload = {
+      method: 'POST',
+      body: formData,
+    };
+
+    const failedMessageId = 'detok-file-not-parsed';
+    const successMessageId = 'detok-file-parsed';
+
+    const onSuccessHandler = results => {
+      console.log('results', results);
+    };
+
+    dispatch(
+      fetchWrapper({
+        url,
+        payload,
+        successMessageId,
+        failedMessageId,
+        onSuccessHandler,
+      }),
+    );
+  };
+};
+
 // encapsulates error handling, network failure, loader toggling and on success or failed handlers
 const fetchWrapper = ({
   url,
