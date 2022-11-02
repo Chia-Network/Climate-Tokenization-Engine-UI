@@ -476,6 +476,34 @@ export const detokenizeUnit = data => {
   };
 };
 
+export const confirmDetokanization = data => {
+  return async dispatch => {
+    let url = `${constants.API_HOST}/confirm-detokanization`;
+
+    const payload = {
+      method: 'POST',
+      body: JSON.stringify(data),
+    };
+
+    const failedMessageId = 'detokanization-not-successful';
+    const successMessageId = 'detokanization-successful';
+
+    const onSuccessHandler = () => {
+      dispatch(setUnitToBeDetokenized(null));
+    };
+
+    dispatch(
+      fetchWrapper({
+        url,
+        payload,
+        successMessageId,
+        failedMessageId,
+        onSuccessHandler,
+      }),
+    );
+  };
+};
+
 // encapsulates error handling, network failure, loader toggling and on success or failed handlers
 const fetchWrapper = ({
   url,

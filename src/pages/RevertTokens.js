@@ -79,7 +79,7 @@ const RevertTokens = () => {
         {isConfirmationModalOpen && (
           <ConfirmDetokanizationModal
             onClose={closeConfirmationModal}
-            unit={unitToBeDetokenized}
+            data={unitToBeDetokenized}
             modalSizeAndPosition={modalSizeAndPosition}
           />
         )}
