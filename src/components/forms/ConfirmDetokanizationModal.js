@@ -1,134 +1,81 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIntl, FormattedMessage } from 'react-intl';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 
-import {
-  Body,
-  BodyContainer,
-  FormContainerStyle,
-  InputContainer,
-  InputSizeEnum,
-  InputStateEnum,
-  InputVariantEnum,
-  LabelContainer,
-  Modal,
-  ModalFormContainerStyle,
-  modalTypeEnum,
-  SpanTwoColumnsContainer,
-  StandardInput,
-  StyledFieldContainer,
-  StyledLabelContainer,
-  UploadFileInput,
-} from '..';
-import { detokenizeUnit } from '../../store/actions/appActions';
+import { Modal, modalTypeEnum, Tab, Tabs, TabPanel, UnitDetails } from '..';
 
-const ConfirmDetokanizationModal = ({ onClose }) => {
+const ConfirmDetokanizationModal = ({
+  onClose,
+  unit,
+  modalSizeAndPosition,
+}) => {
   const { notification } = useSelector(app => app);
-  const dispatch = useDispatch();
   const intl = useIntl();
-  const [isValidationOn, setIsValidationOn] = useState(false);
-  const [formData, setFormData] = useState({
-    password: '',
-    file: '',
+  const [tabValue, setTabValue] = useState(0);
+
+  const handleTabChange = useCallback(
+    (event, newValue) => setTabValue(newValue),
+    [setTabValue],
+  );
+
+  const unitKeys = Object?.keys(unit);
+  const unitDetails = {};
+  const unitTabs = [];
+
+  unitKeys?.forEach(key => {
+    const keyValue = unit[key];
+    if (typeof keyValue !== 'object' || keyValue === null) {
+      unitDetails[key] = keyValue;
+    } else if (keyValue instanceof Array && keyValue.length) {
+      unitTabs.unshift({ tabName: key, tabData: keyValue });
+    } else if (!(keyValue instanceof Array)) {
+      unitTabs.unshift({ tabName: key, tabData: keyValue });
+    }
   });
 
   const onSubmit = () => {
-    setIsValidationOn(true);
-    if (isPasswordValid && isFileValid) dispatch(detokenizeUnit(formData));
+    console.log('trigger action from store');
   };
 
-  const isPasswordValid = useMemo(
-    () => formData.password !== '' && formData.password.indexOf(' ') === -1,
-    [formData],
-  );
-
-  const isFileValid = useMemo(
-    () =>
-      formData.file !== '' &&
-      formData.file.size > 0 &&
-      formData.file.name.endsWith('.zip'),
-    [formData],
-  );
-
-  const wasDetokFileParsedSuccessfully =
-    notification && notification.id === 'detok-file-parsed';
+  const isDetokanizationSuccessful =
+    notification && notification.id === 'detokanization-successful';
   useEffect(() => {
-    if (wasDetokFileParsedSuccessfully) {
+    if (isDetokanizationSuccessful) {
       onClose();
     }
   }, [notification]);
 
   return (
     <Modal
+      modalSizeAndPosition={modalSizeAndPosition}
       modalType={modalTypeEnum.basic}
       title={intl.formatMessage({
-        id: 'detokenize',
+        id: 'confirm-detokanization',
+      })}
+      label={intl.formatMessage({
+        id: 'confirm',
       })}
       onClose={onClose}
       onOk={onSubmit}
       body={
-        <ModalFormContainerStyle>
-          <FormContainerStyle>
-            <BodyContainer>
-              <SpanTwoColumnsContainer>
-                <StyledFieldContainer>
-                  <StyledLabelContainer>
-                    <Body>
-                      <LabelContainer>
-                        <FormattedMessage id="file-upload" />
-                      </LabelContainer>
-                    </Body>
-                  </StyledLabelContainer>
-
-                  <UploadFileInput
-                    file={formData.file}
-                    onChange={file =>
-                      setFormData(prevData => ({ ...prevData, file }))
-                    }
-                  />
-                  {isValidationOn && !isFileValid && (
-                    <Body color="red">
-                      {intl.formatMessage({ id: 'add-valid-detok-file' })}
-                    </Body>
-                  )}
-                </StyledFieldContainer>
-              </SpanTwoColumnsContainer>
-              <StyledFieldContainer>
-                <StyledLabelContainer>
-                  <Body>
-                    <LabelContainer>
-                      <FormattedMessage id="password" />
-                    </LabelContainer>
-                  </Body>
-                </StyledLabelContainer>
-                <InputContainer>
-                  <StandardInput
-                    variant={
-                      isValidationOn &&
-                      !isPasswordValid &&
-                      InputVariantEnum.error
-                    }
-                    type="password"
-                    size={InputSizeEnum.large}
-                    placeholderText={intl.formatMessage({
-                      id: 'password',
-                    })}
-                    value={formData.password}
-                    state={InputStateEnum.basic}
-                    onChange={password =>
-                      setFormData(prevData => ({ ...prevData, password }))
-                    }
-                  />
-                </InputContainer>
-                {isValidationOn && !isPasswordValid && (
-                  <Body color="red">
-                    {intl.formatMessage({ id: 'add-valid-detok-password' })}
-                  </Body>
-                )}
-              </StyledFieldContainer>
-            </BodyContainer>
-          </FormContainerStyle>
-        </ModalFormContainerStyle>
+        <>
+          <Tabs value={tabValue} onChange={handleTabChange}>
+            <Tab label="Unit details" />
+            {unitTabs?.length > 0 &&
+              unitTabs.map(tab => (
+                <Tab label={tab.tabName} key={tab.tabName} />
+              ))}
+          </Tabs>
+          <TabPanel value={tabValue} index={0}>
+            <UnitDetails data={unitDetails} />
+          </TabPanel>
+          {unitTabs?.length > 0 &&
+            unitTabs.map((tab, index) => (
+              <TabPanel value={tabValue} index={index + 1} key={tab.tabName}>
+                <UnitDetails data={tab.tabData} />
+              </TabPanel>
+            ))}
+        </>
       }
     />
   );

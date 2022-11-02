@@ -18,7 +18,7 @@ const initialState = {
   paginationNrOfPages: null,
   projects: null,
   homeOrgUid: null,
-  unitToBeDetokenized: null
+  unitToBeDetokenized: null,
 };
 
 const appReducer = (state = initialState, action) => {

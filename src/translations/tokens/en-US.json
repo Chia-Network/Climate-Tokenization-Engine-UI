@@ -58,5 +58,9 @@
   "update": "Update",
   "import": "Import",
   "import-home-org": "Import Home",
-  "update-home-org": "Home Update"
+  "update-home-org": "Home Update",
+  "detokanization-successful": "Unit was successfully detokenized.",
+  "detokanization-not-successful": "Unit could not be detokenized.",
+  "confirm-detokanization": "Confirm unit detokanization",
+  "confirm": "Confirm"
 }
