@@ -192,6 +192,94 @@ export const importHomeOrg = orgUid => {
   };
 };
 
+export const addProjectDetailsToUnits = ({
+  units,
+  unitsType,
+  isRequestMocked,
+}) => {
+  return async dispatch => {
+    let url = `${constants.API_HOST}/projects?`;
+
+    const projectsIdsNeededSearchQuery = units.reduce(
+      (projectIdsQuery, currentUnit) => {
+        const hasUnitProjectDetails = currentUnit?.issuance?.warehouseProjectId;
+        if (hasUnitProjectDetails) {
+          const isProjectIdNotAdded = !projectIdsQuery.includes(
+            currentUnit?.issuance?.warehouseProjectId,
+          );
+          if (isProjectIdNotAdded) {
+            return (
+              projectIdsQuery +
+              `projectIds=${currentUnit?.issuance?.warehouseProjectId}`
+            );
+          }
+        }
+
+        return projectIdsQuery;
+      },
+      '',
+    );
+
+    const areProjectsNeeded = projectsIdsNeededSearchQuery.length > 0;
+    if (!areProjectsNeeded) {
+      if (unitsType === 'untokenized') {
+        dispatch(setUntokenizedUnits(units));
+      } else if (unitsType === 'tokens') {
+        dispatch(setTokens(units));
+      }
+    } else {
+      url += projectsIdsNeededSearchQuery;
+
+      const failedMessageId = 'projects-not-loaded';
+
+      const onSuccessHandler = results => {
+        const projectsHashmap = results.reduce(
+          (accumulator, currentProject) => {
+            return {
+              ...accumulator,
+              [currentProject.warehouseProjectId]: currentProject,
+            };
+          },
+          {},
+        );
+
+        const unitsEnrichedWithProjectDetails = units.map(unitItem => {
+          if (unitItem.issuance) {
+            if (projectsHashmap[unitItem.issuance?.warehouseProjectId]) {
+              return {
+                ...unitItem,
+                projectName:
+                  projectsHashmap[unitItem.issuance?.warehouseProjectId]
+                    .projectName,
+                projectLink:
+                  projectsHashmap[unitItem.issuance?.warehouseProjectId]
+                    .projectLink,
+              };
+            }
+          }
+          return unitItem;
+        });
+
+        if (unitsType === 'untokenized') {
+          dispatch(setUntokenizedUnits(unitsEnrichedWithProjectDetails));
+        } else if (unitsType === 'tokens') {
+          dispatch(setTokens(unitsEnrichedWithProjectDetails));
+        }
+      };
+
+      dispatch(
+        fetchWrapper({
+          url,
+          failedMessageId,
+          onSuccessHandler,
+          isRequestMocked,
+          projectsStub,
+        }),
+      );
+    }
+  };
+};
+
 export const getUntokenizedUnits = ({
   page,
   resultsLimit,
@@ -213,9 +301,9 @@ export const getUntokenizedUnits = ({
       const onSuccessHandler = results => {
         dispatch(setPaginationNrOfPages(results.pageCount));
         dispatch(
-          addProjectDetailsToUntokenizedUnits({
+          addProjectDetailsToUnits({
             units: results.data,
-            isRequestMocked,
+            unitsType: 'untokenized',
           }),
         );
       };
@@ -245,79 +333,6 @@ export const getUntokenizedUnits = ({
         }),
       );
     }
-  };
-};
-
-export const addProjectDetailsToUntokenizedUnits = ({
-  units,
-  isRequestMocked,
-}) => {
-  return async dispatch => {
-    let url = `${constants.API_HOST}/projects?`;
-
-    const projectsIdsNeededSearchQuery = units.reduce(
-      (projectIdsQuery, currentUnit) => {
-        const hasUnitProjectDetails = currentUnit?.issuance?.warehouseProjectId;
-        if (hasUnitProjectDetails) {
-          const isProjectIdNotAdded = !projectIdsQuery.includes(
-            currentUnit?.issuance?.warehouseProjectId,
-          );
-          if (isProjectIdNotAdded) {
-            return (
-              projectIdsQuery +
-              `projectIds=${currentUnit?.issuance?.warehouseProjectId}`
-            );
-          }
-        }
-
-        return projectIdsQuery;
-      },
-      '',
-    );
-
-    if (projectsIdsNeededSearchQuery.length > 0) {
-      url += projectsIdsNeededSearchQuery;
-    }
-
-    const failedMessageId = 'projects-not-loaded';
-
-    const onSuccessHandler = results => {
-      const projectsHashmap = results.reduce((accumulator, currentProject) => {
-        return {
-          ...accumulator,
-          [currentProject.warehouseProjectId]: currentProject,
-        };
-      }, {});
-
-      const unitsEnrichedWithProjectDetails = units.map(unitItem => {
-        if (unitItem.issuance) {
-          if (projectsHashmap[unitItem.issuance?.warehouseProjectId]) {
-            return {
-              ...unitItem,
-              projectName:
-                projectsHashmap[unitItem.issuance?.warehouseProjectId]
-                  .projectName,
-              projectLink:
-                projectsHashmap[unitItem.issuance?.warehouseProjectId]
-                  .projectLink,
-            };
-          }
-        }
-        return unitItem;
-      });
-
-      dispatch(setUntokenizedUnits(unitsEnrichedWithProjectDetails));
-    };
-
-    dispatch(
-      fetchWrapper({
-        url,
-        failedMessageId,
-        onSuccessHandler,
-        isRequestMocked,
-        projectsStub,
-      }),
-    );
   };
 };
 
@@ -369,7 +384,13 @@ export const getTokens = ({
       }
 
       const onSuccessHandler = results => {
-        dispatch(setTokens(results.data));
+        dispatch(
+          addProjectDetailsToUnits({
+            units: results.data,
+            unitsType: 'tokens',
+          }),
+        );
+
         dispatch(setPaginationNrOfPages(results.pageCount));
       };
 
