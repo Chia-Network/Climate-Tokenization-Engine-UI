@@ -20,10 +20,10 @@ import {
   SearchInput,
   modalTypeEnum,
   Modal,
+  CreateTokenModal,
 } from '../components';
 import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
-import CreateTokenModal from '../components/forms/CreateTokenModal';
 
 const StyledSectionContainer = styled('div')`
   display: flex;

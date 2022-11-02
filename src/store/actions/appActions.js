@@ -24,7 +24,13 @@ export const actions = keyMirror(
   'SET_TOKENS',
   'SET_PROJECTS',
   'SET_HOME_ORG',
+  'SET_UNIT_TO_BE_DETOKENIZED',
 );
+
+export const setUnitToBeDetokenized = unit => ({
+  type: 'SET_UNIT_TO_BE_DETOKENIZED',
+  payload: unit,
+});
 
 export const refreshApp = render => ({
   type: actions.REFRESH_APP,
@@ -434,7 +440,7 @@ export const detokenizeUnit = data => {
     const successMessageId = 'detok-file-parsed';
 
     const onSuccessHandler = results => {
-      console.log('results', results);
+      dispatch(setUnitToBeDetokenized(results));
     };
 
     dispatch(
