@@ -220,8 +220,8 @@ export const addProjectDetailsToUnits = ({
       '',
     );
 
-    const areProjectsNeeded = projectsIdsNeededSearchQuery.length > 0;
-    if (!areProjectsNeeded) {
+    const areProjectNamesNeeded = projectsIdsNeededSearchQuery.length > 0;
+    if (!areProjectNamesNeeded) {
       if (unitsType === 'untokenized') {
         dispatch(setUntokenizedUnits(units));
       } else if (unitsType === 'tokens') {
