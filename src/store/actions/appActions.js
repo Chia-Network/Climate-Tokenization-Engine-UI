@@ -210,7 +210,7 @@ export const addProjectDetailsToUnits = ({
           if (isProjectIdNotAdded) {
             return (
               projectIdsQuery +
-              `projectIds=${currentUnit?.issuance?.warehouseProjectId}`
+              `projectIds=${currentUnit?.issuance?.warehouseProjectId}&`
             );
           }
         }
