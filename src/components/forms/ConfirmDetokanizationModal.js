@@ -1,23 +1,26 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
 
 import { Modal, modalTypeEnum, Tab, Tabs, TabPanel, UnitDetails } from '..';
+import { confirmDetokanization } from '../../store/actions/appActions';
 
 const ConfirmDetokanizationModal = ({
   onClose,
-  unit,
+  data,
   modalSizeAndPosition,
 }) => {
   const { notification } = useSelector(app => app);
   const intl = useIntl();
   const [tabValue, setTabValue] = useState(0);
+  const dispatch = useDispatch();
 
   const handleTabChange = useCallback(
     (event, newValue) => setTabValue(newValue),
     [setTabValue],
   );
 
+  const { unit } = data;
   const unitKeys = Object?.keys(unit);
   const unitDetails = {};
   const unitTabs = [];
@@ -34,7 +37,7 @@ const ConfirmDetokanizationModal = ({
   });
 
   const onSubmit = () => {
-    console.log('trigger action from store');
+    dispatch(confirmDetokanization(data));
   };
 
   const isDetokanizationSuccessful =
