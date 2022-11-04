@@ -300,4 +300,4 @@ const CreateTokenModal = ({ data, onClose }) => {
   );
 };
 
-export default CreateTokenModal;
+export { CreateTokenModal };
