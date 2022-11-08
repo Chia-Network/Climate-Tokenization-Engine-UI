@@ -90,7 +90,7 @@ const CreateTokens = () => {
     setIsTokenCreationPendingModalVisible,
   ] = useState(false);
   const sortOrderOptions = ['Ascending', 'Descending'];
-  const [sortOrder, setSortOrder] = useState(sortOrderOptions[0]);
+  const [sortOrder, setSortOrder] = useState(sortOrderOptions[1]);
 
   useEffect(() => {
     if (tabValue === 0) {
