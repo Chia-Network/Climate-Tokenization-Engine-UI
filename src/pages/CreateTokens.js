@@ -21,6 +21,7 @@ import {
   modalTypeEnum,
   Modal,
   CreateTokenModal,
+  SelectCreatable,
 } from '../components';
 import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
@@ -37,9 +38,9 @@ const StyledHeaderContainer = styled('div')`
   padding: 30px 24px 14px 16px;
 `;
 
-// const StyledFiltersContainer = styled('div')`
-//   margin: 0rem 1.2813rem;
-// `;
+const StyledFiltersContainer = styled('div')`
+  margin: 0rem 1.2813rem;
+`;
 
 const StyledSubHeaderContainer = styled('div')`
   display: flex;
@@ -88,6 +89,8 @@ const CreateTokens = () => {
     isTokenCreationPendingModalVisible,
     setIsTokenCreationPendingModalVisible,
   ] = useState(false);
+  const sortOrderOptions = ['Ascending', 'Descending'];
+  const [sortOrder, setSortOrder] = useState(sortOrderOptions[0]);
 
   useEffect(() => {
     if (tabValue === 0) {
@@ -97,6 +100,7 @@ const CreateTokens = () => {
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
           isRequestMocked: false,
+          sortOrder: sortOrder,
         }),
       );
     } else if (tabValue === 1) {
@@ -106,10 +110,11 @@ const CreateTokens = () => {
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
           isRequestMocked: false,
+          sortOrder: sortOrder,
         }),
       );
     }
-  }, [page, tabValue, searchQuery]);
+  }, [page, tabValue, searchQuery, sortOrder]);
 
   const handleTabChange = useCallback(
     (event, newValue) => {
@@ -180,13 +185,14 @@ const CreateTokens = () => {
             />
           </StyledSearchContainer>
 
-          {/* <StyledFiltersContainer>
+          <StyledFiltersContainer>
             <SelectCreatable
-              options={['Ken', 'Craig', 'Michael']}
-              selected={'Craig'}
-              onChange={val => console.log(val)}
+              options={sortOrderOptions}
+              selected={sortOrder}
+              isClearable={false}
+              onChange={val => setSortOrder(val)}
             />
-          </StyledFiltersContainer> */}
+          </StyledFiltersContainer>
         </StyledHeaderContainer>
 
         <StyledSubHeaderContainer>
