@@ -285,6 +285,7 @@ export const getUntokenizedUnits = ({
   resultsLimit,
   searchQuery,
   isRequestMocked,
+  sortOrder,
 }) => {
   return async dispatch => {
     const areRequestDetailsValid = true;
@@ -296,6 +297,14 @@ export const getUntokenizedUnits = ({
       }&limit=${resultsLimit}`;
       if (searchQuery && typeof searchQuery === 'string') {
         url += `&search=${encodeURIComponent(searchQuery)}`;
+      }
+
+      const sortOrderHashmap = {
+        Ascending: 'ASC',
+        Descending: 'DESC',
+      };
+      if (Object.keys(sortOrderHashmap).includes(sortOrder)) {
+        url += `&order=${sortOrderHashmap[sortOrder]}`;
       }
 
       const onSuccessHandler = results => {
