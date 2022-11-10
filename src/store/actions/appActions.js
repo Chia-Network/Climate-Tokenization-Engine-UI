@@ -483,6 +483,9 @@ export const confirmDetokanization = data => {
     const payload = {
       method: 'POST',
       body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
 
     const failedMessageId = 'detokanization-not-successful';
