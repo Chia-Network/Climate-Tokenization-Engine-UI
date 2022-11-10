@@ -459,8 +459,7 @@ export const detokenizeUnit = data => {
   return async dispatch => {
     let url = `${constants.API_HOST}/parse-detok-file`;
     const formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('password', data.password);
+    formData.append('file', data);
     const payload = {
       method: 'POST',
       body: formData,

@@ -62,5 +62,6 @@
   "detokanization-successful": "Unit was successfully detokenized.",
   "detokanization-not-successful": "Unit could not be detokenized.",
   "confirm-detokanization": "Confirm unit detokanization",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "file-cannot-be-decrypted": "File cannot be decrypted."
 }

@@ -21,6 +21,7 @@ import {
   UploadFileInput,
 } from '..';
 import { detokenizeUnit } from '../../store/actions/appActions';
+import { decrypt } from '../../utils/zip';
 
 const DetokenizeModal = ({ onClose }) => {
   const { notification } = useSelector(app => app);
@@ -31,10 +32,12 @@ const DetokenizeModal = ({ onClose }) => {
     password: '',
     file: '',
   });
+  const [decryptedFile, setDecryptedFile] = useState(null);
 
   const onSubmit = () => {
     setIsValidationOn(true);
-    if (isPasswordValid && isFileValid) dispatch(detokenizeUnit(formData));
+    if (isPasswordValid && isFileValid && isDecryptionSuccessful)
+      dispatch(detokenizeUnit(decryptedFile));
   };
 
   const isPasswordValid = useMemo(
@@ -50,6 +53,11 @@ const DetokenizeModal = ({ onClose }) => {
     [formData],
   );
 
+  const isDecryptionSuccessful = useMemo(
+    () => Boolean(decryptedFile),
+    [decryptedFile],
+  );
+
   const wasDetokFileParsedSuccessfully =
     notification && notification.id === 'detok-file-parsed';
   useEffect(() => {
@@ -57,6 +65,12 @@ const DetokenizeModal = ({ onClose }) => {
       onClose();
     }
   }, [notification]);
+
+  useEffect(() => {
+    if (isFileValid && isPasswordValid) {
+      decrypt(formData.file, formData.password, file => setDecryptedFile(file));
+    }
+  }, [formData]);
 
   return (
     <Modal
@@ -91,6 +105,14 @@ const DetokenizeModal = ({ onClose }) => {
                       {intl.formatMessage({ id: 'add-valid-detok-file' })}
                     </Body>
                   )}
+                  {isValidationOn &&
+                    isFileValid &&
+                    isPasswordValid &&
+                    !isDecryptionSuccessful && (
+                      <Body color="red">
+                        {intl.formatMessage({ id: 'file-cannot-be-decrypted' })}
+                      </Body>
+                    )}
                 </StyledFieldContainer>
               </SpanTwoColumnsContainer>
               <StyledFieldContainer>
