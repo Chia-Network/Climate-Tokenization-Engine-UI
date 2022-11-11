@@ -21,6 +21,7 @@ import {
   UploadFileInput,
 } from '..';
 import { detokenizeUnit } from '../../store/actions/appActions';
+import { getContentFromEncryptedZip } from '../../utils/zip';
 
 const DetokenizeModal = ({ onClose }) => {
   const { notification } = useSelector(app => app);
@@ -31,11 +32,7 @@ const DetokenizeModal = ({ onClose }) => {
     password: '',
     file: '',
   });
-
-  const onSubmit = () => {
-    setIsValidationOn(true);
-    if (isPasswordValid && isFileValid) dispatch(detokenizeUnit(formData));
-  };
+  const [detokString, setDetokString] = useState(null);
 
   const isPasswordValid = useMemo(
     () => formData.password !== '' && formData.password.indexOf(' ') === -1,
@@ -50,6 +47,17 @@ const DetokenizeModal = ({ onClose }) => {
     [formData],
   );
 
+  const isDetokStringValid = useMemo(
+    () => typeof detokString === 'string' && detokString.startsWith('detok'),
+    [detokString],
+  );
+
+  const onSubmit = () => {
+    setIsValidationOn(true);
+    if (isPasswordValid && isFileValid && isDetokStringValid)
+      dispatch(detokenizeUnit(detokString));
+  };
+
   const wasDetokFileParsedSuccessfully =
     notification && notification.id === 'detok-file-parsed';
   useEffect(() => {
@@ -57,6 +65,14 @@ const DetokenizeModal = ({ onClose }) => {
       onClose();
     }
   }, [notification]);
+
+  useEffect(() => {
+    if (isFileValid && isPasswordValid) {
+      getContentFromEncryptedZip(formData.file, formData.password, file =>
+        setDetokString(file),
+      );
+    }
+  }, [formData]);
 
   return (
     <Modal
@@ -91,6 +107,16 @@ const DetokenizeModal = ({ onClose }) => {
                       {intl.formatMessage({ id: 'add-valid-detok-file' })}
                     </Body>
                   )}
+                  {isValidationOn &&
+                    isFileValid &&
+                    isPasswordValid &&
+                    !isDetokStringValid && (
+                      <Body color="red">
+                        {intl.formatMessage({
+                          id: 'detok-file-archive-not-valid',
+                        })}
+                      </Body>
+                    )}
                 </StyledFieldContainer>
               </SpanTwoColumnsContainer>
               <StyledFieldContainer>
