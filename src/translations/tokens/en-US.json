@@ -63,5 +63,5 @@
   "detokanization-not-successful": "Unit could not be detokenized.",
   "confirm-detokanization": "Confirm unit detokanization",
   "confirm": "Confirm",
-  "file-cannot-be-decrypted": "File cannot be decrypted."
+  "detok-file-archive-not-valid": "Detok file could not be obtained from archive."
 }

@@ -21,7 +21,7 @@ import {
   UploadFileInput,
 } from '..';
 import { detokenizeUnit } from '../../store/actions/appActions';
-import { decrypt } from '../../utils/zip';
+import { getContentFromEncryptedZip } from '../../utils/zip';
 
 const DetokenizeModal = ({ onClose }) => {
   const { notification } = useSelector(app => app);
@@ -32,13 +32,7 @@ const DetokenizeModal = ({ onClose }) => {
     password: '',
     file: '',
   });
-  const [decryptedFile, setDecryptedFile] = useState(null);
-
-  const onSubmit = () => {
-    setIsValidationOn(true);
-    if (isPasswordValid && isFileValid && isDecryptionSuccessful)
-      dispatch(detokenizeUnit(decryptedFile));
-  };
+  const [detokString, setDetokString] = useState(null);
 
   const isPasswordValid = useMemo(
     () => formData.password !== '' && formData.password.indexOf(' ') === -1,
@@ -53,10 +47,16 @@ const DetokenizeModal = ({ onClose }) => {
     [formData],
   );
 
-  const isDecryptionSuccessful = useMemo(
-    () => Boolean(decryptedFile),
-    [decryptedFile],
+  const isDetokStringValid = useMemo(
+    () => typeof detokString === 'string' && detokString.startsWith('detok'),
+    [detokString],
   );
+
+  const onSubmit = () => {
+    setIsValidationOn(true);
+    if (isPasswordValid && isFileValid && isDetokStringValid)
+      dispatch(detokenizeUnit(detokString));
+  };
 
   const wasDetokFileParsedSuccessfully =
     notification && notification.id === 'detok-file-parsed';
@@ -68,7 +68,9 @@ const DetokenizeModal = ({ onClose }) => {
 
   useEffect(() => {
     if (isFileValid && isPasswordValid) {
-      decrypt(formData.file, formData.password, file => setDecryptedFile(file));
+      getContentFromEncryptedZip(formData.file, formData.password, file =>
+        setDetokString(file),
+      );
     }
   }, [formData]);
 
@@ -108,9 +110,11 @@ const DetokenizeModal = ({ onClose }) => {
                   {isValidationOn &&
                     isFileValid &&
                     isPasswordValid &&
-                    !isDecryptionSuccessful && (
+                    !isDetokStringValid && (
                       <Body color="red">
-                        {intl.formatMessage({ id: 'file-cannot-be-decrypted' })}
+                        {intl.formatMessage({
+                          id: 'detok-file-archive-not-valid',
+                        })}
                       </Body>
                     )}
                 </StyledFieldContainer>
