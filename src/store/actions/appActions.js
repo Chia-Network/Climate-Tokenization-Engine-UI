@@ -467,8 +467,6 @@ export const detokenizeUnit = detokString => {
       },
     };
 
-    console.log('payload', payload);
-
     const failedMessageId = 'detok-file-not-parsed';
     const successMessageId = 'detok-file-parsed';
 
