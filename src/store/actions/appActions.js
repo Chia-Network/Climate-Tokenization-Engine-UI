@@ -458,10 +458,16 @@ export const tokenizeUnit = data => {
 export const detokenizeUnit = detokString => {
   return async dispatch => {
     let url = `${constants.API_HOST}/parse-detok-file`;
+
     const payload = {
       method: 'POST',
       body: JSON.stringify({ detokString }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
+
+    console.log('payload', payload);
 
     const failedMessageId = 'detok-file-not-parsed';
     const successMessageId = 'detok-file-parsed';
