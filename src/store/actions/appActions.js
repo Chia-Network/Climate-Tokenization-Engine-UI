@@ -455,15 +455,16 @@ export const tokenizeUnit = data => {
   };
 };
 
-export const detokenizeUnit = data => {
+export const detokenizeUnit = detokString => {
   return async dispatch => {
     let url = `${constants.API_HOST}/parse-detok-file`;
-    const formData = new FormData();
-    formData.append('file', data.file);
-    formData.append('password', data.password);
+
     const payload = {
       method: 'POST',
-      body: formData,
+      body: JSON.stringify({ detokString }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
 
     const failedMessageId = 'detok-file-not-parsed';
