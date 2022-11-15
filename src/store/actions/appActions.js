@@ -296,9 +296,7 @@ export const getUntokenizedUnits = ({
         page + 1
       }&limit=${resultsLimit}`;
       if (searchQuery && typeof searchQuery === 'string') {
-        url += `&includeProjectInfoInSearch=true&search=${encodeURIComponent(
-          searchQuery,
-        )}`;
+        url += `&search=${encodeURIComponent(searchQuery)}`;
       }
 
       const sortOrderHashmap = {
@@ -362,9 +360,7 @@ export const getTokens = ({
         page + 1
       }&limit=${resultsLimit}`;
       if (searchQuery && typeof searchQuery === 'string') {
-        url += `&includeProjectInfoInSearch=true&search=${encodeURIComponent(
-          searchQuery,
-        )}`;
+        url += `&search=${encodeURIComponent(searchQuery)}`;
       }
 
       const onSuccessHandler = results => {
