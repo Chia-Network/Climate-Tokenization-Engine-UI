@@ -296,7 +296,9 @@ export const getUntokenizedUnits = ({
         page + 1
       }&limit=${resultsLimit}`;
       if (searchQuery && typeof searchQuery === 'string') {
-        url += `&search=${encodeURIComponent(searchQuery)}`;
+        url += `&includeProjectInfoInSearch=true&search=${encodeURIComponent(
+          searchQuery,
+        )}`;
       }
 
       const sortOrderHashmap = {
@@ -345,35 +347,6 @@ export const getUntokenizedUnits = ({
   };
 };
 
-export const getProjects = ({ searchQuery, orgUid, isRequestMocked }) => {
-  return async dispatch => {
-    let url = `${constants.API_HOST}/projects?`;
-
-    if (searchQuery) {
-      url += `search=${searchQuery}`;
-    }
-    if (orgUid) {
-      url += `orgUid=${orgUid}`;
-    }
-
-    const failedMessageId = 'projects-not-loaded';
-
-    const onSuccessHandler = results => {
-      dispatch(setProjects(results));
-    };
-
-    dispatch(
-      fetchWrapper({
-        url,
-        failedMessageId,
-        onSuccessHandler,
-        isRequestMocked,
-        projectsStub,
-      }),
-    );
-  };
-};
-
 export const getTokens = ({
   page,
   resultsLimit,
@@ -389,7 +362,9 @@ export const getTokens = ({
         page + 1
       }&limit=${resultsLimit}`;
       if (searchQuery && typeof searchQuery === 'string') {
-        url += `&search=${encodeURIComponent(searchQuery)}`;
+        url += `&includeProjectInfoInSearch=true&search=${encodeURIComponent(
+          searchQuery,
+        )}`;
       }
 
       const onSuccessHandler = results => {
