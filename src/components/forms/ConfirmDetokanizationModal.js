@@ -36,6 +36,8 @@ const ConfirmDetokanizationModal = ({
     }
   });
 
+  if (unitDetails?.unitCount) unitDetails.unitCount /= 1000;
+
   const onSubmit = () => {
     dispatch(confirmDetokanization(data));
   };
