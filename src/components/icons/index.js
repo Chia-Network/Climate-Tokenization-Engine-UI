@@ -36,3 +36,4 @@ export * from './AscendingClockIcon';
 export * from './DescendingClockIcon';
 export * from './EditIcon';
 export * from './RemoveIcon';
+export * from './IconColorsWrapper';
