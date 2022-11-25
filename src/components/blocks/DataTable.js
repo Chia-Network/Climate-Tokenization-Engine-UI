@@ -20,15 +20,14 @@ const Table = styled('table')`
 
 const THead = styled('thead')`
   font-weight: 500;
-  background-color: ${props =>
-    props.theme.colors[props.selectedTheme].secondary};
+  background-color: ${props => props.theme.colors.default.gray3};
   border-left: 1px solid whitesmoke;
   border-right: 1px solid whitesmoke;
 `;
 
 const Th = styled('th')`
   padding: 1rem;
-  color: ${props => props.theme.colors[props.selectedTheme].onSurface};
+  color: ${props => props.theme.colors.default.secondary};
   display: table-cell;
   text-align: left;
   border-bottom: 1px solid rgba(224, 224, 224, 1);
@@ -45,7 +44,7 @@ const Th = styled('th')`
 `;
 
 const Tr = styled('tr')`
-  color: ${props => props.theme.colors[props.selectedTheme].onSurface};
+  color: ${props => props.theme.colors.default.secondary};
   background-color: ${props => props.theme.colors.default.onButton};
 `;
 

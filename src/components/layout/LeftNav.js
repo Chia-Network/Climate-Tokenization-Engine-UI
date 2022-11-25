@@ -23,14 +23,21 @@ const NavContainer = styled('div')`
   width: 16rem;
   min-width: 16rem;
   height: 100%;
-  background-color: ${props => props.theme.colors.default.primary};
+  background-color: ${props => props.theme.colors.default.primaryDark};
+  background-image: url(https://www.chia.net/wp-content/themes/chia-theme/dist/images/tiling-abstract-shapes.png);
+  background-repeat: no-repeat;
+  background-position: -63px 135%;
+  background-size: 238px;
 `;
 
 const MenuItem = styled(Link)`
-  background: ${props => (props.selected ? '#003A8C' : 'transparent')};
-  ${props =>
-    !props.selected && !props.disabled && `:hover {background: #40a9ff;}`};
-  padding: 0.5625rem 0rem 0.75rem 4.25rem;
+  background: ${props =>
+    props.selected ? props.theme.colors.default.primary : 'transparent'};
+  :hover {
+    background: ${props =>
+      !props.selected && !props.disabled && props.theme.colors.default.primary};
+  }
+  padding: 0.5625rem 0rem 0.75rem 3.25rem;
   ${props =>
     props.disabled ? 'color: #BFBFBF; pointer-events: none;' : 'color: white;'}
   font-family: ${props => props.theme.typography.primary.bold};
@@ -39,7 +46,7 @@ const MenuItem = styled(Link)`
   text-decoration: none;
   width: calc(100% - 1.625rem);
   margin: auto;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   box-sizing: border-box;
   border-radius: 0.625rem;
   margin-bottom: 0.625rem;
@@ -53,13 +60,15 @@ const LeftNav = withTheme(({ children }) => {
       <NavContainer>
         <MenuItem
           selected={location.pathname.includes(constants.ROUTES.createTokens)}
-          to={constants.ROUTES.createTokens}>
+          to={constants.ROUTES.createTokens}
+        >
           <FormattedMessage id="create-tokens" />
         </MenuItem>
         <div></div>
         <MenuItem
           selected={location.pathname.includes(constants.ROUTES.revertTokens)}
-          to={constants.ROUTES.revertTokens}>
+          to={constants.ROUTES.revertTokens}
+        >
           <FormattedMessage id="revert-tokens" />
         </MenuItem>
       </NavContainer>
