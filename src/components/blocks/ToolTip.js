@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import theme from '../../theme';
 
 const ToolTipPlacement = {
   Top: 'top',
@@ -23,14 +24,17 @@ const ToolTip = withTheme(({ children, body, placement }) => {
       title={body}
       placement={placement}
       componentsProps={{
+        color: 'red',
         popper: {
           sx: {
             [`& .${tooltipClasses.arrow}`]: {
-              color: '#262626',
+              color: theme.colors.default.gray3,
             },
             [`& .${tooltipClasses.tooltip}`]: {
               maxWidth: '12.5rem',
-              backgroundColor: '#262626',
+              backgroundColor: theme.colors.default.gray3,
+              color: theme.colors.default.secondary,
+              fontFamily: theme.typography.primary.regular,
               padding: '0.375rem 0.5rem',
               fontSize: '0.875rem',
               lineHeight: '1.3125rem',
@@ -44,7 +48,8 @@ const ToolTip = withTheme(({ children, body, placement }) => {
           },
         },
       }}
-      arrow>
+      arrow
+    >
       <span>{children}</span>
     </Tooltip>
   );
