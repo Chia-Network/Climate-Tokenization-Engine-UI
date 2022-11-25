@@ -70,7 +70,7 @@ const Button = styled('button')`
         border: 1px solid #e5e5e5;
 
         h4 {
-          color: ${props.theme.colors.default.secondary};
+          color: ${props.theme.colors.default.primaryDark};
         }
         h4:hover,
         h4:active {

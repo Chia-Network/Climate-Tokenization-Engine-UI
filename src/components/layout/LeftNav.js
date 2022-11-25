@@ -38,6 +38,7 @@ const MenuItem = styled(Link)`
       !props.selected && !props.disabled && props.theme.colors.default.primary};
   }
   padding: 0.5625rem 0rem 0.75rem 3.25rem;
+  text-transform: uppercase;
   ${props =>
     props.disabled ? 'color: #BFBFBF; pointer-events: none;' : 'color: white;'}
   font-family: ${props => props.theme.typography.primary.bold};
