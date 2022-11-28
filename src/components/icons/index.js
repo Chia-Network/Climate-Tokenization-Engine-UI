@@ -11,7 +11,7 @@ export * from './ErrorIconSmall';
 export * from './CloseIcon';
 export * from './WarningIconSmall';
 export * from './WarningIcon';
-export * from './ClimateWarehouseLogo';
+export * from './AppLogo';
 export * from './AddIcon';
 export * from './MagnifyGlassIconWhite';
 export * from './ArrowDownIcon';

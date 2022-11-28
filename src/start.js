@@ -14,7 +14,7 @@ function createWindow() {
       nodeIntegration: true,
     },
     icon: path.join(__dirname, '/../public/favicon.ico'),
-    title: 'Climate Portal',
+    title: 'Carbon Tokenization Engine',
   });
 
   mainWindow.loadURL(
