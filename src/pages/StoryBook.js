@@ -27,7 +27,7 @@ import {
   TextareaSizeEnum,
   TextareaStateEnum,
   AddIcon,
-  ClimateWarehouseLogo,
+  AppLogo,
   CloseIcon,
   DarkThemeIcon,
   ErrorIconSmall,
@@ -113,7 +113,8 @@ const StoryBook = () => {
             display: 'flex',
             justifyContent: 'space-around',
             marginTop: '50px',
-          }}>
+          }}
+        >
           <ToolTip body={tooltipContent} placement={ToolTipPlacement.Top}>
             <ButtonText>Tooltip Top</ButtonText>
           </ToolTip>
@@ -134,12 +135,14 @@ const StoryBook = () => {
           </ToolTip>
           <ToolTip
             body={tooltipContent}
-            placement={ToolTipPlacement.BottomLeft}>
+            placement={ToolTipPlacement.BottomLeft}
+          >
             <ButtonText>Bottom-Left</ButtonText>
           </ToolTip>
           <ToolTip
             body={tooltipContent}
-            placement={ToolTipPlacement.BottomRight}>
+            placement={ToolTipPlacement.BottomRight}
+          >
             <ButtonText>Bottom-Right</ButtonText>
           </ToolTip>
           <ToolTip body={tooltipContent} placement={ToolTipPlacement.LeftTop}>
@@ -147,7 +150,8 @@ const StoryBook = () => {
           </ToolTip>
           <ToolTip
             body={tooltipContent}
-            placement={ToolTipPlacement.LeftBottom}>
+            placement={ToolTipPlacement.LeftBottom}
+          >
             <ButtonText>Left-Bottom</ButtonText>
           </ToolTip>
           <ToolTip body={tooltipContent} placement={ToolTipPlacement.RightTop}>
@@ -155,7 +159,8 @@ const StoryBook = () => {
           </ToolTip>
           <ToolTip
             body={tooltipContent}
-            placement={ToolTipPlacement.RightBottom}>
+            placement={ToolTipPlacement.RightBottom}
+          >
             <ButtonText>Right-Bottom</ButtonText>
           </ToolTip>
         </div>
@@ -165,77 +170,90 @@ const StoryBook = () => {
             display: 'flex',
             justifyContent: 'space-around',
             paddingTop: '50px',
-          }}>
+          }}
+        >
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.Top}>
+            placement={PopoverPlacement.Top}
+          >
             <ButtonText>Popover Top</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.Bottom}>
+            placement={PopoverPlacement.Bottom}
+          >
             <ButtonText>Bottom</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.Left}>
+            placement={PopoverPlacement.Left}
+          >
             <ButtonText>Left</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.Right}>
+            placement={PopoverPlacement.Right}
+          >
             <ButtonText>Right</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.TopLeft}>
+            placement={PopoverPlacement.TopLeft}
+          >
             <ButtonText>Top-Left</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.TopRight}>
+            placement={PopoverPlacement.TopRight}
+          >
             <ButtonText>Top-Right</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.BottomLeft}>
+            placement={PopoverPlacement.BottomLeft}
+          >
             <ButtonText>Bottom-Left</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.BottomRight}>
+            placement={PopoverPlacement.BottomRight}
+          >
             <ButtonText>Bottom-Right</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.LeftTop}>
+            placement={PopoverPlacement.LeftTop}
+          >
             <ButtonText>Left-Top</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.LeftBottom}>
+            placement={PopoverPlacement.LeftBottom}
+          >
             <ButtonText>Left-Bottom</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.RightTop}>
+            placement={PopoverPlacement.RightTop}
+          >
             <ButtonText>Right-Top</ButtonText>
           </Popover>
           <Popover
             title={popoverTitle}
             body={popoverContent}
-            placement={PopoverPlacement.RightBottom}>
+            placement={PopoverPlacement.RightBottom}
+          >
             <ButtonText>Right-Bottom</ButtonText>
           </Popover>
         </div>
@@ -246,14 +264,16 @@ const StoryBook = () => {
             flexDirection: 'row',
             height: '120px',
             marginTop: '50px',
-          }}>
+          }}
+        >
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
               marginRight: '30px',
-            }}>
+            }}
+          >
             <StandardInput
               size={InputSizeEnum.large}
               placeholderText="Large input"
@@ -274,7 +294,8 @@ const StoryBook = () => {
               flexDirection: 'column',
               justifyContent: 'space-between',
               marginRight: '30px',
-            }}>
+            }}
+          >
             <StandardInput
               size={InputSizeEnum.large}
               placeholderText={standardInputPlaceholder}
@@ -298,7 +319,8 @@ const StoryBook = () => {
               flexDirection: 'column',
               justifyContent: 'space-between',
               marginRight: '30px',
-            }}>
+            }}
+          >
             <StandardInput
               size={InputSizeEnum.large}
               placeholderText={standardInputPlaceholder}
@@ -322,7 +344,8 @@ const StoryBook = () => {
               flexDirection: 'column',
               justifyContent: 'space-between',
               marginRight: '30px',
-            }}>
+            }}
+          >
             <StandardInput
               size={InputSizeEnum.large}
               placeholderText={standardInputPlaceholder}
@@ -345,7 +368,8 @@ const StoryBook = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-            }}>
+            }}
+          >
             <StandardInput
               size={InputSizeEnum.large}
               placeholderText={standardInputPlaceholder}
@@ -375,14 +399,16 @@ const StoryBook = () => {
             justifyContent: 'start',
             paddingTop: '50px',
             height: '210px',
-          }}>
+          }}
+        >
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-around',
               marginRight: '50px',
-            }}>
+            }}
+          >
             <Textarea
               size={TextareaSizeEnum.large}
               placeholder="Large textarea"
@@ -401,7 +427,8 @@ const StoryBook = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-around',
-            }}>
+            }}
+          >
             <Textarea
               size={TextareaSizeEnum.large}
               placeholder="disabled state"
@@ -425,7 +452,8 @@ const StoryBook = () => {
             display: 'flex',
             justifyContent: 'start',
             paddingTop: '50px',
-          }}>
+          }}
+        >
           <BasicMenu
             options={[
               { label: 'item 1', action: () => console.log('click on item 1') },
@@ -436,7 +464,8 @@ const StoryBook = () => {
             options={[
               { label: 'item 1', action: () => console.log('click on item 1') },
               { label: 'item 1', action: () => console.log('click on item 2') },
-            ]}>
+            ]}
+          >
             Menu
           </BasicMenu>
         </div>
@@ -446,9 +475,10 @@ const StoryBook = () => {
             display: 'flex',
             justifyContent: 'start',
             paddingTop: '50px',
-          }}>
+          }}
+        >
           <div style={{ width: '50px' }}></div>
-          <ClimateWarehouseLogo />
+          <AppLogo />
         </div>
 
         <div
@@ -457,7 +487,8 @@ const StoryBook = () => {
             justifyContent: 'space-around',
             paddingTop: '50px',
             paddingBottom: '50px',
-          }}>
+          }}
+        >
           <AddIconCircle width="20" height="20" />
           <AddIcon width="20" height="20" fill="#262626" />
           <CloseIcon width="20" height="20" />
@@ -490,14 +521,16 @@ const StoryBook = () => {
             flexWrap: 'wrap',
             justifyContent: 'space-around',
             margin: '50px 0px',
-          }}>
+          }}
+        >
           <div
             style={{
               display: 'inline-flex',
               justifyContent: 'flex-start',
               flexDirection: 'column',
               gap: '20px',
-            }}>
+            }}
+          >
             <Pagination
               pages={24}
               current={19}
@@ -515,7 +548,8 @@ const StoryBook = () => {
               justifyContent: 'flex-start',
               flexDirection: 'column',
               gap: '20px',
-            }}>
+            }}
+          >
             <Pagination pages={6} current={6} callback={paginationCallback} />
             <Pagination pages={6} current={5} callback={paginationCallback} />
             <Pagination pages={6} current={4} callback={paginationCallback} />
@@ -528,7 +562,8 @@ const StoryBook = () => {
               justifyContent: 'flex-start',
               flexDirection: 'column',
               gap: '20px',
-            }}>
+            }}
+          >
             <Pagination pages={1} current={1} callback={paginationCallback} />
             <Pagination pages={2} current={2} callback={paginationCallback} />
             <Pagination pages={3} current={3} callback={paginationCallback} />
@@ -547,7 +582,8 @@ const StoryBook = () => {
             flexWrap: 'wrap',
             alignItems: 'center',
             marginTop: '100px',
-          }}>
+          }}
+        >
           <PrimaryButton
             label="Default type button"
             size="large"
@@ -752,7 +788,8 @@ const StoryBook = () => {
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
-            aria-label="basic tabs example">
+            aria-label="basic tabs example"
+          >
             <Tab label="Tab One" />
             <Tab label="Tab Two" />
             <Tab label="Tab Three" />

@@ -20,31 +20,19 @@ import {
 } from '..';
 import { importHomeOrg } from '../../store/actions/appActions';
 
-const ConnectContainer = styled('button')`
+const ConnectContainer = styled('div')`
   background: none;
-  color: ${props => props.theme.colors.default.onSurface};
   cursor: pointer;
-  padding: 16.5px 14px;
-  border-radius: 4px;
-  border-color: rgba(0, 0, 0, 0.23);
-  border-style: solid;
-  border-width: 1px;
   align-items: center;
-  min-height: 1.4375em;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4375em;
-  letter-spacing: 0.00938em;
+
+  color: ${props => props.theme.colors.default.primaryDark};
 
   :hover {
-    border-color: black;
+    color: ${props => props.theme.colors.default.primary};
   }
 
-  :active {
-    border-color: #1976d2;
-    border-width: 2px;
-  }
+  text-transform: uppercase;
+  font-family: ${props => props.theme.typography.primary.semiBold};
 `;
 
 const StyledContainer = styled('div')`

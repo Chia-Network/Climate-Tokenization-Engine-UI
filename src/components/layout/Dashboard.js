@@ -8,6 +8,7 @@ const Main = styled('div')`
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: ${props => props.theme.colors.default.gray4};
 `;
 
 const BodyText = styled('div')`

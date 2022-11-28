@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
+import styled, { withTheme, css } from 'styled-components';
 import { ArrowDownIcon, ThreeDotsIcon } from '..';
 
 const PaginationContainer = styled('div')`
@@ -9,8 +9,8 @@ const PaginationContainer = styled('div')`
   align-items: center;
   gap: 8px;
   width: 100%;
-  color: #8c8c8c;
-  background-color: white;
+  background-color: ${props => props.theme.colors.default.onButton};
+  color: ${props => props.theme.colors.default.secondary};
 `;
 
 const ControlsContainer = styled('div')`
@@ -34,6 +34,16 @@ const ControlsContainer = styled('div')`
     props.isNextButton &&
     `transform-origin: center;   
     transform: rotate(270deg);`};
+
+  ${props =>
+    !props.isDisabled &&
+    (props.isNextButton || props.isBackButton) &&
+    css`
+      :hover {
+        color: ${props => props.theme.colors.default.primary};
+        border: 1px solid ${props => props.theme.colors.default.primary};
+      }
+    `}
 `;
 
 const PagesContainer = styled(ControlsContainer)`
@@ -44,13 +54,18 @@ const PagesContainer = styled(ControlsContainer)`
   line-height: 150%;
   ${props => {
     if (props.isActive) {
-      return `border: 1px solid ${props.theme.colors.default.primary};
-                    color: ${props.theme.colors.default.primary};`;
+      return `border: 1px solid ${props.theme.colors.default.primaryDark};
+                    color: ${props.theme.colors.default.primaryDark};`;
     } else {
-      return `border: 1px solid #D9D9D9;
-                    color: #262626;`;
+      return `border: 1px solid ${props.theme.colors.default.gray4};
+                    color: ${props.theme.colors.default.secondary};`;
     }
   }};
+
+  :hover {
+    border: 1px solid ${props => props.theme.colors.default.primary};
+    color: ${props => props.theme.colors.default.primary};
+  }
 `;
 
 const Pagination = withTheme(
