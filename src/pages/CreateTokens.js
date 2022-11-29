@@ -127,16 +127,11 @@ const CreateTokens = () => {
 
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
-      'vintageYear',
+      'registryProjectId',
       'projectName',
-      'unitOwner',
-      'countryJurisdictionOfOwner',
       'serialNumberBlock',
-      'unitBlockStart',
-      'unitBlockEnd',
-      'unitCount',
       'unitStatus',
-      'unitType',
+      'unitCount',
     ],
     [],
   );

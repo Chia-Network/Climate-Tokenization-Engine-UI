@@ -254,6 +254,9 @@ export const addProjectDetailsToUnits = ({
                 projectLink:
                   projectsHashmap[unitItem.issuance?.warehouseProjectId]
                     .projectLink,
+                registryProjectId:
+                  projectsHashmap[unitItem.issuance?.warehouseProjectId]
+                    .projectId,
               };
             }
           }
