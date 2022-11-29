@@ -136,6 +136,26 @@ const CreateTokens = () => {
     [],
   );
 
+  const tokensKeysToBeDisplayed = useMemo(
+    () => [
+      'registryProjectId',
+      'projectName',
+      'serialNumberBlock',
+      'unitCount',
+      'marketplace',
+      'marketplaceIdentifier',
+      'marketplaceLink',
+    ],
+    [],
+  );
+
+  /*
+Tokenization Date (show timestamp DATE, not hours or minutes) 11-16-2022
+Marketplace
+Marketplace Identifier
+Marketplace link
+  */
+
   const tokenizeUnitButtonConfig = useMemo(
     () => ({
       label: intl.formatMessage({ id: 'create-token' }),
@@ -221,7 +241,7 @@ const CreateTokens = () => {
           <TabPanel value={tabValue} index={1}>
             {tokens?.length > 0 ? (
               <DataTable
-                headings={untokenizedUnitsKeysToBeDisplayed}
+                headings={tokensKeysToBeDisplayed}
                 data={tokens}
                 changePageTo={page => setPage(page)}
                 currentPage={page}
