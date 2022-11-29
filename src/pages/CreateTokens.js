@@ -196,7 +196,7 @@ const CreateTokens = () => {
             <Tab label={intl.formatMessage({ id: 'existing-tokens' })} />
           </Tabs>
           <StyledCSVOperationsContainer>
-            <DownloadIcon width={20} height={20} />
+            {tabValue === 1 && <DownloadIcon width={20} height={20} />}
           </StyledCSVOperationsContainer>
         </StyledSubHeaderContainer>
         <StyledBodyContainer>
