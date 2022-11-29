@@ -26,7 +26,7 @@ const CreateTokenModal = ({ data, onClose }) => {
   const [formValues, setFormValues] = useState({
     quantityOfCredits: data?.unitCount ?? 0,
     projectName: data?.projectName ?? '',
-    projectId: data?.issuance?.warehouseProjectId ?? '',
+    projectId: data?.registryProjectId ?? '',
     vintage: data?.vintageYear,
     projectLink: data?.projectLink ?? '',
     unitOwner: data?.unitOwner ?? '',
