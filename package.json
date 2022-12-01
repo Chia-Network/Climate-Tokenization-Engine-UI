@@ -17,6 +17,7 @@
     "@mui/lab": "*",
     "@mui/material": "^5.0.6",
     "@mui/x-date-pickers": "*",
+    "about-window": "^1.15.2",
     "dayjs": "^1.10.7",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
