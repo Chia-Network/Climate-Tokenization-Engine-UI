@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, MenuItem } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const openAboutWindow = require('about-window').default;
 
 const path = require('path');
@@ -54,12 +54,7 @@ function createWindow() {
                 __dirname,
                 '/../public/android-chrome-512x512.png',
               ),
-              product_name: 'Tokenization Engine',
-              description: 'The Tokenization Engine is about lorem ipsum ...',
-              copyright: 'Copyright (c) 2022 Chia Network 2022',
-              app,
-              BrowserWindow,
-              ipcMain,
+              copyright: '© Chia Network 2022',
             });
           },
         },
@@ -69,8 +64,6 @@ function createWindow() {
 
   Menu.setApplicationMenu(newMenu);
 }
-
-// app.applicationMenu = menu;
 
 app.on('ready', createWindow);
 
@@ -85,56 +78,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-/*
-openAboutWindow({
-  icon_path: path.join(__dirname, '/../public/favicon.ico'),
-  app,
-  BrowserWindow,
-  ipcMain,
-});
-
-Menu.buildFromTemplate([
-  {
-    label: 'About',
-    submenu: [
-      // {
-      //   label: 'About This App',
-      //   click: () =>
-      //     openAboutWindow({
-      //       icon_path: join(__dirname, 'icon.png'),
-      //       copyright: 'Copyright (c) 2015 rhysd',
-      //       package_json_dir: __dirname,
-      //       open_devtools: process.env.NODE_ENV !== 'production',
-      //     }),
-      // },
-      // {
-      //   label: 'About This App (custom version entry)',
-      //   click: () =>
-      //     openAboutWindow({
-      //       icon_path: join(__dirname, 'icon.png'),
-      //       copyright: 'Copyright (c) 2015 rhysd',
-      //       package_json_dir: __dirname,
-      //       use_version_info: [
-      //         ['my version entry 1', 'a.b.c'],
-      //         ['my version entry 2', 'x.y.z'],
-      //       ],
-      //     }),
-      // },
-      {
-        label: 'About This App (modal with close)',
-        click: () =>
-          openAboutWindow({
-            icon_path: '../public/favicon.ico',
-            app,
-            BrowserWindow,
-            ipcMain,
-          }),
-      },
-      {
-        role: 'quit',
-      },
-    ],
-  },
-]);
-*/
