@@ -79,7 +79,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="quantity-of-credits" />
+                      <FormattedMessage id="quantity-of-credits" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -100,7 +100,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="project-name" />
+                      <FormattedMessage id="project-name" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -121,7 +121,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="project-id" />
+                      <FormattedMessage id="project-id" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -142,7 +142,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="vintage" />
+                      <FormattedMessage id="vintage" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -163,7 +163,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="project-link" />
+                      <FormattedMessage id="project-link" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -184,7 +184,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="unit-owner" />
+                      <FormattedMessage id="unit-owner" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -204,7 +204,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="unit-block-start" />
+                      <FormattedMessage id="unit-block-start" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -224,7 +224,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="unit-block-end" />
+                      <FormattedMessage id="unit-block-end" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
