@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Body } from '../../components';
+import { getHyphensISODate, getIsDateValid } from '../../utils/dateUtils';
+import { convertPascalCaseToSentenceCase } from '../../utils/stringUtils';
 
 export const StyledDetailedViewTabItem = styled('div')`
   display: flex;
@@ -33,25 +35,38 @@ const UnitDetails = ({ data }) => {
   const getShouldKeyValueBeDisplayed = value =>
     typeof value !== 'object' || value === null;
 
-  if (isDataOfArrayType) return data.map((item, arrayIndex) => (
-    <StyledDetailedViewTabItem key={arrayIndex}>
-      <div style={{ width: '60%' }}>
-        <StyledDetailedViewTab>
-          {Object.keys(item).map(
-            (key, index) =>
-              getShouldKeyValueBeDisplayed(item[key]) && (
-                <StyledItem key={index}>
-                  <Body size="Bold" width="100%">
-                    {key}
-                  </Body>
-                  <Body>{item[key]}</Body>
-                </StyledItem>
-              ),
-          )}
-        </StyledDetailedViewTab>
-      </div>
-    </StyledDetailedViewTabItem>
-  ));
+  const getFormattedDateIfValueIsOfDateType = value => {
+    const isOfDateType = getIsDateValid(value);
+    if (!isOfDateType) {
+      return value;
+    }
+
+    const formattedDate = getHyphensISODate(value);
+    return formattedDate;
+  };
+
+  if (isDataOfArrayType)
+    return data.map((item, arrayIndex) => (
+      <StyledDetailedViewTabItem key={arrayIndex}>
+        <div style={{ width: '60%' }}>
+          <StyledDetailedViewTab>
+            {Object.keys(item).map(
+              (key, index) =>
+                getShouldKeyValueBeDisplayed(item[key]) && (
+                  <StyledItem key={index}>
+                    <Body size="Bold" width="100%">
+                      {convertPascalCaseToSentenceCase(key)}
+                    </Body>
+                    <Body>
+                      {getFormattedDateIfValueIsOfDateType(item[key])}
+                    </Body>
+                  </StyledItem>
+                ),
+            )}
+          </StyledDetailedViewTab>
+        </div>
+      </StyledDetailedViewTabItem>
+    ));
 
   return (
     <StyledDetailedViewTabItem>
@@ -62,9 +77,9 @@ const UnitDetails = ({ data }) => {
               getShouldKeyValueBeDisplayed(data[key]) && (
                 <StyledItem key={index}>
                   <Body size="Bold" width="100%">
-                    {key}
+                    {convertPascalCaseToSentenceCase(key)}
                   </Body>
-                  <Body>{data[key]}</Body>
+                  <Body>{getFormattedDateIfValueIsOfDateType(data[key])}</Body>
                 </StyledItem>
               ),
           )}

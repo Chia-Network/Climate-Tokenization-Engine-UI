@@ -12,3 +12,9 @@ export const getISODate = date => {
     ? dayjs(date, 'YYYY-MM-DD').format('YYYY/MM/DD')
     : date;
 };
+
+export const getHyphensISODate = date => {
+  return getIsDateValid(date)
+    ? dayjs(date, 'YYYY-MM-DD').format('YYYY-MM-DD')
+    : date;
+};
