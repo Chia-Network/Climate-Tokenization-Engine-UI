@@ -31,7 +31,6 @@ const CreateTokenModal = ({ data, onClose }) => {
     projectLink: data?.projectLink ?? '',
     unitOwner: data?.unitOwner ?? '',
     accountHolderWalletAddress: '',
-    existingMarketplaceIdentifiers: data?.marketplaceIdentifier ?? '',
     unitBlockStart: data?.unitBlockStart ?? '',
     unitBlockEnd: data?.unitBlockEnd ?? '',
   });
@@ -271,26 +270,6 @@ const CreateTokenModal = ({ data, onClose }) => {
                     Add valid wallet address
                   </Body>
                 )}
-              </StyledFieldContainer>
-              <StyledFieldContainer>
-                <StyledLabelContainer>
-                  <Body>
-                    <LabelContainer>
-                      *<FormattedMessage id="existing-marketplace-identifier" />
-                    </LabelContainer>
-                  </Body>
-                </StyledLabelContainer>
-                <InputContainer>
-                  <StandardInput
-                    size={InputSizeEnum.large}
-                    placeholderText={intl.formatMessage({
-                      id: 'existing-marketplace-identifier',
-                    })}
-                    state={InputStateEnum.disabled}
-                    value={formValues.existingMarketplaceIdentifiers}
-                    name="existingMarketplaceIdentifier"
-                  />
-                </InputContainer>
               </StyledFieldContainer>
             </BodyContainer>
           </FormContainerStyle>
