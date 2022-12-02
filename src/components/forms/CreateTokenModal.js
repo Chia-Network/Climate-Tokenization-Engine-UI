@@ -26,12 +26,11 @@ const CreateTokenModal = ({ data, onClose }) => {
   const [formValues, setFormValues] = useState({
     quantityOfCredits: data?.unitCount ?? 0,
     projectName: data?.projectName ?? '',
-    projectId: data?.issuance?.warehouseProjectId ?? '',
+    projectId: data?.registryProjectId ?? '',
     vintage: data?.vintageYear,
     projectLink: data?.projectLink ?? '',
     unitOwner: data?.unitOwner ?? '',
     accountHolderWalletAddress: '',
-    existingMarketplaceIdentifiers: data?.marketplaceIdentifier ?? '',
     unitBlockStart: data?.unitBlockStart ?? '',
     unitBlockEnd: data?.unitBlockEnd ?? '',
   });
@@ -51,6 +50,7 @@ const CreateTokenModal = ({ data, onClose }) => {
         sequence_num: 0,
         warehouseUnitId: data?.warehouseUnitId,
         to_address: formValues?.accountHolderWalletAddress,
+        amount: data?.unitCount,
       };
       dispatch(tokenizeUnit(submitData));
       onClose();
@@ -79,7 +79,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="quantity-of-credits" />
+                      <FormattedMessage id="quantity-of-credits" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -100,7 +100,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="project-name" />
+                      <FormattedMessage id="project-name" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -121,7 +121,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="project-id" />
+                      <FormattedMessage id="project-id" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -142,7 +142,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="vintage" />
+                      <FormattedMessage id="vintage" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -163,7 +163,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="project-link" />
+                      <FormattedMessage id="project-link" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -184,7 +184,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="unit-owner" />
+                      <FormattedMessage id="unit-owner" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -204,7 +204,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="unit-block-start" />
+                      <FormattedMessage id="unit-block-start" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -224,7 +224,7 @@ const CreateTokenModal = ({ data, onClose }) => {
                 <StyledLabelContainer>
                   <Body>
                     <LabelContainer>
-                      *<FormattedMessage id="unit-block-end" />
+                      <FormattedMessage id="unit-block-end" />
                     </LabelContainer>
                   </Body>
                 </StyledLabelContainer>
@@ -271,26 +271,6 @@ const CreateTokenModal = ({ data, onClose }) => {
                   </Body>
                 )}
               </StyledFieldContainer>
-              <StyledFieldContainer>
-                <StyledLabelContainer>
-                  <Body>
-                    <LabelContainer>
-                      *<FormattedMessage id="existing-marketplace-identifier" />
-                    </LabelContainer>
-                  </Body>
-                </StyledLabelContainer>
-                <InputContainer>
-                  <StandardInput
-                    size={InputSizeEnum.large}
-                    placeholderText={intl.formatMessage({
-                      id: 'existing-marketplace-identifier',
-                    })}
-                    state={InputStateEnum.disabled}
-                    value={formValues.existingMarketplaceIdentifiers}
-                    name="existingMarketplaceIdentifier"
-                  />
-                </InputContainer>
-              </StyledFieldContainer>
             </BodyContainer>
           </FormContainerStyle>
         </ModalFormContainerStyle>
@@ -299,4 +279,4 @@ const CreateTokenModal = ({ data, onClose }) => {
   );
 };
 
-export default CreateTokenModal;
+export { CreateTokenModal };

@@ -20,10 +20,11 @@ import {
   SearchInput,
   modalTypeEnum,
   Modal,
+  CreateTokenModal,
+  SelectCreatable,
 } from '../components';
 import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
-import CreateTokenModal from '../components/forms/CreateTokenModal';
 
 const StyledSectionContainer = styled('div')`
   display: flex;
@@ -37,9 +38,9 @@ const StyledHeaderContainer = styled('div')`
   padding: 30px 24px 14px 16px;
 `;
 
-// const StyledFiltersContainer = styled('div')`
-//   margin: 0rem 1.2813rem;
-// `;
+const StyledFiltersContainer = styled('div')`
+  margin: 0rem 1.2813rem;
+`;
 
 const StyledSubHeaderContainer = styled('div')`
   display: flex;
@@ -88,6 +89,8 @@ const CreateTokens = () => {
     isTokenCreationPendingModalVisible,
     setIsTokenCreationPendingModalVisible,
   ] = useState(false);
+  const sortOrderOptions = ['Ascending', 'Descending'];
+  const [sortOrder, setSortOrder] = useState(sortOrderOptions[1]);
 
   useEffect(() => {
     if (tabValue === 0) {
@@ -97,6 +100,7 @@ const CreateTokens = () => {
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
           isRequestMocked: false,
+          sortOrder: sortOrder,
         }),
       );
     } else if (tabValue === 1) {
@@ -106,10 +110,11 @@ const CreateTokens = () => {
           resultsLimit: constants.TABLE_ROWS,
           searchQuery: searchQuery,
           isRequestMocked: false,
+          sortOrder: sortOrder,
         }),
       );
     }
-  }, [page, tabValue, searchQuery]);
+  }, [page, tabValue, searchQuery, sortOrder]);
 
   const handleTabChange = useCallback(
     (event, newValue) => {
@@ -122,19 +127,34 @@ const CreateTokens = () => {
 
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
-      'vintageYear',
+      'registryProjectId',
       'projectName',
-      'unitOwner',
-      'countryJurisdictionOfOwner',
       'serialNumberBlock',
-      'unitBlockStart',
-      'unitBlockEnd',
-      'unitCount',
       'unitStatus',
-      'unitType',
+      'unitCount',
     ],
     [],
   );
+
+  const tokensKeysToBeDisplayed = useMemo(
+    () => [
+      'registryProjectId',
+      'projectName',
+      'serialNumberBlock',
+      'unitCount',
+      'marketplace',
+      'marketplaceIdentifier',
+      'marketplaceLink',
+    ],
+    [],
+  );
+
+  /*
+Tokenization Date (show timestamp DATE, not hours or minutes) 11-16-2022
+Marketplace
+Marketplace Identifier
+Marketplace link
+  */
 
   const tokenizeUnitButtonConfig = useMemo(
     () => ({
@@ -180,13 +200,14 @@ const CreateTokens = () => {
             />
           </StyledSearchContainer>
 
-          {/* <StyledFiltersContainer>
+          <StyledFiltersContainer>
             <SelectCreatable
-              options={['Ken', 'Craig', 'Michael']}
-              selected={'Craig'}
-              onChange={val => console.log(val)}
+              options={sortOrderOptions}
+              selected={sortOrder}
+              isClearable={false}
+              onChange={val => setSortOrder(val)}
             />
-          </StyledFiltersContainer> */}
+          </StyledFiltersContainer>
         </StyledHeaderContainer>
 
         <StyledSubHeaderContainer>
@@ -195,7 +216,7 @@ const CreateTokens = () => {
             <Tab label={intl.formatMessage({ id: 'existing-tokens' })} />
           </Tabs>
           <StyledCSVOperationsContainer>
-            <DownloadIcon width={20} height={20} />
+            {tabValue === 1 && <DownloadIcon width={20} height={20} />}
           </StyledCSVOperationsContainer>
         </StyledSubHeaderContainer>
         <StyledBodyContainer>
@@ -220,7 +241,7 @@ const CreateTokens = () => {
           <TabPanel value={tabValue} index={1}>
             {tokens?.length > 0 ? (
               <DataTable
-                headings={untokenizedUnitsKeysToBeDisplayed}
+                headings={tokensKeysToBeDisplayed}
                 data={tokens}
                 changePageTo={page => setPage(page)}
                 currentPage={page}

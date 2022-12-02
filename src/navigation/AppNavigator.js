@@ -76,6 +76,10 @@ const AppNavigator = () => {
                 element={<Pages.CreateTokens />}
               />
               <Route
+                path={constants.ROUTES.revertTokens}
+                element={<Pages.RevertTokens />}
+              />
+              <Route
                 path={constants.ROUTES.storybook}
                 element={<Pages.StoryBook />}
               />

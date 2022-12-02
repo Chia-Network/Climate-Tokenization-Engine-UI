@@ -25,8 +25,15 @@ const headings = {
  */
 const colors = {
   default: {
-    primary: '#3B8EE0',
-    secondary: '#F2F2F2',
+    primary: '#5ECE71',
+    primaryDark: '#3AAC59',
+    secondary: '#094D4C',
+    gray1: '#65838A',
+    gray2: '#95B0B7',
+    gray3: '#CCDDE1',
+    gray4: '#E2EDF0',
+    gray5: '#F1F7F9',
+    gray6: '#F8FBFC',
     background: '#F0F2F5',
     onSurface: '#000000',
     onButton: '#FFFFFF',
@@ -53,11 +60,11 @@ const colors = {
 
 const typography = {
   primary: {
-    regular: 'NunitoSans',
-    semiBold: 'NunitoSansSemiBold',
-    bold: 'NunitoSansBold',
-    extraBold: 'NunitoSansExtraBold',
-    light: 'NunitoSansLight',
+    regular: 'Poppins',
+    semiBold: 'PoppinsSemiBold',
+    bold: 'PoppinsBold',
+    extraBold: 'PoppinsExtraBold',
+    light: 'PoppinsLight',
   },
 };
 

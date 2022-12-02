@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem } = require('electron');
+const openAboutWindow = require('about-window').default;
 
 const path = require('path');
 const url = require('url');
@@ -14,7 +15,7 @@ function createWindow() {
       nodeIntegration: true,
     },
     icon: path.join(__dirname, '/../public/favicon.ico'),
-    title: 'Climate Warehouse',
+    title: 'Carbon Tokenization Engine',
   });
 
   mainWindow.loadURL(
@@ -34,6 +35,34 @@ function createWindow() {
     e.preventDefault();
     require('electron').shell.openExternal(url);
   });
+
+  let defaultMenu = Menu.getApplicationMenu();
+  let newMenu = new Menu();
+  defaultMenu.items.forEach(mainMenuItem => {
+    newMenu.append(mainMenuItem);
+  });
+
+  newMenu.append(
+    new MenuItem({
+      label: 'About',
+      submenu: [
+        {
+          label: 'About',
+          click() {
+            openAboutWindow({
+              icon_path: path.join(
+                __dirname,
+                '/../public/android-chrome-512x512.png',
+              ),
+              copyright: '© Chia Network 2022',
+            });
+          },
+        },
+      ],
+    }),
+  );
+
+  Menu.setApplicationMenu(newMenu);
 }
 
 app.on('ready', createWindow);

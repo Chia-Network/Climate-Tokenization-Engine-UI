@@ -1,6 +1,6 @@
-# Climate Portal Auxillery App
+# Carbon Tokenization Engine Auxillery App
 
-Auxillery App for the Climate Portal
+Auxillery App for the 
 
 ## Quickstart
 
