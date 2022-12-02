@@ -470,9 +470,6 @@ export const confirmDetokanization = data => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
     };
 
     const failedMessageId = 'detokanization-not-successful';
