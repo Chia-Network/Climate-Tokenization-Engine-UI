@@ -2,11 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import {
-  LocaleSwitcher,
-  ClimateWarehouseLogo,
-  Connect,
-} from '../../components';
+import { LocaleSwitcher, AppLogo, Connect } from '../../components';
 
 const AppHeaderContainer = styled('div')`
   width: 100%;
@@ -18,11 +14,6 @@ const AppHeaderContainer = styled('div')`
   gap: 20px;
   padding: 0rem 1.5rem;
   box-sizing: border-box;
-`;
-
-const LogoContainer = styled('div')`
-  align-self: center;
-  height: 100%;
 `;
 
 const ButtonsContainer = styled('div')`
@@ -42,9 +33,7 @@ const AppHeader = () => {
 
   return (
     <AppHeaderContainer>
-      <LogoContainer>
-        <ClimateWarehouseLogo width="100%" height="100%" />
-      </LogoContainer>
+      <AppLogo height={40} width={40} />
       <ButtonsContainer selectedTheme={appStore.theme}>
         <Connect />
         <LocaleSwitcher />

@@ -127,19 +127,34 @@ const CreateTokens = () => {
 
   const untokenizedUnitsKeysToBeDisplayed = useMemo(
     () => [
-      'vintageYear',
+      'registryProjectId',
       'projectName',
-      'unitOwner',
-      'countryJurisdictionOfOwner',
       'serialNumberBlock',
-      'unitBlockStart',
-      'unitBlockEnd',
-      'unitCount',
       'unitStatus',
-      'unitType',
+      'unitCount',
     ],
     [],
   );
+
+  const tokensKeysToBeDisplayed = useMemo(
+    () => [
+      'registryProjectId',
+      'projectName',
+      'serialNumberBlock',
+      'unitCount',
+      'marketplace',
+      'marketplaceIdentifier',
+      'marketplaceLink',
+    ],
+    [],
+  );
+
+  /*
+Tokenization Date (show timestamp DATE, not hours or minutes) 11-16-2022
+Marketplace
+Marketplace Identifier
+Marketplace link
+  */
 
   const tokenizeUnitButtonConfig = useMemo(
     () => ({
@@ -201,7 +216,7 @@ const CreateTokens = () => {
             <Tab label={intl.formatMessage({ id: 'existing-tokens' })} />
           </Tabs>
           <StyledCSVOperationsContainer>
-            <DownloadIcon width={20} height={20} />
+            {tabValue === 1 && <DownloadIcon width={20} height={20} />}
           </StyledCSVOperationsContainer>
         </StyledSubHeaderContainer>
         <StyledBodyContainer>
@@ -226,7 +241,7 @@ const CreateTokens = () => {
           <TabPanel value={tabValue} index={1}>
             {tokens?.length > 0 ? (
               <DataTable
-                headings={untokenizedUnitsKeysToBeDisplayed}
+                headings={tokensKeysToBeDisplayed}
                 data={tokens}
                 changePageTo={page => setPage(page)}
                 currentPage={page}

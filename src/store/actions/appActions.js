@@ -254,6 +254,9 @@ export const addProjectDetailsToUnits = ({
                 projectLink:
                   projectsHashmap[unitItem.issuance?.warehouseProjectId]
                     .projectLink,
+                registryProjectId:
+                  projectsHashmap[unitItem.issuance?.warehouseProjectId]
+                    .projectId,
               };
             }
           }
@@ -342,35 +345,6 @@ export const getUntokenizedUnits = ({
         }),
       );
     }
-  };
-};
-
-export const getProjects = ({ searchQuery, orgUid, isRequestMocked }) => {
-  return async dispatch => {
-    let url = `${constants.API_HOST}/projects?`;
-
-    if (searchQuery) {
-      url += `search=${searchQuery}`;
-    }
-    if (orgUid) {
-      url += `orgUid=${orgUid}`;
-    }
-
-    const failedMessageId = 'projects-not-loaded';
-
-    const onSuccessHandler = results => {
-      dispatch(setProjects(results));
-    };
-
-    dispatch(
-      fetchWrapper({
-        url,
-        failedMessageId,
-        onSuccessHandler,
-        isRequestMocked,
-        projectsStub,
-      }),
-    );
   };
 };
 
@@ -492,6 +466,9 @@ export const confirmDetokanization = data => {
 
     const payload = {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',

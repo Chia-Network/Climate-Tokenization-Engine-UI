@@ -1,5 +1,5 @@
 {
-  "name": "climate-portal",
+  "name": "carbon-tokenization-engine",
   "version": "1.0.10",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
@@ -17,6 +17,7 @@
     "@mui/lab": "*",
     "@mui/material": "^5.0.6",
     "@mui/x-date-pickers": "*",
+    "about-window": "^1.15.2",
     "dayjs": "^1.10.7",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
@@ -99,8 +100,8 @@
     "standard-version": "^9.3.2"
   },
   "build": {
-    "appId": "org.chia.climate-portal",
-    "productName": "Climate Portal",
+    "appId": "org.chia.carbon-tokenization-engine",
+    "productName": "Carbon Tokenization Engine",
     "files": [
       "build/**/*",
       "node_modules/**/*"
@@ -115,15 +116,18 @@
           "universal"
         ]
       },
-      "publish": null
+      "publish": null,
+      "icon": "src/assets/img/apple-touch-icon.png"
     },
     "win": {
       "target": "nsis",
-      "publish": null
+      "publish": null,
+      "icon": "src/assets/img/mstile-150x150.png"
     },
     "linux": {
       "target": "deb",
-      "publish": null
+      "publish": null,
+      "icon": "src/assets/img/tokenization-engine-logo.png"
     }
   },
   "standard-version": {

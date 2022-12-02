@@ -103,7 +103,7 @@ const DetokenizeModal = ({ onClose }) => {
                     }
                   />
                   {isValidationOn && !isFileValid && (
-                    <Body color="red">
+                    <Body size="Small" color="red">
                       {intl.formatMessage({ id: 'add-valid-detok-file' })}
                     </Body>
                   )}
@@ -111,7 +111,7 @@ const DetokenizeModal = ({ onClose }) => {
                     isFileValid &&
                     isPasswordValid &&
                     !isDetokStringValid && (
-                      <Body color="red">
+                      <Body size="Small" color="red">
                         {intl.formatMessage({
                           id: 'detok-file-archive-not-valid',
                         })}
@@ -147,7 +147,7 @@ const DetokenizeModal = ({ onClose }) => {
                   />
                 </InputContainer>
                 {isValidationOn && !isPasswordValid && (
-                  <Body color="red">
+                  <Body size="Small" color="red">
                     {intl.formatMessage({ id: 'add-valid-detok-password' })}
                   </Body>
                 )}
