@@ -24,10 +24,6 @@ const NavContainer = styled('div')`
   min-width: 16rem;
   height: 100%;
   background-color: ${props => props.theme.colors.default.primaryDark};
-  background-image: url(https://www.chia.net/wp-content/themes/chia-theme/dist/images/tiling-abstract-shapes.png);
-  background-repeat: no-repeat;
-  background-position: -63px 135%;
-  background-size: 238px;
 `;
 
 const MenuItem = styled(Link)`
