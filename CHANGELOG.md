@@ -1,3 +1,12 @@
+## [1.0.12](https://github.com/Chia-Network/Climate-Portal-UI/compare/1.0.11...1.0.12) (2022-12-05)
+
+
+### Features
+
+* remove leaves ([51dae61](https://github.com/Chia-Network/Climate-Portal-UI/commit/51dae610a3e9c1863253ff0d19c90c075b6daac5))
+
+
+
 ## [1.0.11](https://github.com/Chia-Network/Climate-Portal-UI/compare/1.0.10...1.0.11) (2022-12-02)
 
 
