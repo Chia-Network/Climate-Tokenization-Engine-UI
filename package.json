@@ -20,6 +20,7 @@
     "about-window": "^1.15.2",
     "dayjs": "^1.10.7",
     "formik": "^2.2.9",
+    "json-as-xlsx": "^2.5.3",
     "lodash": "^4.17.21",
     "minizip-asm.js": "^1.0.10",
     "qrcode.react": "^2.0.0",

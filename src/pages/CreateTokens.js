@@ -25,6 +25,7 @@ import {
 } from '../components';
 import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
 import constants from '../constants';
+import { downloadXlsxFromDataAndHeadings } from '../utils/xlsxUtils';
 
 const StyledSectionContainer = styled('div')`
   display: flex;
@@ -216,7 +217,18 @@ Marketplace link
             <Tab label={intl.formatMessage({ id: 'existing-tokens' })} />
           </Tabs>
           <StyledCSVOperationsContainer>
-            {tabValue === 1 && <DownloadIcon width={20} height={20} />}
+            {tabValue === 1 && (
+              <DownloadIcon
+                width={20}
+                height={20}
+                onClick={() =>
+                  downloadXlsxFromDataAndHeadings(
+                    tokens,
+                    tokensKeysToBeDisplayed,
+                  )
+                }
+              />
+            )}
           </StyledCSVOperationsContainer>
         </StyledSubHeaderContainer>
         <StyledBodyContainer>
