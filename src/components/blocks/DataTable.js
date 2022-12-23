@@ -38,14 +38,6 @@ const Th = styled('th')`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   text-align: center;
-
-  ${props =>
-    props.stick &&
-    css`
-      position: sticky;
-      right: 0px;
-      background-color: rgba(242, 242, 242);
-    `}
 `;
 
 const Tr = styled('tr')`
@@ -62,17 +54,16 @@ const Td = styled('td')`
   vertical-align: inherit;
   max-width: 200px;
   text-align: center;
-  ${props =>
-    props.sticky &&
-    css`
-      position: sticky;
-      right: 0px;
-      background-color: ${props.theme.colors.default.onButton};
-    `}
-
   button {
     white-space: nowrap;
   }
+`;
+
+const StyledCenterContentContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StyledPaginationContainer = styled('div')`
@@ -112,6 +103,7 @@ const DataTable = withTheme(
     changePageTo,
     currentPage,
     numberOfPages,
+    tooltipsHeadings,
   }) => {
     const { theme } = useSelector(state => state);
     const ref = React.useRef(null);
@@ -138,7 +130,7 @@ const DataTable = withTheme(
                   </Th>
                 ))}
                 {(actions || buttonConfig) && (
-                  <Th selectedTheme={theme} key={'action'} sticky>
+                  <Th selectedTheme={theme} key={'action'}>
                     <TableCellHeaderText>
                       <FormattedMessage id="actions" />
                     </TableCellHeaderText>
@@ -154,20 +146,24 @@ const DataTable = withTheme(
                       <DataTableCell
                         heading={key}
                         value={record[key]}
-                        // tooltipsHeadings={tooltipsHeadings}
+                        tooltipsHeadings={tooltipsHeadings}
                       />
                     </Td>
                   ))}
 
                   {(actions || buttonConfig) && (
-                    <Td selectedTheme={theme} sticky>
-                      {actions && <BasicMenu options={actions} item={record} />}
-                      {buttonConfig && (
-                        <PrimaryButton
-                          label={buttonConfig.label}
-                          onClick={() => buttonConfig.action(record)}
-                        />
-                      )}
+                    <Td selectedTheme={theme}>
+                      <StyledCenterContentContainer>
+                        {actions && (
+                          <BasicMenu options={actions} item={record} />
+                        )}
+                        {buttonConfig && (
+                          <PrimaryButton
+                            label={buttonConfig.label}
+                            onClick={() => buttonConfig.action(record)}
+                          />
+                        )}
+                      </StyledCenterContentContainer>
                     </Td>
                   )}
                 </Tr>

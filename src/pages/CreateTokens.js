@@ -137,6 +137,11 @@ const CreateTokens = () => {
     [],
   );
 
+  const untokenizedTooltipsHeadings = useMemo(
+    () => ['registryProjectId', 'projectName', 'serialNumberBlock'],
+    [],
+  );
+
   const tokensKeysToBeDisplayed = useMemo(
     () => [
       'registryProjectId',
@@ -147,6 +152,11 @@ const CreateTokens = () => {
       'marketplaceIdentifier',
       'marketplaceLink',
     ],
+    [],
+  );
+
+  const tokenizedTooltipsHeadings = useMemo(
+    () => ['marketplaceIdentifier'],
     [],
   );
 
@@ -236,6 +246,7 @@ Marketplace link
             {untokenizedUnits?.length > 0 ? (
               <DataTable
                 headings={untokenizedUnitsKeysToBeDisplayed}
+                tooltipsHeadings={untokenizedTooltipsHeadings}
                 data={untokenizedUnits}
                 changePageTo={page => setPage(page)}
                 currentPage={page}
@@ -254,6 +265,7 @@ Marketplace link
             {tokens?.length > 0 ? (
               <DataTable
                 headings={tokensKeysToBeDisplayed}
+                tooltipsHeadings={tokenizedTooltipsHeadings}
                 data={tokens}
                 changePageTo={page => setPage(page)}
                 currentPage={page}
