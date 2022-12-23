@@ -23,6 +23,9 @@ const THead = styled('thead')`
   background-color: ${props => props.theme.colors.default.gray3};
   border-left: 1px solid whitesmoke;
   border-right: 1px solid whitesmoke;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 `;
 
 const Th = styled('th')`
