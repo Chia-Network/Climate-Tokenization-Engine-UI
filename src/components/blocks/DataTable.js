@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
-import { TableCellHeaderText, TableCellText } from '../typography';
+import { TableCellHeaderText } from '../typography';
 import { convertPascalCaseToSentenceCase } from '../../utils/stringUtils';
 import { BasicMenu, PrimaryButton, Pagination } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { FormattedMessage } from 'react-intl';
+import { DataTableCell } from './DataTableCell';
 
 const Table = styled('table')`
   box-sizing: border-box;
@@ -36,6 +37,7 @@ const Th = styled('th')`
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
+  text-align: center;
 
   ${props =>
     props.stick &&
@@ -59,6 +61,7 @@ const Td = styled('td')`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   max-width: 200px;
+  text-align: center;
   ${props =>
     props.sticky &&
     css`
@@ -66,12 +69,6 @@ const Td = styled('td')`
       right: 0px;
       background-color: ${props.theme.colors.default.onButton};
     `}
-
-  ${props =>
-    props.columnId === 'orgUid' &&
-    `
-  text-align: center;
-  `}
 
   button {
     white-space: nowrap;
@@ -154,16 +151,11 @@ const DataTable = withTheme(
                 <Tr index={index} selectedTheme={theme} key={index}>
                   {headings.map((key, index) => (
                     <Td selectedTheme={theme} columnId={key} key={index}>
-                      <TableCellText
-                        tooltip={record[key] && record[key].toString()}
-                      >
-                        {record[key] === 'null' ||
-                        record[key] === '' ||
-                        record[key] === null ||
-                        !record[key]
-                          ? '--'
-                          : record[key].toString()}
-                      </TableCellText>
+                      <DataTableCell
+                        heading={key}
+                        value={record[key]}
+                        // tooltipsHeadings={tooltipsHeadings}
+                      />
                     </Td>
                   ))}
 
