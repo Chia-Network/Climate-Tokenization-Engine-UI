@@ -186,7 +186,7 @@ const CreateTokens = () => {
   );
 
   const tokenizedTooltipsHeadings = useMemo(
-    () => ['marketplaceIdentifier'],
+    () => ['marketplaceIdentifier', 'projectName', 'serialNumberBlock'],
     [],
   );
 
