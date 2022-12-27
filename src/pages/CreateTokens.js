@@ -23,7 +23,11 @@ import {
   CreateTokenModal,
   SelectCreatable,
 } from '../components';
-import { getTokens, getUntokenizedUnits } from '../store/actions/appActions';
+import {
+  getCountForTokensAndUntokenizedUnits,
+  getTokens,
+  getUntokenizedUnits,
+} from '../store/actions/appActions';
 import constants from '../constants';
 import { downloadXlsxFromDataAndHeadings } from '../utils/xlsxUtils';
 
@@ -84,14 +88,40 @@ const CreateTokens = () => {
   const [tabValue, setTabValue] = useState(0);
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const { untokenizedUnits, paginationNrOfPages, tokens, notification } =
-    useSelector(store => store);
+  const {
+    untokenizedUnits,
+    paginationNrOfPages,
+    tokens,
+    notification,
+    untokenizedUnitsCount,
+    tokensCount,
+  } = useSelector(store => store);
   const [
     isTokenCreationPendingModalVisible,
     setIsTokenCreationPendingModalVisible,
   ] = useState(false);
   const sortOrderOptions = ['Ascending', 'Descending'];
   const [sortOrder, setSortOrder] = useState(sortOrderOptions[1]);
+
+  useEffect(() => {
+    dispatch(getCountForTokensAndUntokenizedUnits());
+  }, []);
+
+  const untokenizedUnitsTabLabel = untokenizedUnitsCount
+    ? `${intl.formatMessage({
+        id: 'untokenized-units',
+      })} (${untokenizedUnitsCount})`
+    : intl.formatMessage({
+        id: 'untokenized-units',
+      });
+
+  const tokensTabLabel = tokensCount
+    ? `${intl.formatMessage({
+        id: 'existing-tokens',
+      })} (${tokensCount})`
+    : intl.formatMessage({
+        id: 'existing-tokens',
+      });
 
   useEffect(() => {
     if (tabValue === 0) {
@@ -160,13 +190,6 @@ const CreateTokens = () => {
     [],
   );
 
-  /*
-Tokenization Date (show timestamp DATE, not hours or minutes) 11-16-2022
-Marketplace
-Marketplace Identifier
-Marketplace link
-  */
-
   const tokenizeUnitButtonConfig = useMemo(
     () => ({
       label: intl.formatMessage({ id: 'create-token' }),
@@ -223,8 +246,8 @@ Marketplace link
 
         <StyledSubHeaderContainer>
           <Tabs value={tabValue} onChange={handleTabChange}>
-            <Tab label={intl.formatMessage({ id: 'untokenized-units' })} />
-            <Tab label={intl.formatMessage({ id: 'existing-tokens' })} />
+            <Tab label={untokenizedUnitsTabLabel} />
+            <Tab label={tokensTabLabel} />
           </Tabs>
           <StyledCSVOperationsContainer>
             {tabValue === 1 && (

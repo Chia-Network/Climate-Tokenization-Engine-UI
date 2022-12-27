@@ -12,7 +12,9 @@ const initialState = {
   notification: null,
   refresh: false,
   untokenizedUnits: null,
+  untokenizedUnitsCount: null,
   tokens: null,
+  tokensCount: null,
   apiKey: null,
   serverAddress: null,
   paginationNrOfPages: null,
@@ -25,6 +27,12 @@ const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case appActions.SET_HOME_ORG:
       return u({ homeOrgUid: action.payload }, state);
+
+    case appActions.SET_TOKENS_COUNT:
+      return u({ tokensCount: action.payload }, state);
+
+    case appActions.SET_UNTOKENIZED_UNITS_COUNT:
+      return u({ untokenizedUnitsCount: action.payload }, state);
 
     case appActions.SET_UNIT_TO_BE_DETOKENIZED:
       return u({ unitToBeDetokenized: action.payload }, state);

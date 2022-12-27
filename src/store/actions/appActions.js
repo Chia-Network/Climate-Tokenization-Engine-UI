@@ -18,10 +18,12 @@ export const actions = keyMirror(
   'SET_NOTIFICATION',
   'REFRESH_APP',
   'SET_UNTOKENIZED_UNITS',
+  'SET_UNTOKENIZED_UNITS_COUNT',
   'SIGN_USER_IN',
   'SIGN_USER_OUT',
   'SET_PAGINATION_NR_OF_PAGES',
   'SET_TOKENS',
+  'SET_TOKENS_COUNT',
   'SET_PROJECTS',
   'SET_HOME_ORG',
   'SET_UNIT_TO_BE_DETOKENIZED',
@@ -52,6 +54,11 @@ export const setUntokenizedUnits = units => ({
   payload: units,
 });
 
+export const setUntokenizedUnitsCount = count => ({
+  type: 'SET_UNTOKENIZED_UNITS_COUNT',
+  payload: count,
+});
+
 export const setProjects = projects => ({
   type: 'SET_PROJECTS',
   payload: projects,
@@ -60,6 +67,11 @@ export const setProjects = projects => ({
 export const setTokens = tokens => ({
   type: 'SET_TOKENS',
   payload: tokens,
+});
+
+export const setTokensCount = count => ({
+  type: 'SET_TOKENS_COUNT',
+  payload: count,
 });
 
 export const activateProgressIndicator = {
@@ -189,6 +201,48 @@ export const importHomeOrg = orgUid => {
         failedMessageId: 'organization-not-created',
       }),
     );
+  };
+};
+
+export const getCountForTokensAndUntokenizedUnits = () => {
+  return async dispatch => {
+    try {
+      let url = `${constants.API_HOST}/units/untokenized?page=${1}&limit=${
+        constants.TABLE_ROWS
+      }`;
+      let response = await fetch(url);
+      let results = await response.json();
+      let untokenizedUnitsCount = results?.data?.length;
+      const untokenizedUnitsPageCount = results?.pageCount;
+
+      if (untokenizedUnitsPageCount > 0) {
+        url = `${constants.API_HOST}/units/untokenized?page=${untokenizedUnitsPageCount}&limit=${constants.TABLE_ROWS}`;
+        response = await fetch(url);
+        results = await response.json();
+        untokenizedUnitsCount += results?.data?.length;
+      }
+
+      dispatch(setUntokenizedUnitsCount(untokenizedUnitsCount));
+
+      url = `${constants.API_HOST}/units/tokenized?page=${1}&limit=${
+        constants.TABLE_ROWS
+      }`;
+      response = await fetch(url);
+      results = await response.json();
+      let tokensCount = results?.data?.length;
+      const tokensPageCount = results?.pageCount;
+
+      if (tokensPageCount > 0) {
+        url = `${constants.API_HOST}/units/tokenized?page=${tokensPageCount}&limit=${constants.TABLE_ROWS}`;
+        response = await fetch(url);
+        results = await response.json();
+        tokensCount += results?.data?.length;
+      }
+
+      dispatch(setTokensCount(tokensCount));
+    } catch {
+      dispatch(setConnectionCheck(false));
+    }
   };
 };
 
