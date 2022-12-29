@@ -16,7 +16,8 @@ import {
   TabPanel,
   DownloadIcon,
   H3,
-  DataTable,
+  Table,
+  TableColumnTypeEnum,
   SearchInput,
   modalTypeEnum,
   Modal,
@@ -156,45 +157,94 @@ const CreateTokens = () => {
     [setTabValue],
   );
 
-  const untokenizedUnitsKeysToBeDisplayed = useMemo(
+  const tokensTableConfig = useMemo(
     () => [
-      'registryProjectId',
-      'projectName',
-      'serialNumberBlock',
-      'unitStatus',
-      'unitCount',
+      {
+        title: 'Registry Project Id',
+        key: 'registryProjectId',
+        type: TableColumnTypeEnum.string,
+        isTooltipVisible: true,
+      },
+      {
+        title: 'Project Name',
+        key: 'projectName',
+        type: TableColumnTypeEnum.string,
+        isTooltipVisible: true,
+      },
+      {
+        title: 'Serial Number Block',
+        key: 'serialNumberBlock',
+        type: TableColumnTypeEnum.string,
+        isTooltipVisible: true,
+      },
+      {
+        title: 'Unit Count',
+        key: 'unitCount',
+        type: TableColumnTypeEnum.quantity,
+      },
+      {
+        title: 'Marketplace',
+        key: 'marketplace',
+        type: TableColumnTypeEnum.string,
+      },
+      {
+        title: 'Marketplace Identifier',
+        key: 'marketplaceIdentifier',
+        type: TableColumnTypeEnum.string,
+        isTooltipVisible: true,
+      },
+      {
+        title: 'Marketplace Link',
+        key: 'marketplaceLink',
+        type: TableColumnTypeEnum.string,
+      },
     ],
-    [],
-  );
-
-  const untokenizedTooltipsHeadings = useMemo(
-    () => ['registryProjectId', 'projectName', 'serialNumberBlock'],
     [],
   );
 
   const tokensKeysToBeDisplayed = useMemo(
+    () => tokensTableConfig.map(configItem => configItem.key),
+    [tokensTableConfig],
+  );
+
+  const untokenizedUnitsTableConfig = useMemo(
     () => [
-      'registryProjectId',
-      'projectName',
-      'serialNumberBlock',
-      'unitCount',
-      'marketplace',
-      'marketplaceIdentifier',
-      'marketplaceLink',
+      {
+        title: 'Registry Project Id',
+        key: 'registryProjectId',
+        type: TableColumnTypeEnum.string,
+        isTooltipVisible: true,
+      },
+      {
+        title: 'Project Name',
+        key: 'projectName',
+        type: TableColumnTypeEnum.string,
+        isTooltipVisible: true,
+      },
+      {
+        title: 'Serial Number Block',
+        key: 'serialNumberBlock',
+        type: TableColumnTypeEnum.string,
+        isTooltipVisible: true,
+      },
+      {
+        title: 'Unit Status',
+        key: 'unitStatus',
+        type: TableColumnTypeEnum.string,
+      },
+      {
+        title: 'Unit Count',
+        key: 'unitCount',
+        type: TableColumnTypeEnum.quantity,
+      },
+      {
+        title: 'Actions',
+        key: 'actions',
+        type: TableColumnTypeEnum.button,
+        buttonLabel: intl.formatMessage({ id: 'create-token' }),
+        buttonOnClick: item => setUnitToBeTokenized(item),
+      },
     ],
-    [],
-  );
-
-  const tokenizedTooltipsHeadings = useMemo(
-    () => ['marketplaceIdentifier', 'projectName', 'serialNumberBlock'],
-    [],
-  );
-
-  const tokenizeUnitButtonConfig = useMemo(
-    () => ({
-      label: intl.formatMessage({ id: 'create-token' }),
-      action: item => setUnitToBeTokenized(item),
-    }),
     [],
   );
 
@@ -267,14 +317,12 @@ const CreateTokens = () => {
         <StyledBodyContainer>
           <TabPanel value={tabValue} index={0}>
             {untokenizedUnits?.length > 0 ? (
-              <DataTable
-                headings={untokenizedUnitsKeysToBeDisplayed}
-                tooltipsHeadings={untokenizedTooltipsHeadings}
+              <Table
+                config={untokenizedUnitsTableConfig}
                 data={untokenizedUnits}
                 changePageTo={page => setPage(page)}
                 currentPage={page}
                 numberOfPages={paginationNrOfPages}
-                buttonConfig={tokenizeUnitButtonConfig}
               />
             ) : (
               <NoDataMessageContainer>
@@ -286,9 +334,8 @@ const CreateTokens = () => {
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
             {tokens?.length > 0 ? (
-              <DataTable
-                headings={tokensKeysToBeDisplayed}
-                tooltipsHeadings={tokenizedTooltipsHeadings}
+              <Table
+                config={tokensTableConfig}
                 data={tokens}
                 changePageTo={page => setPage(page)}
                 currentPage={page}
