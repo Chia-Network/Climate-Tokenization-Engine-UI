@@ -136,7 +136,11 @@ const Table = withTheme(
                 <Tr
                   selectedTheme={theme}
                   key={index}
-                  onClick={() => config?.rows?.onRowClick(record)}
+                  onClick={
+                    config?.rows?.onRowClick
+                      ? () => config?.rows?.onRowClick(record)
+                      : undefined
+                  }
                 >
                   {config.columns.map(columnConfig => (
                     <Td selectedTheme={theme} key={columnConfig.key}>
