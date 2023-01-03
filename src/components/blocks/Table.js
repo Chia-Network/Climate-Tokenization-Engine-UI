@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
-import { TableCellHeaderText } from '../typography';
 import { Pagination, TableCell } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
 
@@ -36,18 +35,32 @@ const StyledTableHead = styled('thead')`
 
 const Th = styled('th')`
   padding: 1rem;
-  color: ${props => props.theme.colors.default.secondary};
   display: table-cell;
   text-align: left;
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   text-align: center;
+  color: ${props => props.color || props.theme.colors.default.secondary};
+  font-size: 0.875rem;
+  font-family: ${props => props.theme.typography.primary.semiBold};
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.375rem;
 `;
 
 const Tr = styled('tr')`
   color: ${props => props.theme.colors.default.secondary};
   background-color: ${props => props.theme.colors.default.onButton};
+
+  ${props =>
+    props.onClick &&
+    css`
+      :hover {
+        background-color: ${props => props.theme.colors.default.gray6};
+        cursor: pointer;
+      }
+    `}
 `;
 
 const Td = styled('td')`
@@ -111,19 +124,21 @@ const Table = withTheme(
           <StyledTable selectedTheme={theme}>
             <StyledTableHead selectedTheme={theme}>
               <tr>
-                {config.map(columnConfig => (
+                {config.columns.map(columnConfig => (
                   <Th selectedTheme={theme} key={columnConfig.key}>
-                    <TableCellHeaderText>
-                      {columnConfig.title}
-                    </TableCellHeaderText>
+                    {columnConfig.title}
                   </Th>
                 ))}
               </tr>
             </StyledTableHead>
             <tbody style={{ position: 'relative' }}>
               {data.map((record, index) => (
-                <Tr selectedTheme={theme} key={index}>
-                  {config.map(columnConfig => (
+                <Tr
+                  selectedTheme={theme}
+                  key={index}
+                  onClick={() => config?.rows?.onRowClick(record)}
+                >
+                  {config.columns.map(columnConfig => (
                     <Td selectedTheme={theme} key={columnConfig.key}>
                       <TableCell
                         config={columnConfig}

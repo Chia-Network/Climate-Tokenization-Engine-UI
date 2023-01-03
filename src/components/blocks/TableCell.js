@@ -1,3 +1,4 @@
+import { Chip } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme } from 'styled-components';
@@ -64,6 +65,18 @@ const TableCell = withTheme(({ config, value, record }) => {
   if (config.type === TableColumnTypeEnum.date) {
     return (
       <Text selectedTheme={appStore.theme}>{getISODateWithHyphens(value)}</Text>
+    );
+  }
+
+  if (config.type === TableColumnTypeEnum.pill) {
+    return (
+      <StyledAlignedDiv>
+        <Chip
+          label={value}
+          color={config.pillColorConfig[value]}
+          variant="outlined"
+        />
+      </StyledAlignedDiv>
     );
   }
 

@@ -158,93 +158,97 @@ const CreateTokens = () => {
   );
 
   const tokensTableConfig = useMemo(
-    () => [
-      {
-        title: 'Registry Project Id',
-        key: 'registryProjectId',
-        type: TableColumnTypeEnum.string,
-        isTooltipVisible: true,
-      },
-      {
-        title: 'Project Name',
-        key: 'projectName',
-        type: TableColumnTypeEnum.string,
-        isTooltipVisible: true,
-      },
-      {
-        title: 'Serial Number Block',
-        key: 'serialNumberBlock',
-        type: TableColumnTypeEnum.string,
-        isTooltipVisible: true,
-      },
-      {
-        title: 'Unit Count',
-        key: 'unitCount',
-        type: TableColumnTypeEnum.quantity,
-      },
-      {
-        title: 'Marketplace',
-        key: 'marketplace',
-        type: TableColumnTypeEnum.string,
-      },
-      {
-        title: 'Marketplace Identifier',
-        key: 'marketplaceIdentifier',
-        type: TableColumnTypeEnum.string,
-        isTooltipVisible: true,
-      },
-      {
-        title: 'Marketplace Link',
-        key: 'marketplaceLink',
-        type: TableColumnTypeEnum.string,
-      },
-    ],
+    () => ({
+      columns: [
+        {
+          title: 'Registry Project Id',
+          key: 'registryProjectId',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Project Name',
+          key: 'projectName',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Serial Number Block',
+          key: 'serialNumberBlock',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Unit Count',
+          key: 'unitCount',
+          type: TableColumnTypeEnum.quantity,
+        },
+        {
+          title: 'Marketplace',
+          key: 'marketplace',
+          type: TableColumnTypeEnum.string,
+        },
+        {
+          title: 'Marketplace Identifier',
+          key: 'marketplaceIdentifier',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Marketplace Link',
+          key: 'marketplaceLink',
+          type: TableColumnTypeEnum.string,
+        },
+      ],
+    }),
     [],
   );
 
   const tokensKeysToBeDisplayed = useMemo(
-    () => tokensTableConfig.map(configItem => configItem.key),
+    () => tokensTableConfig.columns.map(configItem => configItem.key),
     [tokensTableConfig],
   );
 
   const untokenizedUnitsTableConfig = useMemo(
-    () => [
-      {
-        title: 'Registry Project Id',
-        key: 'registryProjectId',
-        type: TableColumnTypeEnum.string,
-        isTooltipVisible: true,
-      },
-      {
-        title: 'Project Name',
-        key: 'projectName',
-        type: TableColumnTypeEnum.string,
-        isTooltipVisible: true,
-      },
-      {
-        title: 'Serial Number Block',
-        key: 'serialNumberBlock',
-        type: TableColumnTypeEnum.string,
-        isTooltipVisible: true,
-      },
-      {
-        title: 'Unit Status',
-        key: 'unitStatus',
-        type: TableColumnTypeEnum.string,
-      },
-      {
-        title: 'Unit Count',
-        key: 'unitCount',
-        type: TableColumnTypeEnum.quantity,
-      },
-      {
-        title: 'Actions',
-        key: 'actions',
-        type: TableColumnTypeEnum.button,
-        buttonLabel: intl.formatMessage({ id: 'create-token' }),
-        buttonOnClick: item => setUnitToBeTokenized(item),
-      },
-    ],
+    () => ({
+      columns: [
+        {
+          title: 'Registry Project Id',
+          key: 'registryProjectId',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Project Name',
+          key: 'projectName',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Serial Number Block',
+          key: 'serialNumberBlock',
+          type: TableColumnTypeEnum.string,
+          isTooltipVisible: true,
+        },
+        {
+          title: 'Unit Status',
+          key: 'unitStatus',
+          type: TableColumnTypeEnum.string,
+        },
+        {
+          title: 'Unit Count',
+          key: 'unitCount',
+          type: TableColumnTypeEnum.quantity,
+        },
+        {
+          title: 'Actions',
+          key: 'actions',
+          type: TableColumnTypeEnum.button,
+          buttonLabel: intl.formatMessage({ id: 'create-token' }),
+          buttonOnClick: item => setUnitToBeTokenized(item),
+        },
+      ],
+    }),
     [],
   );
 
