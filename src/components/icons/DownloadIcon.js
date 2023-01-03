@@ -2,9 +2,9 @@ import React from 'react';
 
 import { IconColorsWrapper } from './IconColorsWrapper';
 
-const DownloadIcon = ({ width = 16, height = 16 }) => {
+const DownloadIcon = ({ width = 16, height = 16, ...props }) => {
   return (
-    <IconColorsWrapper>
+    <IconColorsWrapper {...props}>
       <svg
         width={`${width}px`}
         height={`${height}px`}

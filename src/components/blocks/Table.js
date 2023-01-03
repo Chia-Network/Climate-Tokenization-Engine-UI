@@ -2,13 +2,18 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { withTheme, css } from 'styled-components';
 
-import { TableCellHeaderText, TableCellText } from '../typography';
-import { convertPascalCaseToSentenceCase } from '../../utils/stringUtils';
-import { BasicMenu, PrimaryButton, Pagination } from '..';
+import { Pagination, TableCell } from '..';
 import { useWindowSize } from '../../hooks/useWindowSize';
-import { FormattedMessage } from 'react-intl';
 
-const Table = styled('table')`
+const TableColumnTypeEnum = {
+  string: 'string',
+  quantity: 'quantity',
+  date: 'date',
+  image: 'image',
+  button: 'button',
+};
+
+const StyledTable = styled('table')`
   box-sizing: border-box;
   background-color: ${props => props.theme.colors.default.onButton};
   width: 100%;
@@ -18,34 +23,44 @@ const Table = styled('table')`
   overflow-x: scroll;
 `;
 
-const THead = styled('thead')`
+const StyledTableHead = styled('thead')`
   font-weight: 500;
   background-color: ${props => props.theme.colors.default.gray3};
   border-left: 1px solid whitesmoke;
   border-right: 1px solid whitesmoke;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 `;
 
 const Th = styled('th')`
   padding: 1rem;
-  color: ${props => props.theme.colors.default.secondary};
   display: table-cell;
   text-align: left;
   border-bottom: 1px solid rgba(224, 224, 224, 1);
   letter-spacing: 0.01071em;
   vertical-align: inherit;
-
-  ${props =>
-    props.stick &&
-    css`
-      position: sticky;
-      right: 0px;
-      background-color: rgba(242, 242, 242);
-    `}
+  text-align: center;
+  color: ${props => props.color || props.theme.colors.default.secondary};
+  font-size: 0.875rem;
+  font-family: ${props => props.theme.typography.primary.semiBold};
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.375rem;
 `;
 
 const Tr = styled('tr')`
   color: ${props => props.theme.colors.default.secondary};
   background-color: ${props => props.theme.colors.default.onButton};
+
+  ${props =>
+    props.onClick &&
+    css`
+      :hover {
+        background-color: ${props => props.theme.colors.default.gray6};
+        cursor: pointer;
+      }
+    `}
 `;
 
 const Td = styled('td')`
@@ -56,20 +71,7 @@ const Td = styled('td')`
   letter-spacing: 0.01071em;
   vertical-align: inherit;
   max-width: 200px;
-  ${props =>
-    props.sticky &&
-    css`
-      position: sticky;
-      right: 0px;
-      background-color: ${props.theme.colors.default.onButton};
-    `}
-
-  ${props =>
-    props.columnId === 'orgUid' &&
-    `
   text-align: center;
-  `}
-
   button {
     white-space: nowrap;
   }
@@ -103,16 +105,8 @@ const StyledScalableContainer = styled('div')`
     `}
 `;
 
-const DataTable = withTheme(
-  ({
-    headings,
-    data,
-    actions,
-    buttonConfig,
-    changePageTo,
-    currentPage,
-    numberOfPages,
-  }) => {
+const Table = withTheme(
+  ({ data, config, changePageTo, currentPage, numberOfPages }) => {
     const { theme } = useSelector(state => state);
     const ref = React.useRef(null);
     const [height, setHeight] = React.useState(0);
@@ -127,58 +121,40 @@ const DataTable = withTheme(
     return (
       <StyledRefContainer ref={ref}>
         <StyledScalableContainer height={`${height}px`}>
-          <Table selectedTheme={theme}>
-            <THead selectedTheme={theme}>
+          <StyledTable selectedTheme={theme}>
+            <StyledTableHead selectedTheme={theme}>
               <tr>
-                {headings.map((heading, index) => (
-                  <Th selectedTheme={theme} key={index}>
-                    <TableCellHeaderText>
-                      {heading && convertPascalCaseToSentenceCase(heading)}
-                    </TableCellHeaderText>
+                {config.columns.map(columnConfig => (
+                  <Th selectedTheme={theme} key={columnConfig.key}>
+                    {columnConfig.title}
                   </Th>
                 ))}
-                {(actions || buttonConfig) && (
-                  <Th selectedTheme={theme} key={'action'} sticky>
-                    <TableCellHeaderText>
-                      <FormattedMessage id="actions" />
-                    </TableCellHeaderText>
-                  </Th>
-                )}
               </tr>
-            </THead>
+            </StyledTableHead>
             <tbody style={{ position: 'relative' }}>
               {data.map((record, index) => (
-                <Tr index={index} selectedTheme={theme} key={index}>
-                  {headings.map((key, index) => (
-                    <Td selectedTheme={theme} columnId={key} key={index}>
-                      <TableCellText
-                        tooltip={record[key] && record[key].toString()}
-                      >
-                        {record[key] === 'null' ||
-                        record[key] === '' ||
-                        record[key] === null ||
-                        !record[key]
-                          ? '--'
-                          : record[key].toString()}
-                      </TableCellText>
+                <Tr
+                  selectedTheme={theme}
+                  key={index}
+                  onClick={
+                    config?.rows?.onRowClick
+                      ? () => config?.rows?.onRowClick(record)
+                      : undefined
+                  }
+                >
+                  {config.columns.map(columnConfig => (
+                    <Td selectedTheme={theme} key={columnConfig.key}>
+                      <TableCell
+                        config={columnConfig}
+                        value={record[columnConfig.key]}
+                        record={record}
+                      />
                     </Td>
                   ))}
-
-                  {(actions || buttonConfig) && (
-                    <Td selectedTheme={theme} sticky>
-                      {actions && <BasicMenu options={actions} item={record} />}
-                      {buttonConfig && (
-                        <PrimaryButton
-                          label={buttonConfig.label}
-                          onClick={() => buttonConfig.action(record)}
-                        />
-                      )}
-                    </Td>
-                  )}
                 </Tr>
               ))}
             </tbody>
-          </Table>
+          </StyledTable>
           <StyledPaginationContainer>
             <Pagination
               callback={changePageTo}
@@ -193,4 +169,4 @@ const DataTable = withTheme(
   },
 );
 
-export { DataTable };
+export { Table, TableColumnTypeEnum };
