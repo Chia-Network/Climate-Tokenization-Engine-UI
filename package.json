@@ -1,6 +1,6 @@
 {
   "name": "carbon-tokenization-engine",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
   "homepage": "./",
@@ -20,6 +20,7 @@
     "about-window": "^1.15.2",
     "dayjs": "^1.10.7",
     "formik": "^2.2.9",
+    "json-as-xlsx": "^2.5.3",
     "lodash": "^4.17.21",
     "minizip-asm.js": "^1.0.10",
     "qrcode.react": "^2.0.0",
@@ -40,7 +41,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "nf start -p 3003",
+    "start": "nf start -p 31322",
     "build": "react-scripts build",
     "test": "mocha tests/**/*.spec.js --reporter spec --exit",
     "eject": "react-scripts eject",
@@ -117,12 +118,12 @@
         ]
       },
       "publish": null,
-      "icon": "src/assets/img/apple-touch-icon.png"
+      "icon": "src/assets/img/tokenization-engine-logo.png"
     },
     "win": {
       "target": "nsis",
       "publish": null,
-      "icon": "src/assets/img/mstile-150x150.png"
+      "icon": "src/assets/img/tokenization-engine-logo.png"
     },
     "linux": {
       "target": "deb",

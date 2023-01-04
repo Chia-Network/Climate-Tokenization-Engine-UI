@@ -23,3 +23,9 @@ export const formatValidationError = error => {
 
   return errorStringArray.join(' ');
 };
+
+export const isStringOfImageType = value =>
+  typeof value === 'string' && value.startsWith('data:image/png;base64');
+
+export const isStringOfNoValueType = value =>
+  value === 'null' || value === '' || value === null || !value;
