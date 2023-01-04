@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useIntl } from 'react-intl';
-import { NotificationContainer } from 'react-notifications';
 import {
   HashRouter as Router,
   Routes,
@@ -14,7 +13,10 @@ import {
   setNotificationMessage,
 } from '../store/actions/appActions';
 import * as Pages from '../pages';
-import { createNotification } from '../utils/notificationUtils';
+import {
+  createNotification,
+  NotificationContainer,
+} from '../utils/notificationUtils';
 import {
   AppContainer,
   Modal,
