@@ -1,3 +1,29 @@
+## [1.0.13](https://github.com/Chia-Network/Climate-Portal-UI/compare/1.0.12...1.0.13) (2023-01-04)
+
+
+### Bug Fixes
+
+* fonts for react notifications ([b58155b](https://github.com/Chia-Network/Climate-Portal-UI/commit/b58155bfe5da7a03bb91f0ec141239e5930f1198))
+* progress circle is displayed in the background ([781501b](https://github.com/Chia-Network/Climate-Portal-UI/commit/781501b8dd59f6522b91e4f1cdc00079acc0d088))
+* remove hovertext from specific columns ([bf31a78](https://github.com/Chia-Network/Climate-Portal-UI/commit/bf31a783fff093b28bc857eab73c95105aaaa34a))
+
+
+### Features
+
+* add count to tab names ([ea516da](https://github.com/Chia-Network/Climate-Portal-UI/commit/ea516dae89abfcb8b0f9601ef368a778b4afbd7a))
+* add tooltip for serial number block and project name ([80cb529](https://github.com/Chia-Network/Climate-Portal-UI/commit/80cb529b6dd56f7d448a424281cd1b631bfd2507))
+* download tokens ([1ef1ce2](https://github.com/Chia-Network/Climate-Portal-UI/commit/1ef1ce22b55db1a289f99b93a25fb8de4afb8c5b))
+* fix app icon ([44c16b7](https://github.com/Chia-Network/Climate-Portal-UI/commit/44c16b765596c97f47e14140fde337d62aade39a))
+* freeze table title row ([2141baa](https://github.com/Chia-Network/Climate-Portal-UI/commit/2141baa48a26f61f1ce77f1f307e7e7276d6d649))
+* refactor table ([f9616b9](https://github.com/Chia-Network/Climate-Portal-UI/commit/f9616b9bda09da3aff3404d0c316567970284ef7))
+* refactor table ([d79e675](https://github.com/Chia-Network/Climate-Portal-UI/commit/d79e675542adaa8b4148b8fb05ef5c5bce4be8cc))
+* refactor table ([1565766](https://github.com/Chia-Network/Climate-Portal-UI/commit/1565766b4bed797c73357f8308d8e845169d2ea2))
+* refresh app ([2af1851](https://github.com/Chia-Network/Climate-Portal-UI/commit/2af185175a9263935bf82c9f1ca1daeb32569132))
+* take localization from browser headers ([97186f9](https://github.com/Chia-Network/Climate-Portal-UI/commit/97186f9a99a1b5cc74d64931952a3f77ee083652))
+* update ports for all 3 apps ([28966b4](https://github.com/Chia-Network/Climate-Portal-UI/commit/28966b41fcb101bc5add60a3bb7e2222ffa60305))
+
+
+
 ## [1.0.12](https://github.com/Chia-Network/Climate-Portal-UI/compare/1.0.11...1.0.12) (2022-12-05)
 
 
