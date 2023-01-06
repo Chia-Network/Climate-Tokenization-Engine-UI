@@ -11,6 +11,7 @@ const TableColumnTypeEnum = {
   date: 'date',
   image: 'image',
   button: 'button',
+  link: 'link',
 };
 
 const StyledTable = styled('table')`
@@ -75,6 +76,7 @@ const Td = styled('td')`
   button {
     white-space: nowrap;
   }
+  overflow: hidden;
 `;
 
 export const StyledPaginationContainer = styled('div')`

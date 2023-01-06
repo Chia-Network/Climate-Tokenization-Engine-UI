@@ -423,7 +423,11 @@ export const getTokens = ({
       const onSuccessHandler = results => {
         dispatch(
           addProjectDetailsToUnits({
-            units: results.data,
+            units: results.data.map(item => ({
+              ...item,
+              marketplaceLink:
+                'https://www.alienstore.ro/products/ultrabook-dell-xps-17-9720-17-uhd-touch-i7-12700h-14-core-32gb-ram-nvidia-rtx-3050-1tb-ssd-win-11?variant=40175361851474&currency=RON&utm_medium=product_sync&utm_source=google&utm_content=sag_organic&utm_campaign=sag_organic&gclid=CjwKCAiAqt-dBhBcEiwATw-ggNChJC81jZ2CN7rkk5hMhd8LuW-RWLSh8U1sfFRzgPUrc1VHv6jOoRoCPXQQAvD_BwE',
+            })),
             unitsType: 'tokens',
           }),
         );

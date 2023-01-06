@@ -197,7 +197,7 @@ const CreateTokens = () => {
         {
           title: 'Marketplace Link',
           key: 'marketplaceLink',
-          type: TableColumnTypeEnum.string,
+          type: TableColumnTypeEnum.link,
         },
       ],
     }),
