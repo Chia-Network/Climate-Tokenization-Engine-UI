@@ -215,7 +215,7 @@ export const getCountForTokensAndUntokenizedUnits = () => {
       let untokenizedUnitsCount = results?.data?.length;
       const untokenizedUnitsPageCount = results?.pageCount;
 
-      if (untokenizedUnitsPageCount > 0) {
+      if (untokenizedUnitsPageCount > 1) {
         url = `${constants.API_HOST}/units/untokenized?page=${untokenizedUnitsPageCount}&limit=${constants.TABLE_ROWS}`;
         response = await fetch(url);
         results = await response.json();
@@ -232,7 +232,7 @@ export const getCountForTokensAndUntokenizedUnits = () => {
       let tokensCount = results?.data?.length;
       const tokensPageCount = results?.pageCount;
 
-      if (tokensPageCount > 0) {
+      if (tokensPageCount > 1) {
         url = `${constants.API_HOST}/units/tokenized?page=${tokensPageCount}&limit=${constants.TABLE_ROWS}`;
         response = await fetch(url);
         results = await response.json();
@@ -345,8 +345,8 @@ export const getUntokenizedUnits = ({
   sortOrder,
 }) => {
   return async dispatch => {
-    const areRequestDetailsValid = true;
-    // typeof page === 'number' && typeof resultsLimit === 'number';
+    const areRequestDetailsValid =
+      typeof page === 'number' && typeof resultsLimit === 'number';
 
     if (areRequestDetailsValid) {
       let url = `${constants.API_HOST}/units/untokenized?page=${
