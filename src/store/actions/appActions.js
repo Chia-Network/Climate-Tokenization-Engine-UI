@@ -423,7 +423,7 @@ export const getTokens = ({
       const onSuccessHandler = results => {
         dispatch(
           addProjectDetailsToUnits({
-            units: results.data.map,
+            units: results.data,
             unitsType: 'tokens',
           }),
         );
