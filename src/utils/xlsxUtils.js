@@ -6,7 +6,6 @@ let settings = {
   extraLength: 3,
   writeMode: 'writeFile',
   writeOptions: {},
-  RTL: true,
 };
 
 export const downloadXlsxFromDataAndHeadings = (unformattedData, headings) => {
