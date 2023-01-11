@@ -1,5 +1,7 @@
 // Module to control the application lifecycle and the native browser window.
-const { app, BrowserWindow, protocol } = require('electron');
+const { app, BrowserWindow, protocol, Menu, MenuItem } = require('electron');
+const openAboutWindow = require('about-window').default;
+
 const path = require('path');
 const url = require('url');
 
@@ -40,6 +42,31 @@ function createWindow() {
   if (!app.isPackaged) {
     mainWindow.webContents.openDevTools();
   }
+
+  let defaultMenu = Menu.getApplicationMenu();
+  let newMenu = new Menu();
+  defaultMenu.items.forEach(mainMenuItem => {
+    newMenu.append(mainMenuItem);
+  });
+
+  newMenu.append(
+    new MenuItem({
+      label: 'About',
+      submenu: [
+        {
+          label: 'About',
+          click() {
+            openAboutWindow({
+              icon_path: path.join(__dirname, '/android-chrome-512x512.png'),
+              copyright: '© Chia Network 2022',
+            });
+          },
+        },
+      ],
+    }),
+  );
+
+  Menu.setApplicationMenu(newMenu);
 }
 
 // Setup a local proxy to adjust the paths of requested files when loading
