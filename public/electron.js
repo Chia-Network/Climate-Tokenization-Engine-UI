@@ -1,5 +1,14 @@
 // Module to control the application lifecycle and the native browser window.
-const { app, BrowserWindow, protocol } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  protocol,
+  Menu,
+  MenuItem,
+  shell,
+} = require('electron');
+const openAboutWindow = require('about-window').default;
+
 const path = require('path');
 const url = require('url');
 
@@ -40,6 +49,36 @@ function createWindow() {
   if (!app.isPackaged) {
     mainWindow.webContents.openDevTools();
   }
+
+  let defaultMenu = Menu.getApplicationMenu();
+  let newMenu = new Menu();
+  defaultMenu.items.forEach(mainMenuItem => {
+    newMenu.append(mainMenuItem);
+  });
+
+  newMenu.append(
+    new MenuItem({
+      label: 'About',
+      submenu: [
+        {
+          label: 'About',
+          click() {
+            openAboutWindow({
+              icon_path: path.join(__dirname, '/android-chrome-512x512.png'),
+              copyright: '© Chia Network 2022',
+            });
+          },
+        },
+      ],
+    }),
+  );
+
+  Menu.setApplicationMenu(newMenu);
+
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
 }
 
 // Setup a local proxy to adjust the paths of requested files when loading
@@ -85,15 +124,16 @@ app.on('window-all-closed', function () {
 // If your app has no need to navigate or only needs to navigate to known pages,
 // it is a good idea to limit navigation outright to that known scope,
 // disallowing any other kinds of navigation.
-const allowedNavigationDestinations = 'https://my-app.com';
-app.on('web-contents-created', (event, contents) => {
-  contents.on('will-navigate', (event, navigationURL) => {
-    const parsedURL = new URL(navigationURL);
-    if (!allowedNavigationDestinations.includes(parsedURL.origin)) {
-      event.preventDefault();
-    }
-  });
-});
+// const allowedNavigationDestinations = 'https://my-app.com';
+// app.on('web-contents-created', (event, contents) => {
+//   contents.on('will-navigate', (event, navigationURL) => {
+//     const parsedURL = new URL(navigationURL);
+//     if (!allowedNavigationDestinations.includes(parsedURL.origin)) {
+//       event.preventDefault();
+//       shell.openExternal(navigationURL);
+//     }
+//   });
+// });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
