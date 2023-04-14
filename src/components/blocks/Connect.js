@@ -18,7 +18,8 @@ import {
   TabPanel,
   Tabs,
 } from '..';
-import { importHomeOrg } from '../../store/actions/appActions';
+import { importHomeOrg, signIn } from '../../store/actions/appActions';
+import { validateUrl } from '../../utils/urlUtils';
 
 const ConnectContainer = styled('div')`
   background: none;
@@ -43,13 +44,15 @@ const StyledContainer = styled('div')`
   align-items: center;
 `;
 
-const Connect = withTheme(() => {
+const Connect = withTheme(({ openModal = false, onClose, isHeader = true }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
+  const [isConnectModalOpen, setIsConnectModalOpen] = useState(openModal);
   const { homeOrgUid } = useSelector(state => state);
   const [orgUid, setOrgUid] = useState(homeOrgUid || '');
   const [tabValue, setTabValue] = useState(0);
+  const [apiKey, setApiKey] = useState(null);
+  const [serverAddress, setServerAddress] = useState(null);
 
   const handleTabChange = useCallback(
     (event, newValue) => {
@@ -59,6 +62,16 @@ const Connect = withTheme(() => {
   );
 
   const connectToHomeOrg = () => {
+    if (apiKey && serverAddress && validateUrl(serverAddress)) {
+      dispatch(
+        signIn({
+          insertedApiKey: apiKey,
+          insertedServerAddress: serverAddress,
+        }),
+      );
+      setServerAddress(null);
+      setApiKey(null);
+    }
     dispatch(importHomeOrg(orgUid));
     setIsConnectModalOpen(false);
   };
@@ -69,10 +82,12 @@ const Connect = withTheme(() => {
 
   return (
     <>
-      <ConnectContainer onClick={() => setIsConnectModalOpen(true)}>
-        {!homeOrgUid && <FormattedMessage id="connect-to-cw" />}
-        {homeOrgUid && <FormattedMessage id="connected" />}
-      </ConnectContainer>
+      {isHeader && (
+        <ConnectContainer onClick={() => setIsConnectModalOpen(true)}>
+          {!homeOrgUid && <FormattedMessage id="connect-to-cw" />}
+          {homeOrgUid && <FormattedMessage id="connected" />}
+        </ConnectContainer>
+      )}
 
       {isConnectModalOpen && (
         <Modal
@@ -90,13 +105,85 @@ const Connect = withTheme(() => {
                   id: homeOrgUid ? 'update-home-org' : 'import-home-org',
                 })}
               />
+              <Tab
+                label={intl.formatMessage({
+                  id: 'connect-to-remote',
+                })}
+              />
             </Tabs>
           }
-          onClose={() => setIsConnectModalOpen(false)}
+          onClose={() => (onClose ? onClose() : setIsConnectModalOpen(false))}
           body={
             <ModalFormContainerStyle>
               <TabPanel value={tabValue} index={0}>
                 <StyledContainer>
+                  <StyledFieldContainer>
+                    <StyledLabelContainer>
+                      <Body>
+                        *<FormattedMessage id="org-uid" />
+                      </Body>
+                    </StyledLabelContainer>
+                    <InputContainer>
+                      <StandardInput
+                        size={InputSizeEnum.large}
+                        variant={InputVariantEnum.default}
+                        value={orgUid}
+                        onChange={value => setOrgUid(value)}
+                        placeholderText="Org Uid"
+                      />
+                    </InputContainer>
+                  </StyledFieldContainer>
+                </StyledContainer>
+              </TabPanel>
+              <TabPanel value={tabValue} index={1}>
+                <StyledContainer style={{ height: 300 }}>
+                  <StyledFieldContainer>
+                    <StyledLabelContainer>
+                      <Body>
+                        *<FormattedMessage id="server-address" />{' '}
+                      </Body>
+                    </StyledLabelContainer>
+                    <InputContainer>
+                      <StandardInput
+                        size={InputSizeEnum.large}
+                        variant={InputVariantEnum.default}
+                        value={serverAddress}
+                        onChange={value => setServerAddress(value)}
+                        placeholderText="http://0.0.0.0:31310"
+                      />
+                    </InputContainer>
+                    {(serverAddress === null ||
+                      validateUrl(serverAddress) === false) && (
+                      <Body size="Small" color="red">
+                        {intl.formatMessage({
+                          id: 'add-valid-server-address',
+                        })}
+                      </Body>
+                    )}
+                  </StyledFieldContainer>
+                  <StyledFieldContainer>
+                    <StyledLabelContainer>
+                      <Body>
+                        *<FormattedMessage id="api-key" />
+                      </Body>
+                    </StyledLabelContainer>
+                    <InputContainer>
+                      <StandardInput
+                        size={InputSizeEnum.large}
+                        variant={InputVariantEnum.default}
+                        value={apiKey}
+                        onChange={value => setApiKey(value)}
+                        placeholderText="xxxxxxx-xxxxxx-xxxxxx"
+                      />
+                    </InputContainer>
+                    {apiKey === null && (
+                      <Body size="Small" color="red">
+                        {intl.formatMessage({
+                          id: 'add-valid-api-key',
+                        })}
+                      </Body>
+                    )}
+                  </StyledFieldContainer>
                   <StyledFieldContainer>
                     <StyledLabelContainer>
                       <Body>
