@@ -58,6 +58,7 @@
   "update": "Update",
   "import": "Import",
   "import-home-org": "Import Home",
+  "connect-to-remote": "Connect to Remote",
   "update-home-org": "Home Update",
   "detokanization-successful": "Unit was successfully detokenized.",
   "detokanization-not-successful": "Unit could not be detokenized.",
