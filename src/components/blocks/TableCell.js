@@ -36,6 +36,14 @@ const StyledCenterContentContainer = styled('div')`
   align-items: center;
 `;
 
+const StyledLink = styled('a')`
+  white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  width: 80%;
+  text-overflow: ellipsis;
+`;
+
 const TableCell = withTheme(({ config, value, record }) => {
   const appStore = useSelector(state => state);
 
@@ -52,6 +60,16 @@ const TableCell = withTheme(({ config, value, record }) => {
 
   if (isStringOfNoValueType(value)) {
     return <Text selectedTheme={appStore.theme}>--</Text>;
+  }
+
+  if (config.type === TableColumnTypeEnum.link) {
+    return (
+      <StyledCenterContentContainer>
+        <StyledLink href={value} target="_blank">
+          {value}
+        </StyledLink>
+      </StyledCenterContentContainer>
+    );
   }
 
   if (config.type === TableColumnTypeEnum.image) {

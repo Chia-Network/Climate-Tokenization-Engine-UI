@@ -8,10 +8,7 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import {
-  refreshApp,
-  setNotificationMessage,
-} from '../store/actions/appActions';
+import { setNotificationMessage } from '../store/actions/appActions';
 import * as Pages from '../pages';
 import {
   createNotification,
@@ -19,10 +16,9 @@ import {
 } from '../utils/notificationUtils';
 import {
   AppContainer,
-  Modal,
-  modalTypeEnum,
   IndeterminateProgressOverlay,
   Dashboard,
+  Connect,
 } from '../components';
 import constants from '../constants';
 
@@ -47,16 +43,7 @@ const AppNavigator = () => {
   return (
     <AppContainer>
       {showProgressOverlay && <IndeterminateProgressOverlay />}
-      {!connectionCheck && (
-        <Modal
-          informationType="error"
-          modalType={modalTypeEnum.information}
-          label="Try Again"
-          onOk={() => dispatch(refreshApp(true))}
-          title={intl.formatMessage({ id: 'network-error' })}
-          body={intl.formatMessage({ id: 'there-is-a-connection-error' })}
-        />
-      )}
+      {!connectionCheck && <Connect openModal={true} isHeader={false} />}
       <NotificationContainer />
       <Router>
         <Dashboard>

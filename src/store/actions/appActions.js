@@ -154,6 +154,7 @@ export const setLocale = locale => {
 
 export const signIn = ({ insertedApiKey, insertedServerAddress }) => {
   return async dispatch => {
+    console.log(insertedApiKey, insertedServerAddress);
     if (insertedApiKey && insertedServerAddress) {
       localStorage.setItem('apiKey', insertedApiKey);
       localStorage.setItem('serverAddress', insertedServerAddress);
@@ -215,7 +216,7 @@ export const getCountForTokensAndUntokenizedUnits = () => {
       let untokenizedUnitsCount = results?.data?.length;
       const untokenizedUnitsPageCount = results?.pageCount;
 
-      if (untokenizedUnitsPageCount > 0) {
+      if (untokenizedUnitsPageCount > 1) {
         url = `${constants.API_HOST}/units/untokenized?page=${untokenizedUnitsPageCount}&limit=${constants.TABLE_ROWS}`;
         response = await fetch(url);
         results = await response.json();
@@ -232,7 +233,7 @@ export const getCountForTokensAndUntokenizedUnits = () => {
       let tokensCount = results?.data?.length;
       const tokensPageCount = results?.pageCount;
 
-      if (tokensPageCount > 0) {
+      if (tokensPageCount > 1) {
         url = `${constants.API_HOST}/units/tokenized?page=${tokensPageCount}&limit=${constants.TABLE_ROWS}`;
         response = await fetch(url);
         results = await response.json();
@@ -345,8 +346,8 @@ export const getUntokenizedUnits = ({
   sortOrder,
 }) => {
   return async dispatch => {
-    const areRequestDetailsValid = true;
-    // typeof page === 'number' && typeof resultsLimit === 'number';
+    const areRequestDetailsValid =
+      typeof page === 'number' && typeof resultsLimit === 'number';
 
     if (areRequestDetailsValid) {
       let url = `${constants.API_HOST}/units/untokenized?page=${
@@ -545,6 +546,38 @@ export const confirmDetokanization = data => {
   };
 };
 
+const maybeServerOverrideFetch = async (url, payload) => {
+  const apiKey = localStorage.getItem('apiKey');
+  const serverAddress = localStorage.getItem('serverAddress');
+  const doesSignInDataExist = apiKey != null && serverAddress != null;
+
+  if (doesSignInDataExist) {
+    const payloadWithApiKey = { ...payload };
+    if (payloadWithApiKey?.headers) {
+      payloadWithApiKey.headers = {
+        ...payloadWithApiKey.headers,
+        'x-api-key': apiKey,
+      };
+    } else {
+      payloadWithApiKey.headers = { 'x-api-key': apiKey };
+    }
+
+    const serverAddressUrl =
+      serverAddress[serverAddress.length - 1] !== '/'
+        ? `${serverAddress}/`
+        : serverAddressUrl;
+
+    const newUrl = url.replace(
+      /(https:|http:|)(^|\/\/)(.*?\/)/g,
+      serverAddressUrl,
+    );
+
+    return fetch(newUrl, payloadWithApiKey);
+  }
+
+  return fetch(url, payload);
+};
+
 // encapsulates error handling, network failure, loader toggling and on success or failed handlers
 const fetchWrapper = ({
   url,
@@ -562,7 +595,7 @@ const fetchWrapper = ({
     } else {
       try {
         dispatch(activateProgressIndicator);
-        const response = await fetch(url, payload);
+        const response = await maybeServerOverrideFetch(url, payload);
 
         const headers = response?.headers;
         if (headers.has('x-org-uid')) {
