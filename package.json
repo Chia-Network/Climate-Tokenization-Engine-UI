@@ -1,5 +1,5 @@
 {
-  "name": "carbon-tokenization-engine",
+  "name": "climate-tokenization-engine-ui",
   "version": "1.0.14",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
@@ -101,8 +101,8 @@
     "standard-version": "^9.3.2"
   },
   "build": {
-    "appId": "org.chia.carbon-tokenization-engine",
-    "productName": "Carbon Tokenization Engine",
+    "appId": "org.chia.climate-tokenization-engine-ui",
+    "productName": "Climate Tokenization Engine UI",
     "files": [
       "build/**/*",
       "node_modules/**/*"
