@@ -1,10 +1,13 @@
-# Carbon Tokenization Engine Auxillery App
+# Climate Tokenization Engine User Interface
 
-Auxillery App for the 
+User interface for the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine).  Intended to be run as a desktop application and connect to the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) API running either locally or remotely.  
 
-## Quickstart
+## Installation
 
-### Installation
+Packages are available for Windows, Mac, and Debian-based Linux distribution on the [releases](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/releases) page.  
+
+### From Source
+
 
 ```
 npm install -g react-scripts
@@ -27,7 +30,7 @@ chmod ug+x .git/hooks/*
 npm run start
 ```
 
-### Prerequisites
+#### Prerequisites
 
 You'll need:
 
