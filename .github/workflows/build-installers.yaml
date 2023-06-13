@@ -54,7 +54,7 @@ jobs:
           npm install -g notarize-cli
           notarize-cli \
             --file="$DMG_FILE" \
-            --bundle-id net.chia.climate-portal-ui \
+            --bundle-id net.chia.climate-tokenization-engine-ui \
             --username "${{ secrets.APPLE_NOTARIZE_USERNAME }}" \
             --password "${{ secrets.APPLE_NOTARIZE_PASSWORD }}"
       - name: Upload Mac Installer
@@ -152,7 +152,7 @@ jobs:
           echo "EXE_FILE=$EXE_FILE" >>$GITHUB_ENV
 
       - name: Release
-        uses: softprops/action-gh-release@v0.1
+        uses: softprops/action-gh-release@v0.1.15
         with:
           files: |
             ${{ env.DMG_FILE }}

@@ -1,10 +1,13 @@
 # Climate Tokenization Engine User Interface
 
-User Interface for the [Climate Token Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) application.  Commonly run as a desktop application to connect to a local or remote instance of the Climate Token Engine.  This application can be compiled from source and run in a browser as well.  
+User interface for the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine).  Intended to be run as a desktop application and connect to the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) API running either locally or remotely.  
 
-## Quickstart
+## Installation
 
-### Installation
+Packages are available for Windows, Mac, and Debian-based Linux distribution on the [releases](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/releases) page.  
+
+### From Source
+
 
 
 
@@ -33,7 +36,7 @@ chmod ug+x .git/hooks/*
 npm run start
 ```
 
-### Prerequisites
+#### Prerequisites
 
 You'll need:
 

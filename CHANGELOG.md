@@ -1,3 +1,24 @@
+## [1.0.14](https://github.com/Chia-Network/Climate-Portal-UI/compare/1.0.13...1.0.14) (2023-04-18)
+
+
+### Bug Fixes
+
+* electron navbar ([3a0ea79](https://github.com/Chia-Network/Climate-Portal-UI/commit/3a0ea794ff8f2020d086ddcefc18bc52766087fc))
+* link opening in electron not in browser ([4d2f209](https://github.com/Chia-Network/Climate-Portal-UI/commit/4d2f209349935c462726b2da8545d487b3360013))
+* link opening in electron not in browser ([dbfe714](https://github.com/Chia-Network/Climate-Portal-UI/commit/dbfe714ee2067394d7f6395374ed9c053b1022aa))
+* table counter not displaying correct number ([86ec77c](https://github.com/Chia-Network/Climate-Portal-UI/commit/86ec77ceb725ff5d256a27022b69d3dd6eee6591))
+* xlsx download shown weirdly ([9fb210a](https://github.com/Chia-Network/Climate-Portal-UI/commit/9fb210a90f0c7c8f0b03a65a215ec18e762dd60b))
+
+
+### Features
+
+* add hyperlink to marketplace field ([995b15c](https://github.com/Chia-Network/Climate-Portal-UI/commit/995b15c2d75b9c8528fddc92bf30a4650009fddf))
+* add hyperlink to marketplace field ([2ca1571](https://github.com/Chia-Network/Climate-Portal-UI/commit/2ca157186e34eba82355181e53a849b4d969d8e8))
+* add link support to table ([5ed1f8d](https://github.com/Chia-Network/Climate-Portal-UI/commit/5ed1f8d70d397634dc1a4c589464a3522f40cdb5))
+* add remote connect tab ([0016bef](https://github.com/Chia-Network/Climate-Portal-UI/commit/0016bef50b8ee534bdcf83bff651d4fa301b6cef))
+
+
+
 ## [1.0.13](https://github.com/Chia-Network/Climate-Portal-UI/compare/1.0.12...1.0.13) (2023-01-04)
 
 
