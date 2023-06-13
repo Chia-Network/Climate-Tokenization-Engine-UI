@@ -2,14 +2,20 @@
 
 User interface for the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine).  Intended to be run as a desktop application and connect to the [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) API running either locally or remotely.  
 
+## Related Projects
+
+* [Chia Blockchain](https://github.com/Chia-Network/chia-blockchain)
+* [Climate Tokenization Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine)
+* [Climate Explorer](https://github.com/Chia-Network/climate-token-driver)
+* [Chia Climate Tokenization](https://github.com/Chia-Network/climate-token-driver)
+* [Climate Explorer UI](https://github.com/Chia-Network/climate-explorer-ui)
+* [Climate Wallet](https://github.com/Chia-Network/Climate-Wallet)
+* [Climate Action Data Trust](https://github.com/Chia-Network/cadt)
+* [Climate Action Data Trust UI](https://github.com/Chia-Network/cadt-ui)
+
 ## Installation
 
 Packages are available for Windows, Mac, and Debian-based Linux distribution on the [releases](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/releases) page.  
-
-### From Source
-
-
-
 
 ## Developer Guide
 
