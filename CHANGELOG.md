@@ -1,3 +1,12 @@
+## [1.0.16](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.0.15...1.0.16) (2023-06-13)
+
+
+### Bug Fixes
+
+* disable close modal on out of modal click ([3500635](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/3500635f7753442677c8fd0eab3ef602103669f0))
+
+
+
 ## [1.0.15](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.0.14...1.0.15) (2023-05-23)
 
 
