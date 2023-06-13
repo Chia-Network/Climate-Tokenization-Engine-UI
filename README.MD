@@ -49,7 +49,7 @@ You'll need:
 - Git
 - [nvm](https://github.com/nvm-sh/nvm)
 
-  This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
+This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
 
 ### Contributing
 
