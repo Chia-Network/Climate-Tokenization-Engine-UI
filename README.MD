@@ -1,10 +1,16 @@
-# Carbon Tokenization Engine Auxillery App
+# Climate Tokenization Engine User Interface
 
-Auxillery App for the 
+User Interface for the [Climate Token Engine](https://github.com/Chia-Network/Climate-Tokenization-Engine) application.  Commonly run as a desktop application to connect to a local or remote instance of the Climate Token Engine.  This application can be compiled from source and run in a browser as well.  
 
 ## Quickstart
 
 ### Installation
+
+
+
+## Developer Guide
+
+### Installation From Source
 
 ```
 npm install -g react-scripts
@@ -36,11 +42,13 @@ You'll need:
 
   This app uses `nvm` to align node versions across development, CI and production. If you're working on Windows you should consider [nvm-windows](https://github.com/coreybutler/nvm-windows)
 
-## Contributing
+### Contributing
 
 Upon your first commit, you will automatically be added to the package.json file as a contributor.
 
-## Commiting
+#### Commiting
+
+[Signed commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits) are required. 
 
 This repo uses a commit convention. A typical commit message might read:
 
@@ -55,14 +63,21 @@ The first part of this is the commit "type". The most common types are "feat" fo
 - `docs` for documentation only changes
 - `style` is for code formatting only
 - `refactor` is for changes to code which should not be detectable by users or testers
+- `perf` is for a code change that improves performance
 - `test` is for changes which only touch test files or related tooling
 - `build` is for changes which only touch our develop/release tools
-- `chore` is for housekeeping tasks such as hydrating from another branch
+- `ci` is for changes to the continuous integration files and scripts
+- `chore` is for changes that don't modify code, like a version bump
+- `revert` is for reverting a previous commit
 
 After the type and scope there should be a colon.
 
 The "subject" of the commit follows. It should be a short indication of the change. The commit convention prefers that this is written in the present-imperative tense.
 
-### Commit linting
+#### Commit linting
 
 Each time you commit the message will be checked against these standards in a pre-commit hook. Additionally all the commits in a PR branch will be linted before it can be merged to master.
+
+#### Branch Layout
+
+All pull requests should be made against the `develop` branch.  Commits to the `main` branch will trigger a release, so the `main` branch is always the code in the latest release.
