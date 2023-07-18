@@ -156,3 +156,14 @@ jobs:
             ${{ env.DMG_FILE }}
             ${{ env.DEB_FILE }}
             ${{ env.EXE_FILE }}
+
+      - name: Get repo name
+        id: repo-name
+        run: |
+          echo "REPO_NAME=$(echo "$GITHUB_REPOSITORY" | cut -d "/" -f 2)" >>$GITHUB_OUTPUT
+
+      - name: Trigger apt repo update
+        run: |
+          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"climate_tokenization_repo":"${{ steps.repo-name.outputs.REPO_NAME }}","application_name":"climate-tokenization-engine-ui","release_version":"${{ steps.tag-name.outputs.TAGNAME }}","add_debian_version":"true","arm64":"false"}' ${{ secrets.GLUE_API_URL }}/api/v1/climate-tokenization/${{ github.sha }}/start
+          curl -s -XPOST -H "Authorization: Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}" --data '{"climate_tokenization_repo":"${{ steps.repo-name.outputs.REPO_NAME }}","application_name":"climate-tokenization-engine-ui","release_version":"${{ steps.tag-name.outputs.TAGNAME }}","add_debian_version":"true","arm64":"false"}' ${{ secrets.GLUE_API_URL }}/api/v1/climate-tokenization/${{ github.sha }}/success/deploy
+
