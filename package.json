@@ -3,6 +3,7 @@
   "version": "1.0.18",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
+  "description": "User Interface for the Climate Tokenization Engine",
   "homepage": "./",
   "main": "src/start.js",
   "engineStrict": true,
