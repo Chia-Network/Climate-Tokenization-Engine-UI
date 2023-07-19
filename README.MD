@@ -17,7 +17,7 @@ User interface for the [Climate Tokenization Engine](https://github.com/Chia-Net
 
 Packages are available for Windows, Mac, and Debian-based Linux distribution on the [releases](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/releases) page.  
 
-#### Using APT on Debian-based Linux Distros (Ubuntu, Mint, etc)
+### Using APT on Debian-based Linux Distros (Ubuntu, Mint, etc)
 
 The Climate Tokenization Engine UI can be installed with `apt`.
 
