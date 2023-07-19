@@ -11,8 +11,8 @@ concurrency:
   group: main-release-check
 
 jobs:
-  check-version:
-    name: Check version increment
+  tag-and-changelog:
+    name: Create Changelog and tag release
     runs-on: ubuntu-latest
     steps:
       - uses: Chia-Network/actions/clean-workspace@main
