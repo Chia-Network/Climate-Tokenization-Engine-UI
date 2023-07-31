@@ -114,6 +114,36 @@ jobs:
           name: linux-installer
           path: ${{ github.workspace }}/dist/*.deb
 
+  build_web:
+    name: Build Web App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node 18.16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.16'
+
+      - name: Install Husky
+        run: npm install --save-dev husky
+
+      - name: npm install and build
+        run: |
+          node --version
+          npm install
+          npm run build
+
+      - name: Create .tar.gz of the web build
+        run: tar -cvzf climate-tokenization-engine-ui-web-build.tar.gz build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: climate-tokenization-engine-ui-web-build
+          path: climate-tokenization-engine-ui-web-build.tar.gz
+
   release:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
