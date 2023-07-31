@@ -1,6 +1,6 @@
 {
   "name": "climate-tokenization-engine-ui",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
   "description": "User Interface for the Climate Tokenization Engine",
