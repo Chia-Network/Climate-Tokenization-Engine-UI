@@ -181,7 +181,7 @@ jobs:
           DMG_FILE=$(find ${{ github.workspace }}/mac-installer/ -type f -name '*.dmg')
           DEB_FILE=$(find ${{ github.workspace }}/linux-installer/ -type f -name '*.deb')
           EXE_FILE=$(find ${{ github.workspace }}/windows-installer/ -type f -name '*.exe')
-          WEB_FILE=$(find ${{ github.workspace }}/climate-explorer-ui-web-build/ -type f -name '*.tar.gz')
+          WEB_FILE=$(find ${{ github.workspace }}/climate-tokenization-engine-ui-web-build/ -type f -name '*.tar.gz')
 
           echo "DMG_FILE=$DMG_FILE" >>$GITHUB_ENV
           echo "DEB_FILE=$DEB_FILE" >>$GITHUB_ENV
