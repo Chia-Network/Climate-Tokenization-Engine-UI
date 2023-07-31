@@ -5,7 +5,7 @@
     "node": true,
     "es6": true
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -18,12 +18,10 @@
   ],
   "rules": {
     "react/prop-types": "off",
-    "mocha/no-mocha-arrows": 0
+    "mocha/no-mocha-arrows": 0,
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }]
   },
-  "plugins": [
-    "react",
-    "mocha"
-  ],
+  "plugins": ["react", "mocha"],
   "settings": {
     "react": {
       "version": "detect"
