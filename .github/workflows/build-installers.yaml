@@ -170,14 +170,23 @@ jobs:
           name: linux-installer
           path: linux-installer
 
+      - name: Download Web artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: climate-tokenization-engine-ui-web-build
+          path: climate-tokenization-engine-ui-web-build
+
       - name: Get Filenames
         run: |
           DMG_FILE=$(find ${{ github.workspace }}/mac-installer/ -type f -name '*.dmg')
           DEB_FILE=$(find ${{ github.workspace }}/linux-installer/ -type f -name '*.deb')
           EXE_FILE=$(find ${{ github.workspace }}/windows-installer/ -type f -name '*.exe')
+          WEB_FILE=$(find ${{ github.workspace }}/climate-explorer-ui-web-build/ -type f -name '*.tar.gz')
+
           echo "DMG_FILE=$DMG_FILE" >>$GITHUB_ENV
           echo "DEB_FILE=$DEB_FILE" >>$GITHUB_ENV
           echo "EXE_FILE=$EXE_FILE" >>$GITHUB_ENV
+          echo "WEB_FILE=$WEB_FILE" >>$GITHUB_ENV
 
       - name: Release
         uses: softprops/action-gh-release@v0.1.15
@@ -186,6 +195,7 @@ jobs:
             ${{ env.DMG_FILE }}
             ${{ env.DEB_FILE }}
             ${{ env.EXE_FILE }}
+            ${{ env.WEB_FILE }}
 
       - name: Get repo name
         id: repo-name
