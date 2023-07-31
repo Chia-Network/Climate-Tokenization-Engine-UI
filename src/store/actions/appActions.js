@@ -567,10 +567,7 @@ const maybeServerOverrideFetch = async (url, payload) => {
         ? `${serverAddress}/`
         : serverAddressUrl;
 
-    const newUrl = url.replace(
-      /(https:|http:|)(^|\/\/)(.*?\/)/g,
-      serverAddressUrl,
-    );
+    const newUrl = url.replace(serverAddressUrl);
 
     return fetch(newUrl, payloadWithApiKey);
   }

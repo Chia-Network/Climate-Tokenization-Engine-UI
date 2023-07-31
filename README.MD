@@ -57,8 +57,8 @@ sudo apt-get install climate-tokenization-engine-ui
 npm install -g react-scripts
 git clone git@github.com:Chia-Network/Climate-Portal-UI
 cd Climate-Portal-Ui
-nvm install 16.0.0
-nvm use 16.0.0
+nvm install 18.16.0
+nvm use 18.16.0
 npm install foreman -g
 npm install -g husky
 npm install -g prettier
