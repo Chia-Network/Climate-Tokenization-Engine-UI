@@ -116,7 +116,7 @@ const Connect = withTheme(({ openModal = false, onClose, isHeader = true }) => {
 
   return (
     <>
-      {isHeader && (
+      {isHeader && window.self === window.top && (
         <ConnectContainer onClick={() => setIsConnectModalOpen(true)}>
           {!homeOrgUid && <FormattedMessage id="connect-to-cw" />}
           {homeOrgUid && <FormattedMessage id="connected" />}
