@@ -156,8 +156,14 @@ export const signIn = ({ insertedApiKey, insertedServerAddress }) => {
   return async dispatch => {
     console.log(insertedApiKey, insertedServerAddress);
     if (insertedApiKey && insertedServerAddress) {
-      localStorage.setItem('apiKey', insertedApiKey);
-      localStorage.setItem('serverAddress', insertedServerAddress);
+      localStorage.setItem(
+        'climateTokenizationEngineRemoteServerApiKey',
+        insertedApiKey,
+      );
+      localStorage.setItem(
+        'climateTokenizationEngineRemoteServerAddress',
+        insertedServerAddress,
+      );
       dispatch({
         type: actions.SIGN_USER_IN,
         payload: {
@@ -172,8 +178,8 @@ export const signIn = ({ insertedApiKey, insertedServerAddress }) => {
 
 export const signOut = () => {
   return async dispatch => {
-    localStorage.removeItem('apiKey');
-    localStorage.removeItem('serverAddress');
+    localStorage.removeItem('climateTokenizationEngineRemoteServerApiKey');
+    localStorage.removeItem('climateTokenizationEngineRemoteServerAddress');
     dispatch({
       type: actions.SIGN_USER_OUT,
       payload: {
@@ -547,8 +553,12 @@ export const confirmDetokanization = data => {
 };
 
 const maybeServerOverrideFetch = async (url, payload) => {
-  const apiKey = localStorage.getItem('apiKey');
-  const serverAddress = localStorage.getItem('serverAddress');
+  const apiKey = localStorage.getItem(
+    'climateTokenizationEngineRemoteServerApiKey',
+  );
+  const serverAddress = localStorage.getItem(
+    'climateTokenizationEngineRemoteServerAddress',
+  );
   const doesSignInDataExist = apiKey != null && serverAddress != null;
 
   if (doesSignInDataExist) {
