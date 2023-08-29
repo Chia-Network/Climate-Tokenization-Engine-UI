@@ -1,3 +1,15 @@
+## [1.1.3](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.2...1.1.3) (2023-08-29)
+
+
+### Features
+
+* hide connect button on iframe ([00573b1](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/00573b100c9f310dd0045b5d0bf47f05c348f790))
+* hide header if in iframe ([099060a](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/099060adece619961a4f4ff7b0d4e29681217613))
+* listen to iframe message ([0d4d792](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/0d4d792398e06bcc810bbc935652cfb708084653))
+* namespace localstorage keys ([e90f08e](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/e90f08ef6d3941c2814799fc8f06e105811c24a5))
+
+
+
 ## [1.1.2](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.1...1.1.2) (2023-07-31)
 
 
