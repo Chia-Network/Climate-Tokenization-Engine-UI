@@ -80,9 +80,43 @@ const Connect = withTheme(({ openModal = false, onClose, isHeader = true }) => {
     setOrgUid(homeOrgUid);
   }, [homeOrgUid]);
 
+    useEffect(() => {
+    // Function to handle the message event
+    const handleMessage = event => {
+      if (event.origin !== window.location.origin) {
+        return;
+      }
+      console.log('Received message:', event.data);
+      if (
+        event?.data?.serverAddress &&
+        validateUrl(event?.data?.serverAddress)
+      ) {
+        dispatch(
+          signIn({
+            apiKey: event?.data?.apiKey,
+            serverAddress: event?.data?.serverAddress,
+          }),
+        );
+        setServerAddress(null);
+        setApiKey(null);
+        setIsConnectModalOpen(false);
+        dispatch(importHomeOrg(orgUid));
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener('message', handleMessage, false);
+
+    // Return a function that will be called when the component unmounts
+    return () => {
+      // Remove the event listener
+      window.removeEventListener('message', handleMessage, false);
+    };
+  }, []);
+
   return (
     <>
-      {isHeader && (
+      {isHeader && window.self === window.top && (
         <ConnectContainer onClick={() => setIsConnectModalOpen(true)}>
           {!homeOrgUid && <FormattedMessage id="connect-to-cw" />}
           {homeOrgUid && <FormattedMessage id="connected" />}
