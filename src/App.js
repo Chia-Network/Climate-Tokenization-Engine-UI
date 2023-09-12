@@ -3,7 +3,10 @@ import { ThemeProvider } from 'styled-components';
 import { IntlProvider } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setLocale, setThemeFromLocalStorage } from './store/actions/appActions';
+import {
+  setLocale,
+  setThemeFromLocalStorage,
+} from './store/actions/appActions';
 
 import { loadLocaleData } from './translations';
 import { AppNavigator } from './navigation';
@@ -16,10 +19,9 @@ const App = () => {
   const appStore = useSelector(state => state);
   const [translationTokens, setTranslationTokens] = useState();
 
-  useEffect(
-    () => dispatch(setThemeFromLocalStorage),
-    [setThemeFromLocalStorage],
-  );
+  useEffect(() => {
+    dispatch(setThemeFromLocalStorage);
+  }, [setThemeFromLocalStorage]);
 
   useEffect(() => {
     if (appStore.locale) {
@@ -42,7 +44,8 @@ const App = () => {
       <IntlProvider
         locale="en"
         defaultLocale="en"
-        messages={translationTokens.default}>
+        messages={translationTokens.default}
+      >
         <AppNavigator />
       </IntlProvider>
     </ThemeProvider>

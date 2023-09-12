@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const StyledTabs = styled(MuiTabs)`
   .MuiButtonBase-root {
-    color: ${props => props.theme.colors.default.primaryDark};
+    color: #6e7d7f;
     font-family: ${props => props.theme.typography.primary.semiBold};
   }
 
@@ -14,7 +14,7 @@ const StyledTabs = styled(MuiTabs)`
   }
 
   button.Mui-selected {
-    color: ${props => props.theme.colors.default.primaryDark};
+    color: ${props => props.theme.colors.default.primary};
   }
 
   .MuiTabs-indicator {

@@ -26,7 +26,7 @@ const headings = {
 const colors = {
   default: {
     primary: '#5ECE71',
-    primaryDark: '#3AAC59',
+    primaryDark: '#FEFEFF',
     secondary: '#094D4C',
     gray1: '#65838A',
     gray2: '#95B0B7',
