@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.3...1.1.4) (2023-09-12)
+
+
+### Features
+
+* light theme ([d783dab](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/d783dab6bf0f9a3ef0689b00424ad559812d24f5))
+
+
+
 ## [1.1.3](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.2...1.1.3) (2023-08-29)
 
 
