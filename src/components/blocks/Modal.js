@@ -208,7 +208,6 @@ const Modal = withTheme(
                   size="large"
                   label={intl.formatMessage({ id: 'cancel' })}
                   onClick={onClose}
-                  type="default"
                 />
               )}
               {extraButtonLabel && extraButtonOnClick && (
