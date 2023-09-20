@@ -552,16 +552,32 @@ export const confirmDetokanization = data => {
   };
 };
 
-const maybeServerOverrideFetch = async (url, payload) => {
+const maybeServerOverrideFetch = async (originalUrl, payload) => {
   const apiKey = localStorage.getItem(
     'climateTokenizationEngineRemoteServerApiKey',
   );
+
   const serverAddress = localStorage.getItem(
     'climateTokenizationEngineRemoteServerAddress',
   );
-  const doesSignInDataExist = apiKey != null && serverAddress != null;
 
-  if (doesSignInDataExist) {
+  // If serverAddress is valid, replace the domain of the original URL.
+  if (serverAddress && typeof serverAddress === 'string') {
+    const serverUrl = new URL(serverAddress);
+    originalUrl = new URL(originalUrl);
+
+    // Remove trailing slash from serverUrl.pathname if it exists
+    let serverPathname = serverUrl.pathname;
+    serverPathname = serverPathname.replace(/\/$/, '');
+
+    // Replace the domain of the original URL with the server URL domain.
+    // Also, append the server URL's pathname to the original URL's pathname.
+    // And, maintain the query parameters from the original URL.
+    const newUrl = new URL(
+      serverPathname + originalUrl.pathname + originalUrl.search,
+      serverUrl,
+    );
+
     const payloadWithApiKey = { ...payload };
     if (payloadWithApiKey?.headers) {
       payloadWithApiKey.headers = {
@@ -572,17 +588,11 @@ const maybeServerOverrideFetch = async (url, payload) => {
       payloadWithApiKey.headers = { 'x-api-key': apiKey };
     }
 
-    const serverAddressUrl =
-      serverAddress[serverAddress.length - 1] !== '/'
-        ? `${serverAddress}/`
-        : serverAddressUrl;
-
-    const newUrl = url.replace(serverAddressUrl);
-
-    return fetch(newUrl, payloadWithApiKey);
+    return fetch(newUrl.toString(), payloadWithApiKey);
   }
 
-  return fetch(url, payload);
+  // If serverAddress is not valid, return the original URL.
+  return fetch(originalUrl, payload);
 };
 
 // encapsulates error handling, network failure, loader toggling and on success or failed handlers

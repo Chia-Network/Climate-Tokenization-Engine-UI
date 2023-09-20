@@ -54,8 +54,8 @@ const PagesContainer = styled(ControlsContainer)`
   line-height: 150%;
   ${props => {
     if (props.isActive) {
-      return `border: 1px solid ${props.theme.colors.default.primaryDark};
-                    color: ${props.theme.colors.default.primaryDark};`;
+      return `border: 1px solid ${props.theme.colors.default.primary};
+                    color: ${props.theme.colors.default.primary};`;
     } else {
       return `border: 1px solid ${props.theme.colors.default.gray4};
                     color: ${props.theme.colors.default.secondary};`;
@@ -72,7 +72,7 @@ const Pagination = withTheme(
   ({ pages, current, showLast = false, callback }) => {
     // if current page number higher or equal than number of pages, first page is displayed
     const currentPageNumber =
-      current && current > 0 && current < pages ? current + 1 : 1;
+      current && current > 0 && current < pages ? current : 1;
     const numberOfPages = pages && pages !== 0 ? pages : 1;
     const changeCurrentPageTo = value => callback(value - 1);
     const backButtonIsDisabled = currentPageNumber === 1;
