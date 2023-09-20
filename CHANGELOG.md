@@ -1,3 +1,12 @@
+## [1.1.5](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.4...1.1.5) (2023-09-20)
+
+
+### Bug Fixes
+
+* server override fixes ([67cddd2](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/67cddd29bf4983c27709dbb17eff2b29b50adfad))
+
+
+
 ## [1.1.4](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.3...1.1.4) (2023-09-12)
 
 
