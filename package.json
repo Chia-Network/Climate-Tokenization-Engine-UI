@@ -1,6 +1,6 @@
 {
   "name": "climate-tokenization-engine-ui",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "private": true,
   "author": "Chia Network Inc. <hello@chia.net>",
   "description": "User Interface for the Climate Tokenization Engine",
@@ -92,7 +92,7 @@
     "dotenv": "^16.4.5",
     "dotenv-webpack": "^8.0.1",
     "electron": "^25.9.8",
-    "electron-builder": "^24.12.0",
+    "electron-builder": "^24.13.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.29.1",
