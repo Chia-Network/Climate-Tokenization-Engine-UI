@@ -47,18 +47,19 @@ jobs:
 
       - name: Build electron app
         env:
-          CSC_FOR_PULL_REQUEST: "true"
+          CSC_FOR_PULL_REQUEST: 'true'
         run: npm run electron:package:mac
 
       - name: Notarize
         run: |
           DMG_FILE=$(find ${{ github.workspace }}/dist/ -type f -name '*.dmg')
-          npm install -g notarize-cli
-          notarize-cli \
-            --file="$DMG_FILE" \
-            --bundle-id net.chia.climate-tokenization-engine-ui \
-            --username "${{ secrets.APPLE_NOTARIZE_USERNAME }}" \
-            --password "${{ secrets.APPLE_NOTARIZE_PASSWORD }}"
+          xcrun notarytool submit \
+          --wait \
+          --apple-id "${{ secrets.APPLE_NOTARIZE_USERNAME }}" \
+          --password "${{ secrets.APPLE_NOTARIZE_PASSWORD }}" \
+          --team-id "${{ secrets.APPLE_TEAM_ID }}" \
+          "$DMG_FILE"
+
       - name: Upload Mac Installer
         uses: actions/upload-artifact@v3
         with:
@@ -100,13 +101,13 @@ jobs:
           sm_client_cert_file_b64: ${{ secrets.SM_CLIENT_CERT_FILE_B64 }}
           sm_client_cert_password: ${{ secrets.SM_CLIENT_CERT_PASSWORD }}
           sm_code_signing_cert_sha1_hash: ${{ secrets.SM_CODE_SIGNING_CERT_SHA1_HASH }}
-          file: "${{ github.workspace }}/${{ env.INSTALLER_FILE }}"
+          file: '${{ github.workspace }}/${{ env.INSTALLER_FILE }}'
 
       - name: Upload Windows Installer
         uses: actions/upload-artifact@v3
         with:
           name: windows-installer
-          path: "${{ github.workspace }}/${{ env.INSTALLER_FILE }}"
+          path: '${{ github.workspace }}/${{ env.INSTALLER_FILE }}'
 
   build_linux:
     name: Build Linux Installer
