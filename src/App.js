@@ -13,6 +13,7 @@ import { AppNavigator } from './navigation';
 import theme from './theme';
 
 import { IndeterminateProgressOverlay } from './components';
+import { LocaleChangeListener } from './components/blocks/LocaleChangeListener';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const App = () => {
         defaultLocale="en"
         messages={translationTokens.default}
       >
+        <LocaleChangeListener />
         <AppNavigator />
       </IntlProvider>
     </ThemeProvider>
