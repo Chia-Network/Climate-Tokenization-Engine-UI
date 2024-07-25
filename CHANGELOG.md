@@ -1,3 +1,17 @@
+## [1.1.9](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.8...1.1.9) (2024-07-25)
+
+
+### Bug Fixes
+
+* language selector default color ([d8f226d](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/d8f226dee0aafd9580c394374bb72e30c5851b25))
+
+
+### Features
+
+* update localization to receive and apply locale changes from core-registery ([029948b](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/029948bcfa706a11b1449893e27b1c0e443e92ce))
+
+
+
 ## [1.1.8](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.7...1.1.8) (2024-03-07)
 
 
