@@ -17,6 +17,10 @@ const Container = styled('div')`
     font-family: ${props => props.theme.typography.primary.semiBold};
   }
 
+  .MuiSelect-select {
+    color: ${props => props.theme.colors.default.primary}};
+  }
+
   .MuiSelect-root:hover,
   .MuiSvgIcon-root:hover,
   .MuiSelect-select:hover {
@@ -24,7 +28,8 @@ const Container = styled('div')`
   }
 
   .MuiOutlinedInput-notchedOutline {
-    border: 0;
+    border: 0 !important;
+    outline: 0;
   }
 `;
 
