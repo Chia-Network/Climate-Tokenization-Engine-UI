@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { withTheme } from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
@@ -23,20 +23,19 @@ const NavContainer = styled('div')`
   width: 16rem;
   min-width: 16rem;
   height: 100%;
-  background-color: ${props => props.theme.colors.default.primaryDark};
+  background-color: ${props =>
+    props.color ?? props.theme.colors.default.primaryDark};
 `;
 
 const MenuItem = styled(Link)`
-  background: ${props => (props.selected ? 'white' : 'transparent')};
+  background: ${props =>
+    props.selected ? props.highlightColor ?? 'white' : 'transparent'};
   :hover {
     background: ${props => props.theme.colors.default.primary};
   }
   padding: 0.5625rem 0rem 0.75rem 3.25rem;
   text-transform: uppercase;
-  ${props =>
-    props.selected
-      ? `color: ${props.theme.colors.default.primary};`
-      : 'color: #6e7d7f;'}
+  ${props => `color: ${props.color ?? props.theme.colors.default.primary};`}
   font-family: ${props => props.theme.typography.primary.bold};
   cursor: pointer;
   display: block;
@@ -51,11 +50,37 @@ const MenuItem = styled(Link)`
 
 const LeftNav = withTheme(({ children }) => {
   const location = useLocation();
+  const [colors, setColors] = useState({
+    topBarBgColor: undefined,
+    leftNavHighlightColor: undefined,
+    leftNavBgColor: undefined,
+    leftNavTextColor: undefined,
+  });
+  function notifyParentWhenLeftNavLoaded() {
+    window.parent.postMessage('leftNavLoaded', window.location.origin);
+  }
+
+  useEffect(() => {
+    const handleMessage = event => {
+      if (event.data.colors) {
+        setColors(event.data.colors);
+      }
+    };
+    notifyParentWhenLeftNavLoaded();
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
 
   return (
     <Container>
-      <NavContainer>
+      <NavContainer color={colors.leftNavBgColor}>
         <MenuItem
+          color={colors.leftNavTextColor}
+          highlightColor={colors.leftNavHighlightColor}
           selected={location.pathname.includes(constants.ROUTES.createTokens)}
           to={constants.ROUTES.createTokens}
         >
@@ -63,6 +88,8 @@ const LeftNav = withTheme(({ children }) => {
         </MenuItem>
         <div></div>
         <MenuItem
+          color={colors.leftNavTextColor}
+          highlightColor={colors.leftNavHighlightColor}
           selected={location.pathname.includes(constants.ROUTES.revertTokens)}
           to={constants.ROUTES.revertTokens}
         >
