@@ -4,13 +4,13 @@ import { IntlProvider } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  setCustomTheme,
   setLocale,
   setThemeFromLocalStorage,
 } from './store/actions/appActions';
 
 import { loadLocaleData } from './translations';
 import { AppNavigator } from './navigation';
-import theme from './theme';
 
 import { IndeterminateProgressOverlay } from './components';
 import { LocaleChangeListener } from './components/blocks/LocaleChangeListener';
@@ -19,6 +19,26 @@ const App = () => {
   const dispatch = useDispatch();
   const appStore = useSelector(state => state);
   const [translationTokens, setTranslationTokens] = useState();
+
+  function notifyParentWhenAppLoaded() {
+    window.parent.postMessage('appLoaded', window.location.origin);
+  }
+
+  useEffect(() => {
+    const handleMessage = event => {
+      if (event.data.customThemeColors) {
+        dispatch(setCustomTheme(event.data.customThemeColors));
+      }
+    };
+
+    notifyParentWhenAppLoaded();
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(setThemeFromLocalStorage);
@@ -41,7 +61,7 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={appStore.customTheme}>
       <IntlProvider
         locale="en"
         defaultLocale="en"
