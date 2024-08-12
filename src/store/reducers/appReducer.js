@@ -78,7 +78,7 @@ const appReducer = (state = initialState, action) => {
       }
       return state;
     case appActions.SET_CUSTOM_THEME:
-      return { ...state, customTheme: action.payload };
+      return u({ customTheme: action.payload }, state);
 
     case appActions.TOGGLE_THEME:
       // eslint-disable-next-line

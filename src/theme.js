@@ -37,6 +37,11 @@ const colors = {
     background: '#F0F2F5',
     onSurface: '#000000',
     onButton: '#FFFFFF',
+    leftNav: {
+      bg: 'rgb(240, 242, 245)',
+      text: '#6e7d7f',
+      highlight: '#fff',
+    },
     status: {
       info: {
         primary: '#91D5FF',

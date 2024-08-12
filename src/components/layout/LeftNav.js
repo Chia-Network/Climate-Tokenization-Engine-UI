@@ -23,27 +23,23 @@ const NavContainer = styled('div')`
   width: 16rem;
   min-width: 16rem;
   height: 100%;
-  background-color: ${props =>
-    props.theme.customColors?.leftNavBgColor ??
-    props.theme.colors.default.primaryDark};
+  background-color: ${props => props.theme.colors.default.leftNav.bg};
 `;
 
 const MenuItem = styled(Link)`
   background: ${props =>
     props.selected
-      ? props.theme.customColors?.leftNavHighlightColor ?? 'white'
+      ? props.theme.colors.default.leftNav.highlight
       : 'transparent'};
   :hover {
     background: ${props => props.theme.colors.default.primary};
   }
   padding: 0.5625rem 0rem 0.75rem 3.25rem;
   text-transform: uppercase;
-  ${props =>
-    props.theme.customColors?.leftNavTextColor
-      ? `color: ${props.theme.customColors?.leftNavTextColor};`
-      : props.selected
-      ? `color: ${props.theme.colors.default.primary};`
-      : 'color: #6e7d7f;'}
+  color: ${props =>
+    props.selected
+      ? props.theme.colors.default.primary
+      : props.theme.colors.default.leftNav.text};
   font-family: ${props => props.theme.typography.primary.bold};
   cursor: pointer;
   display: block;
