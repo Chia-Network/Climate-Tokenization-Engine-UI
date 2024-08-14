@@ -1,3 +1,19 @@
+## [1.1.10](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.9...1.1.10) (2024-08-14)
+
+
+### Bug Fixes
+
+* all the colors could be changed by parent ui, removed conditional colors rendering ([8d86fbb](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/8d86fbbd053f3563e7581b475f06415c47593c17))
+* used arrow functions ([489b7e9](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/489b7e9918beeaca5ffcc5f66f8106a2616d23ee))
+
+
+### Features
+
+* implement theme changing feature to sync with parent app ([786b975](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/786b9759d55cb797099c5b1d2458158433d0d360))
+* integrate theme changes received from parent app and used redux and themeProvider ([cf9bdb7](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/cf9bdb7708963ccca8b900780f8c6b9e78c48a50))
+
+
+
 ## [1.1.9](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.8...1.1.9) (2024-07-25)
 
 
