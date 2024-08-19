@@ -11,5 +11,7 @@
   "server-address": "Server Address",
   "api-key": "API Key",
   "connect": "connect",
-  "unable-to-load-contents": "unable to load contents"
+  "unable-to-load-contents": "unable to load contents",
+  "tokenized-units": "tokenized units",
+  "untokenized-units": "untokenized units"
 }

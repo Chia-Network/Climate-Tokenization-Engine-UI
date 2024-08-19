@@ -14,9 +14,9 @@ const AppNavigator: React.FC = () => {
             loader={({ params }) => redirect(params['*'] || '/')}
           />
           <Route path="" element={<Template />}>
-            <Route path="/" element={<Navigate to={ROUTES.PROJECTS_LIST} />} />
-            <Route path={ROUTES.PROJECTS_LIST} element={<Pages.ListPageSample />} />
-            <Route path="*" element={<Navigate replace to={ROUTES.PROJECTS_LIST} />} />
+            <Route path="/" element={<Navigate to={ROUTES.CREATE_TOKENS} />} />
+            <Route path={ROUTES.CREATE_TOKENS} element={<Pages.ListPageSample />} />
+            <Route path="*" element={<Navigate replace to={ROUTES.CREATE_TOKENS} />} />
           </Route>
         </Routes>
         {/* app-wide blocking modals go below this comment*/}

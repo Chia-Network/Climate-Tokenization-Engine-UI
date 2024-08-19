@@ -1,3 +1,4 @@
 export default {
-  PROJECTS_LIST: '/projects',
+  CREATE_TOKENS: '/create-tokens',
+  REVERT_TOKENS: '/revert-tokens',
 };
