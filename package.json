@@ -1,116 +1,95 @@
 {
-  "name": "climate-tokenization-engine-ui",
-  "version": "1.1.10",
+  "name": "cadt-ui",
   "private": true,
-  "author": "Chia Network Inc. <hello@chia.net>",
-  "description": "User Interface for the Climate Tokenization Engine",
-  "homepage": "./",
-  "main": "src/start.js",
+  "version": "0.0.10",
+  "type": "module",
+  "main": "build/main.js",
   "engineStrict": true,
+  "author": "Chia Network Inc. <hello@chia.net>",
+  "description": "Climate Action Data Trust User Interface",
   "engines": {
-    "node": ">=18.16.0"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@lukeed/uuid": "^2.0.1",
-    "@mui/lab": "^5.0.0-alpha.133",
-    "@mui/material": "^5.15.10",
-    "@mui/x-date-pickers": "^6.19.4",
-    "about-window": "^1.15.2",
-    "dayjs": "^1.11.10",
-    "formik": "^2.4.5",
-    "json-as-xlsx": "^2.5.6",
-    "lodash": "^4.17.21",
-    "minizip-asm.js": "^1.0.10",
-    "nf": "^0.0.3",
-    "qrcode.react": "^3.1.0",
-    "react": "^18.2.0",
-    "react-app-env": "^1.2.3",
-    "react-dom": "^18.2.0",
-    "react-indiana-drag-scroll": "^2.2.0",
-    "react-intl": "^6.6.2",
-    "react-notifications": "^1.7.4",
-    "react-redux": "^8.1.3",
-    "react-router-dom": "^6.22.1",
-    "react-scripts": "^5.0.1",
-    "react-select": "^5.8.0",
-    "redux": "^4.2.1",
-    "redux-thunk": "^2.4.2",
-    "styled-components": "^6.1.8",
-    "updeep": "^1.2.4",
-    "web-vitals": "^3.5.2",
-    "yup": "^1.3.3"
+    "node": ">=20.0"
   },
   "scripts": {
-    "start": "nf start -p 31322",
-    "build": "react-scripts build",
-    "test": "mocha tests/**/*.spec.js --reporter spec --exit",
-    "eject": "react-scripts eject",
-    "electron": "electron .",
-    "electron-start": "node src/start-react",
-    "react-start": "react-scripts start",
-    "pack": "build --dir",
-    "dist": "npm run build && build",
-    "requirements-check": "node check_node_version.js",
-    "postinstall": "npm run requirements-check && install-app-deps",
-    "release": "",
+    "start": "vite",
+    "build": "npm run clean && tsc && cp src/preload.js build/preload.js && vite build",
+    "web-build": "npm run build && npm run prep-web-production",
+    "prep-web-production": "cp -r build/renderer/* build && rm -rf build/main.js build/preload.js build/renderer",
+    "electron": "npm run clean &&  tsc && cp src/preload.js build/preload.js && cross-env NODE_ENV=development electron .",
+    "dev": "concurrently \"npm run start\" \"npm run electron\"",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "clean": "rm -rf dist && rm -rf build",
     "prepare": "husky install",
-    "electron:package:mac": "npm run build && electron-builder -m -c.extraMetadata.main=build/electron.js",
-    "electron:package:win": "npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
-    "electron:package:linux": "npm run build && electron-builder -l -c.extraMetadata.main=build/electron.js"
+    "electron:package:mac": "npm run clean && npm run build && electron-builder -m -c.extraMetadata.main=build/main.js",
+    "electron:package:win": "npm run clean && npm run build && electron-builder -w -c.extraMetadata.main=build/main.js",
+    "electron:package:linux": "npm run clean && npm run build && electron-builder -l -c.extraMetadata.main=build/main.js"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      "last 1 electron version",
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 electron version"
-    ]
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.3",
+    "@types/styled-components": "^5.1.34",
+    "@xterm/xterm": "^5.3.0",
+    "dayjs": "^1.11.10",
+    "express": "^4.19.2",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.7.8",
+    "formik": "^2.4.5",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-content-loader": "^7.0.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.3.0",
+    "react-intl": "^6.6.5",
+    "react-redux": "^9.1.1",
+    "react-router-dom": "^6.22.3",
+    "redux-persist": "^6.0.0",
+    "simplebar": "^6.2.5",
+    "simplebar-react": "^3.2.4",
+    "styled-components": "^6.1.8",
+    "uuid": "^9.0.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.23.9",
-    "@babel/eslint-parser": "^7.23.10",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-env": "^7.23.9",
-    "@babel/preset-react": "^7.23.3",
-    "@babel/register": "^7.23.7",
-    "@commitlint/cli": "^17.8.1",
-    "@commitlint/config-conventional": "^14.1.0",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "chai": "^4.4.1",
-    "dotenv": "^16.4.5",
-    "dotenv-webpack": "^8.0.1",
-    "electron": "^25.9.8",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^28.3.0",
     "electron-builder": "^24.13.3",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-mocha": "^9.0.0",
-    "eslint-plugin-react": "^7.33.2",
-    "git-authors-cli": "^1.0.49",
-    "husky": "^7.0.4",
-    "lint-staged": "^11.2.6",
-    "mocha": "^9.2.2",
-    "mock-local-storage": "^1.1.24",
-    "prettier": "^2.8.8",
-    "standard-version": "^9.5.0"
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "postcss": "^8.4.38",
+    "prettier": "^3.2.5",
+    "standard-version": "^9.5.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.9",
+    "wait-on": "^7.2.0"
+  },
+  "standard-version": {
+    "skip": {
+      "bump": true,
+      "commit": true,
+      "tag": true
+    }
+  },
+  "lint-staged": {
+    "*.+(js|ts|tsx)": "npm run lint:prettier-eslint"
   },
   "build": {
-    "appId": "org.chia.climate-tokenization-engine-ui",
-    "productName": "Climate Tokenization Engine UI",
+    "appId": "org.worldbank.climate-action-data-trust",
+    "productName": "cadt-ui",
     "files": [
+      "build/renderer/**/*",
       "build/**/*",
       "node_modules/**/*"
     ],
@@ -125,33 +104,23 @@
         ]
       },
       "publish": null,
-      "icon": "src/assets/img/tokenization-engine-logo.png"
+      "icon": "src/assets/img/CADT_Icon.png"
     },
     "win": {
       "target": "nsis",
       "publish": null,
-      "icon": "src/assets/img/tokenization-engine-logo.png"
+      "icon": "src/assets/img/CADT_Icon.png"
     },
     "linux": {
       "target": "deb",
+      "description": "Climate Action Data Trust User Interface",
+      "maintainer": "Chia Network Inc. <hello@chia.net>",
+      "vendor": "https://climateactiondata.org/",
       "publish": null,
-      "icon": "src/assets/img/tokenization-engine-logo.png"
+      "icon": "src/assets/img/CADT_Icon.png",
+      "desktop": {
+        "Icon": "/usr/share/icons/hicolor/0x0/apps/cadt-ui.png"
+      }
     }
-  },
-  "standard-version": {
-    "skip": {
-      "bump": true,
-      "commit": true,
-      "tag": true
-    }
-  },
-  "contributors": [
-    "Daniel <daniel.stefan@equilobe.com>",
-    "Stanley Pageot <stanley@rxdu.io>",
-    "Michael Taylor <5665004+MichaelTaylor3D@users.noreply.github.com>",
-    "Michael.Taylor <mtaylor@michaeltaylor3d.com>",
-    "Daniel Stefan <82083960+danielstefanequilobe@users.noreply.github.com>",
-    "SPageot <Stanley.Pageot@hotmail.com>",
-    "Justin England <justin@jeng.land>"
-  ]
+  }
 }

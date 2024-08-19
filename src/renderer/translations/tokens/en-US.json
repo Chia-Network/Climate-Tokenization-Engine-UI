@@ -1,0 +1,15 @@
+{
+  "please-reload-or-restart-the-application": "please restart or reload the application",
+  "application-error": "application error",
+  "no-records-found": "no records found",
+  "server-not-found": "server not found",
+  "submit": "submit",
+  "retry": "retry",
+  "server-address-helper": "server address helper",
+  "connect-to-remote-server": "connect to remote server",
+  "api-host-loaded-from-configuration": "API host loaded from configuration",
+  "server-address": "Server Address",
+  "api-key": "API Key",
+  "connect": "connect",
+  "unable-to-load-contents": "unable to load contents"
+}
