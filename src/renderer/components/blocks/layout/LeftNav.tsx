@@ -26,8 +26,8 @@ const LeftNav = () => {
               </Card>
               <Sidebar.Item
                 style={{ cursor: 'pointer' }}
-                active={isActive(ROUTES.PROJECTS_LIST)}
-                onClick={() => navigate(ROUTES.PROJECTS_LIST)}
+                active={isActive(ROUTES.CREATE_TOKENS)}
+                onClick={() => navigate(ROUTES.CREATE_TOKENS)}
               >
                 <FormattedMessage id="projects-list" />
               </Sidebar.Item>

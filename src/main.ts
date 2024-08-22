@@ -32,7 +32,7 @@ function createWindow() {
   // Load URL based on the environment
   const loadUrl =
     process.env.NODE_ENV === 'development'
-      ? 'http://localhost:5173/' // Development URL
+      ? 'http://localhost:5174/' // Development URL
       : `http://localhost:${serverPort}/`; // Production URL served by Express
 
   win.loadURL(loadUrl);

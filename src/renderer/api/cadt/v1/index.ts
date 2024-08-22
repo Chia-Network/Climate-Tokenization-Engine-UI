@@ -1,10 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import initialState from '@/store/slices/app/app.initialstate';
 
-const projectsTag = 'projects';
-
-const sampleTag = 'removeThisExample';
-
 const baseQuery = fetchBaseQuery({
   baseUrl: '/',
 });
@@ -43,8 +39,5 @@ const baseQueryWithDynamicHost = async (args, api, extraOptions) => {
 export const cadtApi = createApi({
   baseQuery: baseQueryWithDynamicHost,
   reducerPath: 'cadtApi',
-  tagTypes: [projectsTag, sampleTag],
   endpoints: () => ({}),
 });
-
-export { projectsTag, sampleTag };

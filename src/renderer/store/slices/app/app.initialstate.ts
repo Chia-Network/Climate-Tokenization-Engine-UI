@@ -8,7 +8,7 @@ export interface AppState {
 
 const initialState: AppState = {
   locale: null,
-  apiHost: 'http://localhost:31310',
+  apiHost: 'http://localhost:31311',
   apiKey: null,
   configFileLoaded: false,
   isDarkTheme: false,

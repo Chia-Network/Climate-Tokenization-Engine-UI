@@ -1,14 +1,19 @@
 import { DebouncedFunc } from 'lodash';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button, Column, DataTable, PageCounter, Pagination, SampleDeepLinkedModal, Tooltip } from '@/components';
+import { Button, Column, DataTable, PageCounter, Pagination, CreateTokenModal, Tooltip } from '@/components';
 import { Project } from '@/schemas/Project.schema';
 import { Badge } from 'flowbite-react';
 import { useUrlHash, useWildCardUrlHash } from '@/hooks';
+import { Unit } from '@/schemas/Unit.schema';
+
+export interface UnitWithProject extends Unit {
+  project: Project;
+}
 
 interface TableProps {
-  data: Project[];
-  rowActions?: 'edit' | 'transfer';
+  data: UnitWithProject[];
+  rowActions?: 'tokenize';
   isLoading: boolean;
   currentPage: number;
   onPageChange: DebouncedFunc<(page: any) => void>;
@@ -19,10 +24,7 @@ interface TableProps {
   totalCount: number;
 }
 
-/** left in as example of the pattern in which the page is in control of getting data from the api and determining view
- * settings and how the data and view settings are cascaded down to the components responsible for displaying the data */
-
-const ProjectsListTable: React.FC<TableProps> = ({
+const UntokenizedUnitListTable: React.FC<TableProps> = ({
   data,
   rowActions,
   isLoading,
@@ -50,7 +52,7 @@ const ProjectsListTable: React.FC<TableProps> = ({
         ignoreChildEvents: true,
         ignoreOrderChange: true,
         render: (row: Project) => {
-          if (rowActions === 'edit') {
+          if (rowActions === 'tokenize') {
             return <Button>optional {row.projectName}</Button>;
           } else {
             return <></>;
@@ -147,10 +149,10 @@ const ProjectsListTable: React.FC<TableProps> = ({
         }
       />
       {(createProjectModalActive || editProjectModalActive) && (
-        <SampleDeepLinkedModal urlFragmentDerivedData={''} onClose={handleCloseUpsertModal} />
+        <CreateTokenModal urlFragmentDerivedData={''} onClose={handleCloseUpsertModal} />
       )}
     </>
   );
 };
 
-export { ProjectsListTable };
+export { UntokenizedUnitListTable };

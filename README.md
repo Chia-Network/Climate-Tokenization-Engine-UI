@@ -26,7 +26,7 @@ define RTKQuery endpoints in the /v1 directory. Note that when exporting a hook 
 is prepended with use, and appended with either query or mutation. To export resource query hook foo, the export name 
 will need to be useFooQuery. For mutation hook foo it will need to be useFooMutation. 
 
-sampleProjects.api.ts can be deleted as it is only use in other sample code that will be deleted, but it is highly
+projects.api.ts can be deleted as it is only use in other sample code that will be deleted, but it is highly
 recommended that system.api.ts be kept and the resource url's changed to the /health equivalent for the backend the
 app will be connected to. the application uses these system hooks to determine if the backend is available or not.
 removing it will require refactoring, and it will likely end-up being reimplemented over the course of development.
@@ -75,8 +75,8 @@ The pattern for displaying data has 3 general steps:
 of how to display the data
 - the structure, data, and options are passed to a common base component responsible for rendering the data
 
-This pattern is exemplified by pages/ListPageSample.tsx, components/blocks/tables/ProjectsListTable.tsx, and 
-components/layout/Datatable.tsx. ListPageSample.tsx fetches the data via the RTKQuery hooks, then passes the data,
+This pattern is exemplified by pages/TokensPage.tsx, components/blocks/tables/ProjectsListTable.tsx, and 
+components/layout/Datatable.tsx. TokensPage.tsx fetches the data via the RTKQuery hooks, then passes the data,
 filters, and sorts to ProjectsListTable.tsx, which defines the structure (columns) of the table and passes the structure and data
 down to the generalized DataTable.tsx. The project table and data table are directly controlled at the page level and
 make no assumptions about the data or how to display it. The data table can be used in any capacity for any table and
@@ -86,5 +86,5 @@ For all other operations that don't involve fetching and sorting data, a pattern
 pull date directly from the api hooks and are parent component-agnostic is used. Prop drilling is explicitly avoided.
 
 For deep-linking components and state, the hooks/ directory contains hooks for manipulating query params and url hashes.
-these hooks operate much like the useState hook with additional arguments. pages/ListPageSample.tsx has examples for
+these hooks operate much like the useState hook with additional arguments. pages/TokensPage.tsx has examples for
 how to use these hooks.

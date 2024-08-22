@@ -1,2 +1,2 @@
-export * from './ProjectsListTable';
+export * from './UntokenizedUnitListTable';
 export * from './SkeletonTable';

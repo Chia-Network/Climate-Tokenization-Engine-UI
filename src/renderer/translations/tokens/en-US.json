@@ -13,5 +13,6 @@
   "connect": "connect",
   "unable-to-load-contents": "unable to load contents",
   "tokenized-units": "tokenized units",
-  "untokenized-units": "untokenized units"
+  "untokenized-units": "untokenized units",
+  "create-token": "create token"
 }

@@ -26,7 +26,7 @@ const systemApi = cadtApi.injectEndpoints({
   endpoints: (builder) => ({
     getHealth: builder.query<ServerHealth, GetHealthParams>({
       query: ({ apiHost = '', apiKey }) => ({
-        url: `${apiHost}/health`,
+        url: `${apiHost}/healthz`,
         method: 'GET',
         headers: apiKey ? { 'X-Api-Key': apiKey } : {},
       }),
@@ -38,7 +38,7 @@ const systemApi = cadtApi.injectEndpoints({
     }),
     getHealthImmediate: builder.mutation<boolean, GetHealthParams>({
       query: ({ apiHost = '', apiKey }) => ({
-        url: `${apiHost}/health`,
+        url: `${apiHost}/healthz`,
         method: 'GET',
         headers: apiKey ? { 'X-Api-Key': apiKey } : {},
       }),
