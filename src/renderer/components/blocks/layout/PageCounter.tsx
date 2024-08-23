@@ -1,4 +1,5 @@
 import React from 'react';
+import { RECORDS_PER_PAGE } from '@/api/cadt/v1';
 
 // Define an interface for the component's props
 interface PageCounterProps {
@@ -13,7 +14,8 @@ const PageCounter: React.FC<PageCounterProps> = ({ currentPage, totalCount }) =>
     <div className="text-sm text-gray-600 dark:text-gray-400">
       Show{' '}
       <span className="font-semibold">
-        {(currentPage - 1) * 10 + 1} - {Math.min((currentPage - 1) * 10 + 10, totalCount)}
+        {(currentPage - 1) * RECORDS_PER_PAGE + 1} -{' '}
+        {Math.min((currentPage - 1) * RECORDS_PER_PAGE + RECORDS_PER_PAGE, totalCount)}
       </span>{' '}
       of <span className="font-semibold">{totalCount}</span>
     </div>

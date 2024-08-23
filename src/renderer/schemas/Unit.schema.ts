@@ -3,7 +3,6 @@ import { Issuance } from '@/schemas/Issuance.schema';
 
 export interface Unit {
   orgUid?: string | null;
-  warehouseProjectId?: string | null;
   warehouseUnitId?: string | null;
   countryJurisdictionOfOwner: string | null;
   unitCount: number | null;

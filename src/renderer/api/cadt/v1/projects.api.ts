@@ -1,4 +1,4 @@
-import { cadtApi } from './index';
+import { cadtApi, RECORDS_PER_PAGE } from './index';
 import { Project } from '@/schemas/Project.schema';
 
 interface GetProjectsParams {
@@ -27,7 +27,7 @@ const projectsApi = cadtApi.injectEndpoints({
     getProjects: builder.query<GetProjectsResponse, GetProjectsParams>({
       query: ({ page, orgUid, search, order }: GetProjectsParams) => {
         // Initialize the params object with page and limit
-        const params: GetProjectsParams & { limit: number } = { page, limit: 10 };
+        const params: GetProjectsParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
 
         if (orgUid) {
           params.orgUid = orgUid;

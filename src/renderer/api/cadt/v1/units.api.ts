@@ -1,4 +1,4 @@
-import { cadtApi } from './index';
+import { cadtApi, RECORDS_PER_PAGE } from './index';
 import { Unit } from '@/schemas/Unit.schema';
 
 interface GetUnitsParams {
@@ -24,7 +24,7 @@ const unitsApi = cadtApi.injectEndpoints({
     getUntokenizedUnits: builder.query<GetUnitsResponse, GetUnitsParams>({
       query: ({ page, search, order, filter }: GetUnitsParams) => {
         // Initialize the params object with page and limit
-        const params: GetUnitsParams & { limit: number } = { page, limit: 10 };
+        const params: GetUnitsParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
 
         if (search) {
           params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');
@@ -49,7 +49,7 @@ const unitsApi = cadtApi.injectEndpoints({
     getTokenizedUnits: builder.query<GetUnitsResponse, GetUnitsParams>({
       query: ({ page, search, order, filter }: GetUnitsParams) => {
         // Initialize the params object with page and limit
-        const params: GetUnitsParams & { limit: number } = { page, limit: 10 };
+        const params: GetUnitsParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
 
         if (search) {
           params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');

@@ -1,14 +1,15 @@
 import { FormattedMessage } from 'react-intl';
-import { CreateTokenModal, UntokenizedUnitListTable, SkeletonTable, UnitWithProject } from '@/components';
+import { CreateTokenModal, UntokenizedUnitListTable, SkeletonTable } from '@/components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useGetProjectsByIdsImmediateMutation } from '@/api';
 import { useColumnOrderHandler, useQueryParamState, useWildCardUrlHash } from '@/hooks';
 import { debounce } from 'lodash';
 import { GetUnitsResponse, useGetUntokenizedUnitsQuery } from '@/api/cadt/v1/units.api';
 import { Unit } from '@/schemas/Unit.schema';
+import { Project } from '@/schemas/Project.schema';
 
-interface UnitsWithProjectsResult extends Omit<GetUnitsResponse, 'data'> {
-  data: UnitWithProject[];
+interface UnitAndProjectResult extends Omit<GetUnitsResponse, 'data'> {
+  data: (Unit & Project)[];
 }
 
 interface PageTabProps {
@@ -31,7 +32,6 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
     useGetProjectsByIdsImmediateMutation();
 
   useEffect(() => {
-    console.log('%%%%%%%%%%% loading status', untokenizedUnitsLoading, projectsLoading);
     if (untokenizedUnitsLoading) {
       setDataLoading(true);
     } else if (
@@ -43,14 +43,13 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
     ) {
       const projectIds: string[] = untokenizedUnitsResponse.data.reduce<string[]>(
         (projectIds: string[], unit: Unit) => {
-          if (unit?.warehouseProjectId) {
-            projectIds.push(unit.warehouseProjectId);
+          if (unit?.issuance?.warehouseProjectId) {
+            projectIds.push(unit?.issuance?.warehouseProjectId);
           }
           return projectIds;
         },
         [],
       );
-      console.log('^^^^^^^^ getting projects');
       triggerGetProjects({ projectIds });
     } else if (
       dataLoading &&
@@ -70,10 +69,7 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
     untokenizedUnitsLoading,
   ]);
 
-  console.log('units', untokenizedUnitsResponse);
-  console.log('projects', projectsResponse);
-
-  const unifiedResult = useMemo<UnitsWithProjectsResult | undefined>(() => {
+  const unifiedResult = useMemo<UnitAndProjectResult | undefined>(() => {
     console.log(projectsResponse && untokenizedUnitsResponse);
     if (
       projectsResponse &&
@@ -83,13 +79,13 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
       !untokenizedUnitsLoading &&
       !projectsLoading
     ) {
-      const result: UnitsWithProjectsResult = { ...untokenizedUnitsResponse, data: [] };
+      const result: UnitAndProjectResult = { ...untokenizedUnitsResponse, data: [] };
       untokenizedUnitsResponse.data.forEach((unit: Unit) => {
         const associatedProject = projectsResponse.find(
-          (project) => project.warehouseProjectId === unit.warehouseProjectId,
+          (project) => project.warehouseProjectId === unit.issuance?.warehouseProjectId,
         );
         if (associatedProject) {
-          result.data.push({ ...unit, project: associatedProject });
+          result.data.push({ ...unit, ...associatedProject });
         } else {
           console.error('unit did not have associated project');
         }
