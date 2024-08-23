@@ -2,7 +2,7 @@ import { cadtApi, RECORDS_PER_PAGE } from './index';
 import { Unit } from '@/schemas/Unit.schema';
 
 interface GetUnitsParams {
-  page: number;
+  page: number | 'all';
   orgUid?: string;
   search?: string;
   order?: string;
@@ -80,5 +80,7 @@ const unitsApi = cadtApi.injectEndpoints({
     }),
   }),
 });
+
+export const invalidateUnitsApiTag = unitsApi.util.invalidateTags;
 
 export const { useGetTokenizedUnitsQuery, useGetUntokenizedUnitsQuery, useGetUnitQuery } = unitsApi;

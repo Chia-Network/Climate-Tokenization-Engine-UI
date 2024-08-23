@@ -1,4 +1,4 @@
-import { cadtApi, RECORDS_PER_PAGE } from './index';
+import { cadtApi, projectsTag, RECORDS_PER_PAGE } from './index';
 import { Project } from '@/schemas/Project.schema';
 
 interface GetProjectsParams {
@@ -47,31 +47,7 @@ const projectsApi = cadtApi.injectEndpoints({
           method: 'GET',
         };
       },
-    }),
-
-    getProjectsImmediate: builder.mutation<GetProjectsResponse, GetProjectsParams>({
-      query: ({ orgUid, search, order }: GetProjectsParams) => {
-        // Initialize the params object with page and limit
-        const params: GetProjectsParams = {};
-
-        if (orgUid) {
-          params.orgUid = orgUid;
-        }
-
-        if (search) {
-          params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');
-        }
-
-        if (order) {
-          params.order = order;
-        }
-
-        return {
-          url: `/projects`,
-          params,
-          method: 'GET',
-        };
-      },
+      providesTags: [projectsTag],
     }),
 
     getProject: builder.query<Project, GetProjectParams>({
@@ -95,5 +71,6 @@ const projectsApi = cadtApi.injectEndpoints({
   }),
 });
 
-export const { useGetProjectsQuery, useGetProjectsImmediateMutation, useGetProjectsByIdsImmediateMutation } =
-  projectsApi;
+export const invalidateProjectApiTag = projectsApi.util.invalidateTags;
+
+export const { useGetProjectsQuery, useGetProjectsByIdsImmediateMutation } = projectsApi;

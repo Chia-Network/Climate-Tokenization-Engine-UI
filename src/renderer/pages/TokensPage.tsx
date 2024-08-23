@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useQueryParamState } from '@/hooks';
 import { debounce } from 'lodash';
-import { UntokenizedUnitsTab, SearchBox, Tabs } from '@/components';
+import { UntokenizedUnitsTab, SearchBox, Tabs, SyncIndicator } from '@/components';
 import { FormattedMessage } from 'react-intl';
 
 enum TabTypes {
@@ -26,6 +26,7 @@ const TokensPage: React.FC = () => {
       <div className="pt-2 pl-2 pr-2 h-full">
         <div className="flex flex-col md:flex-row gap-6 my-2.5 relative z-30 items-center h-auto">
           <SearchBox defaultValue={search} onChange={handleSearchChange} />
+          <SyncIndicator detailed={true} />
         </div>
         <div className="h-13">
           <Tabs onActiveTabChange={(tab: TabTypes) => setActiveTab(tab)}>

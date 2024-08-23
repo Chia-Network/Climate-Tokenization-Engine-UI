@@ -1,10 +1,9 @@
 import { FormattedMessage } from 'react-intl';
 import { CreateTokenModal, UntokenizedUnitListTable, SkeletonTable } from '@/components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useGetProjectsByIdsImmediateMutation } from '@/api';
 import { useColumnOrderHandler, useQueryParamState, useWildCardUrlHash } from '@/hooks';
 import { debounce } from 'lodash';
-import { GetUnitsResponse, useGetUntokenizedUnitsQuery } from '@/api/cadt/v1/units.api';
+import { GetUnitsResponse, useGetProjectsByIdsImmediateMutation, useGetUntokenizedUnitsQuery } from '@/api';
 import { Unit } from '@/schemas/Unit.schema';
 import { Project } from '@/schemas/Project.schema';
 
