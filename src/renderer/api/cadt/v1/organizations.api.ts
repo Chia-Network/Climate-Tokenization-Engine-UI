@@ -7,7 +7,7 @@ const organizationsApi = cadtApi.injectEndpoints({
   endpoints: (builder) => ({
     getHomeOrg: builder.query<Organization | undefined, void | null>({
       query: () => ({
-        url: `/v1/organizations`,
+        url: `/organizations`,
         method: 'GET',
       }),
       transformResponse(baseQueryReturnValue: BaseQueryResult<Organization[]>): Organization | undefined {

@@ -13,12 +13,10 @@ interface SyncIndicatorProps {
 
 /**
  * Displays synchronization indicator and allows a hard refresh when sync status changes.
- * @param {Object} props Component props.
- * @param {boolean} props.detailed Indicates if detailed view is enabled.
- * @param {string} [props.orgUid] Organization UID for specific org data.
+ * @param detailed Indicates if detailed view is enabled.
  * @returns {JSX.Element} SyncIndicator component.
  */
-const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }) => {
+const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }: SyncIndicatorProps) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { data: homeOrg } = useGetHomeOrgQuery(null, {
@@ -58,9 +56,11 @@ const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }) => {
           <div className="flex flex-col text-left">
             <span className={`text-sm ${isSynced ? 'text-green-700' : 'text-yellow-600'}`}>
               {isSynced ? (
-                <FormattedMessage id="synced" />
+                <p className="capitalize">
+                  <FormattedMessage id="synced" />
+                </p>
               ) : (
-                <p>
+                <p className="capitalize">
                   <FormattedMessage id="syncing" />
                   ...
                 </p>
@@ -80,7 +80,9 @@ const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }) => {
           className="ml-2 py-2 px-4 bg-orange-200 text-orange-600 border border-orange-400 rounded-lg hover:bg-orange-300 transition duration-150 ease-in-out flex items-center justify-center space-x-2 dark:bg-orange-600 dark:text-orange-200 dark:border-orange-700 dark:hover:bg-orange-700"
         >
           <BiRefresh className="text-orange-600 dark:text-orange-300" />
-          <span>Refresh</span>
+          <p className="capitalize">
+            <FormattedMessage id="refresh" />
+          </p>
         </button>
       )}
     </>

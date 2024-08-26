@@ -43,7 +43,9 @@ const ConnectButton: React.FC = () => {
           !serverHealth?.isHealthy ? setActive(true) : handleDisconnect();
         }}
       >
-        {!serverHealth?.isHealthy ? <FormattedMessage id="connect" /> : <FormattedMessage id="disconnect" />}
+        <div className="capitalize">
+          {!serverHealth?.isHealthy ? <FormattedMessage id="connect" /> : <FormattedMessage id="disconnect" />}
+        </div>
       </Button>
       {isActive && <ConnectModal onClose={() => setActive(false)} />}
     </>

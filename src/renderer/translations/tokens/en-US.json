@@ -19,5 +19,13 @@
   "project-name": "project name",
   "serial-number-block": "serial number block",
   "unit-status": "unit status",
-  "unit-count": "unit count"
+  "unit-count": "unit count",
+  "create-tokens": "create tokens",
+  "syncing": "syncing",
+  "remaining": "remaining",
+  "disconnect": "disconnect",
+  "synced": "synced",
+  "refresh": "refresh",
+  "tokenization": "tokenization",
+  "search": "search"
 }

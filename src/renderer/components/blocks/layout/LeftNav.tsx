@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { Card, Sidebar, WarehouseIcon } from '@/components';
+import { Card, Sidebar } from '@/components';
 import ROUTES from '@/routes/route-constants';
+import { RiTokenSwapLine } from 'react-icons/ri';
 
 const LeftNav = () => {
   const navigate = useNavigate();
@@ -18,10 +19,10 @@ const LeftNav = () => {
             <Sidebar.ItemGroup>
               <Card className="max-w-sm mb-6 shadow-none">
                 <div className={'flex space-x-3 justify-center'}>
-                  <WarehouseIcon height={24} width={24} />
-                  <div>
-                    <FormattedMessage id={'warehouse'} />
-                  </div>
+                  <RiTokenSwapLine size={24} />
+                  <p className="capitalize">
+                    <FormattedMessage id={'tokenization'} />
+                  </p>
                 </div>
               </Card>
               <Sidebar.Item
@@ -29,7 +30,9 @@ const LeftNav = () => {
                 active={isActive(ROUTES.CREATE_TOKENS)}
                 onClick={() => navigate(ROUTES.CREATE_TOKENS)}
               >
-                <FormattedMessage id="projects-list" />
+                <p className="capitalize">
+                  <FormattedMessage id="create-tokens" />
+                </p>
               </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>

@@ -11,7 +11,7 @@
  * tailwind.config.js
  */
 :root {
-  --color-leftNavBg: #585858;
+  --color-leftNavBg: #F0F2F5;
   --color-leftNavText: #ffffff;
   --color-leftNavItemActive: #14D863;
 }
