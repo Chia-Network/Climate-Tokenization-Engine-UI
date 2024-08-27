@@ -1,4 +1,4 @@
-import { cadtApi, RECORDS_PER_PAGE } from './index';
+import { cadtApi, RECORDS_PER_PAGE, tokenizedUnitsTag, untokenizedUnitsTag } from './index';
 import { Unit } from '@/schemas/Unit.schema';
 
 interface GetUnitsParams {
@@ -44,6 +44,7 @@ const unitsApi = cadtApi.injectEndpoints({
           method: 'GET',
         };
       },
+      providesTags: [untokenizedUnitsTag],
     }),
 
     getTokenizedUnits: builder.query<GetUnitsResponse, GetUnitsParams>({
@@ -69,6 +70,7 @@ const unitsApi = cadtApi.injectEndpoints({
           method: 'GET',
         };
       },
+      providesTags: [tokenizedUnitsTag],
     }),
 
     getUnit: builder.query<Unit, GetUnitParams>({

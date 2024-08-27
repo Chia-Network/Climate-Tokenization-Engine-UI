@@ -27,5 +27,7 @@
   "synced": "synced",
   "refresh": "refresh",
   "tokenization": "tokenization",
-  "search": "search"
+  "search": "search",
+  "no-owned-organization-found": "no owned organization found",
+  "tokenize": "tokenize"
 }

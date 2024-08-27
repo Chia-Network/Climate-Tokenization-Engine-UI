@@ -5,6 +5,7 @@ export const RECORDS_PER_PAGE = 10;
 export const projectsTag = 'projects';
 export const untokenizedUnitsTag = 'untokenizedUnits';
 export const tokenizedUnitsTag = 'tokenizedUnits';
+export const projectsByIdsTag = 'projectsByIds';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: '/',
@@ -45,5 +46,5 @@ export const cadtApi = createApi({
   baseQuery: baseQueryWithDynamicHost,
   reducerPath: 'cadtApi',
   endpoints: () => ({}),
-  tagTypes: [projectsTag, untokenizedUnitsTag, tokenizedUnitsTag],
+  tagTypes: [projectsTag, untokenizedUnitsTag, tokenizedUnitsTag, projectsByIdsTag],
 });

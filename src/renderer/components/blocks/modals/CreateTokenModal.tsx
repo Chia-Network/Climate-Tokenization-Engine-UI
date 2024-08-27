@@ -9,9 +9,11 @@ interface UpsertModalProps {
 
 const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, urlFragmentDerivedData }: UpsertModalProps) => {
   return (
-    <Modal onClose={onClose} show={true} size={'8xl'} position="top-center">
+    <Modal onClose={onClose} show={true} size={'5xl'}>
       <Modal.Header>
-        <FormattedMessage id="create-token" />
+        <p className="capitalize">
+          <FormattedMessage id="create-token" />
+        </p>
       </Modal.Header>
       <Modal.Body>
         <p>sample modal</p>

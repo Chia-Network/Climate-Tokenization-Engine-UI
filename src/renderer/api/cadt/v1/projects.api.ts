@@ -1,4 +1,4 @@
-import { cadtApi, projectsTag, RECORDS_PER_PAGE } from './index';
+import { cadtApi, projectsByIdsTag, projectsTag, RECORDS_PER_PAGE } from './index';
 import { Project } from '@/schemas/Project.schema';
 
 interface GetProjectsParams {
@@ -58,7 +58,7 @@ const projectsApi = cadtApi.injectEndpoints({
       }),
     }),
 
-    getProjectsByIdsImmediate: builder.mutation<Project[], GetProjectsById>({
+    getProjectsByIds: builder.query<Project[], GetProjectsById>({
       query: ({ projectIds }: GetProjectsById) => {
         const queryParams = new URLSearchParams();
         projectIds.forEach((projectId) => queryParams.append('projectIds', projectId));
@@ -67,10 +67,11 @@ const projectsApi = cadtApi.injectEndpoints({
           method: 'GET',
         };
       },
+      providesTags: [projectsByIdsTag],
     }),
   }),
 });
 
 export const invalidateProjectApiTag = projectsApi.util.invalidateTags;
 
-export const { useGetProjectsQuery, useGetProjectsByIdsImmediateMutation } = projectsApi;
+export const { useGetProjectsQuery, useLazyGetProjectsByIdsQuery } = projectsApi;

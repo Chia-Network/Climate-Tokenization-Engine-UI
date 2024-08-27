@@ -147,7 +147,7 @@ const DataTable: React.FC<DataTableProps> = ({
                         }}
                       >
                         <div className="text-gray-600 dark:text-white">
-                          <div className="truncate" style={{ maxWidth: '300px' }}>
+                          <div className="truncate" style={{ maxWidth: '310px' }}>
                             {column.render ? (
                               column.render(row)
                             ) : (

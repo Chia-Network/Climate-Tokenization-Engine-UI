@@ -4,7 +4,7 @@ import { BiRefresh } from 'react-icons/bi';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { projectsTag, untokenizedUnitsTag } from '@/api/cadt/v1';
+import { projectsByIdsTag, projectsTag, tokenizedUnitsTag, untokenizedUnitsTag } from '@/api/cadt/v1';
 
 interface SyncIndicatorProps {
   detailed: boolean;
@@ -20,7 +20,7 @@ const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }: SyncIndicator
   const dispatch = useDispatch();
   const location = useLocation();
   const { data: homeOrg } = useGetHomeOrgQuery(null, {
-    pollingInterval: 10000,
+    pollingInterval: 5000,
   });
 
   const [isSynced, setIsSynced] = useState(true);
@@ -34,8 +34,8 @@ const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }: SyncIndicator
 
     if (prevSyncRemaining !== syncRemaining && prevSyncRemaining !== 0) {
       setShowRefreshBadge(true);
-      dispatch(invalidateProjectApiTag([projectsTag]));
-      dispatch(invalidateUnitsApiTag([untokenizedUnitsTag]));
+      dispatch(invalidateProjectApiTag([projectsTag, projectsByIdsTag]));
+      dispatch(invalidateUnitsApiTag([untokenizedUnitsTag, tokenizedUnitsTag]));
     }
 
     setPrevSyncRemaining(syncRemaining);

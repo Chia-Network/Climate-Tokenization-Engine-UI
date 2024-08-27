@@ -12,7 +12,7 @@ const SidebarTheme = {
     inner: 'h-full overflow-y-auto overflow-x-hidden bg-leftNavBg px-3 py-4 dark:bg-gray-800',
   },
   item: {
-    base: 'flex items-center justify-center rounded-lg p-2 text-leftNavText font-normal text-leftNavText hover:text-black hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700',
+    base: 'flex items-center justify-center rounded-lg p-2 text-leftNavText font-normal text-leftNavText hover:text-black hover:bg-white dark:text-white dark:hover:bg-gray-700',
     active: 'bg-leftNavItemActive dark:bg-gray-700 text-black',
   },
 };
@@ -34,11 +34,7 @@ function ItemGroup({ children, ...props }: SidebarItemGroupProps) {
 }
 
 function Item({ children, ...props }: SidebarItemProps) {
-  return (
-    <FlowbiteSidebar.Item className={'active:bg-green-500 dark:active:bg-green-500'} {...props}>
-      {children}
-    </FlowbiteSidebar.Item>
-  );
+  return <FlowbiteSidebar.Item {...props}>{children}</FlowbiteSidebar.Item>;
 }
 
 Sidebar.Item = Item;

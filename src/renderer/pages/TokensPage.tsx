@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { useQueryParamState } from '@/hooks';
 import { debounce } from 'lodash';
-import { UntokenizedUnitsTab, SearchBox, Tabs, SyncIndicator } from '@/components';
+import { SearchBox, Tabs, SyncIndicator, UntokenizedUnitsTab } from '@/components';
 import { FormattedMessage } from 'react-intl';
 
 enum TabTypes {
-  TOKENIZED,
   UNTOKENIZED,
+  TOKENIZED,
 }
 
 const TokensPage: React.FC = () => {
@@ -20,6 +20,8 @@ const TokensPage: React.FC = () => {
     }, 800),
     [setSearch, debounce],
   );
+
+  console.log(activeTab);
 
   return (
     <>
@@ -50,9 +52,7 @@ const TokensPage: React.FC = () => {
           {activeTab === TabTypes.UNTOKENIZED && (
             <UntokenizedUnitsTab search={search} order={order} setOrder={setOrder} />
           )}
-          {activeTab === TabTypes.TOKENIZED && (
-            <UntokenizedUnitsTab search={search} order={order} setOrder={setOrder} />
-          )}
+          {activeTab === TabTypes.TOKENIZED && <p>tokenized units</p>}
         </div>
       </div>
     </>

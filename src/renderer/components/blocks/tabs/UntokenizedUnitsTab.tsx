@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl';
-import { CreateTokenModal, UntokenizedUnitListTable, SkeletonTable } from '@/components';
+import { UntokenizedUnitListTable, SkeletonTable } from '@/components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useColumnOrderHandler, useQueryParamState, useWildCardUrlHash } from '@/hooks';
+import { useColumnOrderHandler, useQueryParamState } from '@/hooks';
 import { debounce } from 'lodash';
-import { GetUnitsResponse, useGetProjectsByIdsImmediateMutation, useGetUntokenizedUnitsQuery } from '@/api';
+import { GetUnitsResponse, useLazyGetProjectsByIdsQuery, useGetUntokenizedUnitsQuery } from '@/api';
 import { Unit } from '@/schemas/Unit.schema';
 import { Project } from '@/schemas/Project.schema';
 
@@ -20,15 +20,15 @@ interface PageTabProps {
 const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }: PageTabProps) => {
   const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
   const handleSetOrder = useColumnOrderHandler(order, setOrder);
-  const [tokenizeModalFragment, tokenizeModalActive, setTokenizeModalActive] = useWildCardUrlHash('project');
+
   const [dataLoading, setDataLoading] = useState<boolean>();
   const {
     data: untokenizedUnitsResponse,
-    isLoading: untokenizedUnitsLoading,
+    isFetching: untokenizedUnitsLoading,
     error: untokenizedUnitsError,
-  } = useGetUntokenizedUnitsQuery({ page: Number(currentPage), search, order });
+  } = useGetUntokenizedUnitsQuery({ page: Number(currentPage), search, order }, { refetchOnMountOrArgChange: true });
   const [triggerGetProjects, { data: projectsResponse, isLoading: projectsLoading, error: projectsError }] =
-    useGetProjectsByIdsImmediateMutation();
+    useLazyGetProjectsByIdsQuery();
 
   useEffect(() => {
     if (untokenizedUnitsLoading) {
@@ -69,7 +69,6 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
   ]);
 
   const unifiedResult = useMemo<UnitAndProjectResult | undefined>(() => {
-    console.log(projectsResponse && untokenizedUnitsResponse);
     if (
       projectsResponse &&
       untokenizedUnitsResponse &&
@@ -130,17 +129,10 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
           isLoading={untokenizedUnitsLoading}
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}
-          onRowClick={(row) => setTokenizeModalActive(true, row.warehouseProjectId)}
           setOrder={handleSetOrder}
           order={order}
           totalPages={unifiedResult.pageCount}
           totalCount={unifiedResult.pageCount < 10 ? unifiedResult.data.length : unifiedResult.pageCount * 10}
-        />
-      )}
-      {tokenizeModalActive && (
-        <CreateTokenModal
-          onClose={() => setTokenizeModalActive(false)}
-          urlFragmentDerivedData={tokenizeModalFragment.replace('tokenize-', '')}
         />
       )}
     </>

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Card, Sidebar } from '@/components';
 import ROUTES from '@/routes/route-constants';
 import { RiTokenSwapLine } from 'react-icons/ri';
+import { NoHomeOrgModal } from '@/components/blocks/modals/NoHomeOrgModal';
 
 const LeftNav = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const LeftNav = () => {
 
   return (
     <div className="h-full relative bg-white dark:bg-gray-800">
-      {/* Original Desktop LeftNav Layout */}
       <div className="h-full hidden md:block">
         <Sidebar aria-label="App Navigation">
           <Sidebar.Items>
@@ -38,6 +38,8 @@ const LeftNav = () => {
           </Sidebar.Items>
         </Sidebar>
       </div>
+      {/* app-wide modals */}
+      <NoHomeOrgModal />
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import { DebouncedFunc } from 'lodash';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button, Column, DataTable, PageCounter, Pagination, CreateTokenModal, Tooltip } from '@/components';
+import { Button, Column, CreateTokenModal, DataTable, PageCounter, Pagination } from '@/components';
 import { Project } from '@/schemas/Project.schema';
 import { Badge } from 'flowbite-react';
-import { useUrlHash, useWildCardUrlHash } from '@/hooks';
+import { useWildCardUrlHash } from '@/hooks';
 import { Unit } from '@/schemas/Unit.schema';
 
 interface TableProps {
@@ -32,13 +32,7 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
   totalPages,
   totalCount,
 }) => {
-  const [, editProjectModalActive, setEditProjectModalActive] = useWildCardUrlHash('edit-project');
-  const [createProjectModalActive, setCreateProjectModalActive] = useUrlHash('create-project');
-
-  const handleCloseUpsertModal = () => {
-    setCreateProjectModalActive(false);
-    setEditProjectModalActive(false);
-  };
+  const [tokenizeModalFragment, tokenizeModalActive, setTokenizeModalActive] = useWildCardUrlHash('tokenize');
 
   const columns = useMemo(() => {
     const actionColumn: Column[] = [
@@ -47,9 +41,15 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
         key: 'actionColumn',
         ignoreChildEvents: true,
         ignoreOrderChange: true,
-        render: (row: Project) => {
+        render: (row: Unit & Project) => {
           if (rowActions === 'tokenize') {
-            return <Button>optional {row.projectName}</Button>;
+            return (
+              <Button onClick={() => setTokenizeModalActive(true, row.warehouseUnitId || undefined)}>
+                <p className="capitalize">
+                  <FormattedMessage id="tokenize" />
+                </p>
+              </Button>
+            );
           } else {
             return <></>;
           }
@@ -61,7 +61,7 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
       {
         title: <FormattedMessage id="registry-project-id" />,
         key: 'warehouseProjectId',
-        render: (row: Project) => <span className="font-bold">{row.currentRegistry || '-'}</span>,
+        render: (row: Project) => <span className="font-bold">{row.warehouseProjectId || '-'}</span>,
       },
       {
         title: <FormattedMessage id="project-name" />,
@@ -70,22 +70,22 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
       {
         title: <FormattedMessage id="serial-number-block" />,
         key: 'serialNumberBlock',
-        render: (row: Project) => (
+        render: (row: Unit) => (
           <div className="m-1 p-3 bg-white rounded-lg border shadow-sm dark:border-gray-500 dark:bg-transparent text-center overflow-hidden">
-            <Tooltip content={row.projectId}>
-              <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-gray-50">{row.projectId}</h5>
-            </Tooltip>
+            <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-gray-50">
+              {row.serialNumberBlock}
+            </h5>
           </div>
         ),
       },
       {
         title: <FormattedMessage id="unit-status" />,
         key: 'unitStatus',
-        render: (row: Unit & Project) => {
+        render: (row: Unit) => {
           let color: string = '';
           switch (row.unitStatus) {
             case 'Held': {
-              color = 'success';
+              color = 'lime';
               break;
             }
             case 'Retired': {
@@ -93,11 +93,11 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
               break;
             }
             case 'Cancelled': {
-              color = 'warning';
+              color = 'yellow';
               break;
             }
             case 'Expired': {
-              color = 'failure';
+              color = 'red';
               break;
             }
             case 'Buffer': {
@@ -108,20 +108,22 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
               color = 'pink';
               break;
             }
-            case 'Exported': {
-              color = 'gray';
+            case 'Inactive': {
+              color = 'dark';
               break;
             }
             default: {
-              color = 'black';
+              color = 'gray';
               break;
             }
           }
 
           return (
-            <Badge color={color} style={{ display: 'inline-flex' }}>
-              {row.unitStatus}
-            </Badge>
+            <div className="flex">
+              <Badge color={color} size="sm">
+                {row.unitStatus}
+              </Badge>
+            </div>
           );
         },
       },
@@ -132,7 +134,7 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
     ];
 
     return rowActions ? actionColumn.concat(staticColumns) : staticColumns;
-  }, [rowActions]);
+  }, [rowActions, setTokenizeModalActive]);
 
   return (
     <>
@@ -158,8 +160,11 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
           </>
         }
       />
-      {(createProjectModalActive || editProjectModalActive) && (
-        <CreateTokenModal urlFragmentDerivedData={''} onClose={handleCloseUpsertModal} />
+      {tokenizeModalActive && (
+        <CreateTokenModal
+          onClose={() => setTokenizeModalActive(false)}
+          urlFragmentDerivedData={tokenizeModalFragment.replace('tokenize-', '')}
+        />
       )}
     </>
   );
