@@ -27,7 +27,10 @@
   "synced": "synced",
   "refresh": "refresh",
   "tokenization": "tokenization",
-  "search": "search",
+  "search": "Search",
   "no-owned-organization-found": "no owned organization found",
-  "tokenize": "tokenize"
+  "tokenize": "tokenize",
+  "please-create-an-organization-to-use-this-application": "please create an organization to use this application",
+  "loading-unit-and-associated-project": "loading unit and associated project",
+  "unable-to-load-tokenization-data": "unable to load tokenization data"
 }

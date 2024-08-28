@@ -24,10 +24,10 @@ const validationSchema = yup.object({
 interface FormProps {
   onSubmit: (apiHost: string, apiKey?: string) => Promise<any>;
   hasServerError: boolean;
-  onClearError: () => void;
+  onClearError?: () => void;
 }
 
-const ConnectForm: React.FC<FormProps> = ({ onSubmit, hasServerError, onClearError = noop }) => {
+const CreateTokenForm: React.FC<FormProps> = ({ onSubmit, hasServerError, onClearError = noop }) => {
   const intl: IntlShape = useIntl();
   const [, setIsActive] = useUrlHash('connect');
   const appStore = useSelector((state: RootState) => state.app);
@@ -130,4 +130,4 @@ const ConnectForm: React.FC<FormProps> = ({ onSubmit, hasServerError, onClearErr
   );
 };
 
-export { ConnectForm };
+export { CreateTokenForm };

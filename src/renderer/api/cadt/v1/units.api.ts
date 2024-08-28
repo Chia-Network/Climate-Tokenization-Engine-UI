@@ -75,14 +75,16 @@ const unitsApi = cadtApi.injectEndpoints({
 
     getUnit: builder.query<Unit, GetUnitParams>({
       query: ({ warehouseUnitId }: GetUnitParams) => ({
-        url: `/v1/units`,
+        url: `/units/untokenized`,
         params: { warehouseUnitId },
         method: 'GET',
       }),
+      keepUnusedDataFor: 0,
     }),
   }),
 });
 
 export const invalidateUnitsApiTag = unitsApi.util.invalidateTags;
 
-export const { useGetTokenizedUnitsQuery, useGetUntokenizedUnitsQuery, useGetUnitQuery } = unitsApi;
+export const { useGetTokenizedUnitsQuery, useGetUntokenizedUnitsQuery, useLazyGetUnitQuery, useGetUnitQuery } =
+  unitsApi;

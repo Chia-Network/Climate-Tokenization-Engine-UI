@@ -33,12 +33,12 @@ class ErrorBoundary extends React.Component {
       >
         <Modal show={true}>
           <Modal.Header>
-            <p className="normal-case">
+            <p className="sentence-case">
               <FormattedMessage id="application-error" />
             </p>
           </Modal.Header>
           <Modal.Body>
-            <p className="normal-case text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            <p className="sentence-case text-base leading-relaxed text-gray-500 dark:text-gray-400">
               <FormattedMessage id="please-reload-or-restart-the-application" />.
             </p>
           </Modal.Body>
