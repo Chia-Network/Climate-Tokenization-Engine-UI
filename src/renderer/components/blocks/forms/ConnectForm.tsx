@@ -63,7 +63,7 @@ const ConnectForm: React.FC<FormProps> = ({ onSubmit, hasServerError, onClearErr
           {hasServerError && (
             <>
               <Alert color="failure">
-                <p className="normal-case">
+                <p className="sentence-case">
                   <FormattedMessage id="server-not-found" />
                 </p>
               </Alert>

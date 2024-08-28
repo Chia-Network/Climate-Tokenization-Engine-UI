@@ -56,6 +56,7 @@ const projectsApi = cadtApi.injectEndpoints({
         params: { warehouseProjectId },
         method: 'GET',
       }),
+      keepUnusedDataFor: 0,
     }),
 
     getProjectsByIds: builder.query<Project[], GetProjectsById>({
@@ -74,4 +75,4 @@ const projectsApi = cadtApi.injectEndpoints({
 
 export const invalidateProjectApiTag = projectsApi.util.invalidateTags;
 
-export const { useGetProjectsQuery, useLazyGetProjectsByIdsQuery } = projectsApi;
+export const { useGetProjectsQuery, useLazyGetProjectsByIdsQuery, useGetProjectQuery } = projectsApi;

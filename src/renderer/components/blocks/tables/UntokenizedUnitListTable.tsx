@@ -43,8 +43,9 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
         ignoreOrderChange: true,
         render: (row: Unit & Project) => {
           if (rowActions === 'tokenize') {
+            const urlHashValue = row.warehouseUnitId + '^' + row.warehouseProjectId || undefined;
             return (
-              <Button onClick={() => setTokenizeModalActive(true, row.warehouseUnitId || undefined)}>
+              <Button onClick={() => setTokenizeModalActive(true, urlHashValue)}>
                 <p className="capitalize">
                   <FormattedMessage id="tokenize" />
                 </p>
@@ -60,8 +61,7 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
     const staticColumns: Column[] = [
       {
         title: <FormattedMessage id="registry-project-id" />,
-        key: 'warehouseProjectId',
-        render: (row: Project) => <span className="font-bold">{row.warehouseProjectId || '-'}</span>,
+        key: 'projectId',
       },
       {
         title: <FormattedMessage id="project-name" />,
@@ -146,7 +146,7 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
         data={data}
         primaryKey="warehouseUnitId"
         isLoading={isLoading}
-        tableHeightOffsetPx={170}
+        tableHeightOffsetPx={320}
         footer={
           <>
             <PageCounter currentPage={currentPage} totalCount={totalCount} />
@@ -161,10 +161,7 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
         }
       />
       {tokenizeModalActive && (
-        <CreateTokenModal
-          onClose={() => setTokenizeModalActive(false)}
-          urlFragmentDerivedData={tokenizeModalFragment.replace('tokenize-', '')}
-        />
+        <CreateTokenModal onClose={() => setTokenizeModalActive(false)} tokenizeUrlFragment={tokenizeModalFragment} />
       )}
     </>
   );

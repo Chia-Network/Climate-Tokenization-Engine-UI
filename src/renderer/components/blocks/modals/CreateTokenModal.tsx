@@ -1,13 +1,47 @@
-import React from 'react';
-import { Button, Modal } from '@/components';
+import React, { useMemo } from 'react';
+import { Button, ComponentCenteredSpinner, Modal } from '@/components';
 import { FormattedMessage } from 'react-intl';
+import { useGetProjectQuery, useGetUnitQuery } from '@/api';
 
 interface UpsertModalProps {
-  urlFragmentDerivedData: string;
+  tokenizeUrlFragment: string;
   onClose: () => void;
 }
 
-const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, urlFragmentDerivedData }: UpsertModalProps) => {
+const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, tokenizeUrlFragment }: UpsertModalProps) => {
+  const urlHashValues: string[] = tokenizeUrlFragment?.replace('tokenize-', '')?.split('^');
+  const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
+  const warehouseProjectId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
+  console.log(warehouseProjectId, warehouseUnitId);
+  const { data: unit, isFetching: unitLoading } = useGetUnitQuery({ warehouseUnitId });
+  const { data: project, isFetching: projectLoading } = useGetProjectQuery({ warehouseProjectId });
+
+  console.log('unit', unit);
+  console.log('project', project);
+
+  const modalBody = useMemo(() => {
+    if (unitLoading || projectLoading) {
+      return (
+        <div className="h-20">
+          <ComponentCenteredSpinner label={<FormattedMessage id="loading-unit-and-associated-project" />} />
+        </div>
+      );
+    } else if (unit && project) {
+      return (
+        <div>
+          {project.projectName}
+          {unit.serialNumberBlock}
+        </div>
+      );
+    } else {
+      return (
+        <p className="sentence-case">
+          <FormattedMessage id="unable-to-load-tokenization-data" />
+        </p>
+      );
+    }
+  }, [project, projectLoading, unit, unitLoading]);
+
   return (
     <Modal onClose={onClose} show={true} size={'5xl'}>
       <Modal.Header>
@@ -15,12 +49,9 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, urlFragmentDeri
           <FormattedMessage id="create-token" />
         </p>
       </Modal.Header>
-      <Modal.Body>
-        <p>sample modal</p>
-        <p>{urlFragmentDerivedData}</p>
-      </Modal.Body>
+      <Modal.Body>{modalBody}</Modal.Body>
       <Modal.Footer>
-        <Button>
+        <Button disabled={!project || !unit || projectLoading || unitLoading}>
           <p className="capitalize">
             <FormattedMessage id="create-token" />
           </p>

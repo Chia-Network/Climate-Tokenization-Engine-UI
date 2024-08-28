@@ -69,14 +69,7 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
   ]);
 
   const unifiedResult = useMemo<UnitAndProjectResult | undefined>(() => {
-    if (
-      projectsResponse &&
-      untokenizedUnitsResponse &&
-      !untokenizedUnitsError &&
-      !projectsError &&
-      !untokenizedUnitsLoading &&
-      !projectsLoading
-    ) {
+    if (projectsResponse && untokenizedUnitsResponse) {
       const result: UnitAndProjectResult = { ...untokenizedUnitsResponse, data: [] };
       untokenizedUnitsResponse.data.forEach((unit: Unit) => {
         const associatedProject = projectsResponse.find(

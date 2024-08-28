@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useQueryParamState } from '@/hooks';
 import { debounce } from 'lodash';
-import { SearchBox, Tabs, SyncIndicator, UntokenizedUnitsTab } from '@/components';
+import { SearchBox, SyncIndicator, Tabs, UntokenizedUnitsTab } from '@/components';
 import { FormattedMessage } from 'react-intl';
 
 enum TabTypes {
@@ -20,8 +20,6 @@ const TokensPage: React.FC = () => {
     }, 800),
     [setSearch, debounce],
   );
-
-  console.log(activeTab);
 
   return (
     <>
