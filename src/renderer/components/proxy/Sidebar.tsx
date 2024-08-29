@@ -1,9 +1,9 @@
 import {
   Sidebar as FlowbiteSidebar,
-  SidebarProps,
+  SidebarItemGroupProps,
   SidebarItemProps,
   SidebarItemsProps,
-  SidebarItemGroupProps,
+  SidebarProps,
 } from 'flowbite-react';
 
 const SidebarTheme = {

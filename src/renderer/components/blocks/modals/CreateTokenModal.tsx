@@ -1,7 +1,9 @@
-import React, { useMemo } from 'react';
-import { Button, ComponentCenteredSpinner, Modal } from '@/components';
+import React, { useEffect, useState } from 'react';
+import { ComponentCenteredSpinner, CreateTokenForm, Modal, Table } from '@/components';
 import { FormattedMessage } from 'react-intl';
-import { useGetProjectQuery, useGetUnitQuery } from '@/api';
+import { useGetProjectQuery, useGetUnitQuery, useTokenizeUnitMutation } from '@/api';
+import { Alert } from 'flowbite-react';
+import { HiInformationCircle } from 'react-icons/hi';
 
 interface UpsertModalProps {
   tokenizeUrlFragment: string;
@@ -12,25 +14,156 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, tokenizeUrlFrag
   const urlHashValues: string[] = tokenizeUrlFragment?.replace('tokenize-', '')?.split('^');
   const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
   const warehouseProjectId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
-  console.log(warehouseProjectId, warehouseUnitId);
   const { data: unit, isFetching: unitLoading } = useGetUnitQuery({ warehouseUnitId });
   const { data: project, isFetching: projectLoading } = useGetProjectQuery({ warehouseProjectId });
+  const [triggerTokenizeUnit, { isLoading: tokenizationLoading, error: tokenizationError }] = useTokenizeUnitMutation();
+  const [showTokenizationFailure, setShowTokenizationFailure] = useState<boolean>(false);
 
-  console.log('unit', unit);
-  console.log('project', project);
+  useEffect(() => {
+    if (tokenizationError) {
+      setShowTokenizationFailure(true);
+    } else if (tokenizationLoading) {
+      setShowTokenizationFailure(false);
+    }
+  }, [tokenizationError, tokenizationLoading]);
 
-  const modalBody = useMemo(() => {
+  const requiredFieldsPresent =
+    unit &&
+    project &&
+    (unit?.orgUid || project?.orgUid) &&
+    warehouseProjectId &&
+    warehouseUnitId &&
+    unit?.vintageYear &&
+    unit?.unitBlockStart &&
+    unit?.unitBlockEnd &&
+    unit?.unitCount;
+
+  const onSumbitTokenization = async (walletAddress: string) => {
+    if (unit && project) {
+      const submitData = {
+        org_uid: unit?.orgUid,
+        warehouse_project_id: project?.warehouseProjectId,
+        vintage_year: unit?.vintageYear,
+        sequence_num: 0,
+        warehouseUnitId: unit?.warehouseUnitId,
+        to_address: walletAddress,
+        amount: unit?.unitCount,
+      };
+
+      const result = await triggerTokenizeUnit(submitData);
+      if (result?.error) {
+        setShowTokenizationFailure(true);
+      }
+    }
+  };
+
+  const modalBody = () => {
     if (unitLoading || projectLoading) {
       return (
-        <div className="h-20">
+        <div className="h-72">
           <ComponentCenteredSpinner label={<FormattedMessage id="loading-unit-and-associated-project" />} />
         </div>
       );
-    } else if (unit && project) {
+    } else if (unit && project && requiredFieldsPresent) {
       return (
-        <div>
-          {project.projectName}
-          {unit.serialNumberBlock}
+        <div className="space-y-5">
+          <div className="border-2 rounded-lg" id="tokenizeInfo">
+            <Table striped hoverable>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>
+                    <p className="capitalize">
+                      <FormattedMessage id="project-name" />
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {project.projectName ? (
+                      <p>{project.projectName}</p>
+                    ) : (
+                      <p className="capitalize">
+                        <FormattedMessage id="not-specified" />
+                      </p>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <p className="capitalize">
+                      <FormattedMessage id="project-id" />
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {project.projectId ? (
+                      <p>{project.projectId}</p>
+                    ) : (
+                      <p className="capitalize">
+                        <FormattedMessage id="not-specified" />
+                      </p>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <p className="capitalize">
+                      <FormattedMessage id="unit-owner" />
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {unit.unitOwner ? (
+                      <p>{unit.unitOwner}</p>
+                    ) : (
+                      <p className="capitalize">
+                        <FormattedMessage id="not-specified" />
+                      </p>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <p className="capitalize">
+                      <FormattedMessage id="quantity-of-credits" />
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p>{unit.unitCount}</p>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <p className="capitalize">
+                      <FormattedMessage id="unit-block-start" />
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p>{unit.unitBlockStart}</p>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <p className="capitalize">
+                      <FormattedMessage id="unit-block-end" />
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p>{unit.unitBlockEnd}</p>
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <p className="capitalize">
+                      <FormattedMessage id="vintage-year" />
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p>{unit.vintageYear}</p>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
+          </div>
+          <div>
+            <CreateTokenForm onSubmit={onSumbitTokenization} />
+          </div>
         </div>
       );
     } else {
@@ -40,23 +173,27 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, tokenizeUrlFrag
         </p>
       );
     }
-  }, [project, projectLoading, unit, unitLoading]);
+  };
 
   return (
-    <Modal onClose={onClose} show={true} size={'5xl'}>
+    <Modal onClose={onClose} show={true} size={'4xl'}>
       <Modal.Header>
         <p className="capitalize">
           <FormattedMessage id="create-token" />
         </p>
       </Modal.Header>
-      <Modal.Body>{modalBody}</Modal.Body>
-      <Modal.Footer>
-        <Button disabled={!project || !unit || projectLoading || unitLoading}>
-          <p className="capitalize">
-            <FormattedMessage id="create-token" />
-          </p>
-        </Button>
-      </Modal.Footer>
+      <Modal.Body>
+        <div className="space-y-5">
+          {showTokenizationFailure && (
+            <Alert color="failure" icon={HiInformationCircle} onDismiss={() => setShowTokenizationFailure(false)}>
+              <p className="sentence-case">
+                <FormattedMessage id="an-error-occurred-while-trying-to-tokenize" />
+              </p>
+            </Alert>
+          )}
+          {modalBody()}
+        </div>
+      </Modal.Body>
     </Modal>
   );
 };
