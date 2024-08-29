@@ -1,4 +1,11 @@
-import { cadtApi, RECORDS_PER_PAGE, tokenizedUnitsTag, untokenizedUnitsTag } from './index';
+import {
+  cadtApi,
+  projectsByIdsTag,
+  projectsTag,
+  RECORDS_PER_PAGE,
+  tokenizedUnitsTag,
+  untokenizedUnitsTag,
+} from './index';
 import { Unit } from '@/schemas/Unit.schema';
 
 interface GetUnitsParams {
@@ -12,6 +19,8 @@ interface GetUnitsParams {
 interface GetUnitParams {
   warehouseUnitId: string;
 }
+
+interface TokenizeParams {}
 
 export interface GetUnitsResponse {
   page: number;
@@ -81,10 +90,25 @@ const unitsApi = cadtApi.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
     }),
+
+    tokenizeUnit: builder.mutation<any, TokenizeParams>({
+      query: (tokenizeParams: TokenizeParams) => ({
+        url: '/tokenize',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: tokenizeParams,
+      }),
+      invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
+    }),
   }),
 });
 
 export const invalidateUnitsApiTag = unitsApi.util.invalidateTags;
 
-export const { useGetTokenizedUnitsQuery, useGetUntokenizedUnitsQuery, useLazyGetUnitQuery, useGetUnitQuery } =
-  unitsApi;
+export const {
+  useGetTokenizedUnitsQuery,
+  useGetUntokenizedUnitsQuery,
+  useLazyGetUnitQuery,
+  useGetUnitQuery,
+  useTokenizeUnitMutation,
+} = unitsApi;

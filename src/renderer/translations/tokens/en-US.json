@@ -32,5 +32,17 @@
   "tokenize": "tokenize",
   "please-create-an-organization-to-use-this-application": "please create an organization to use this application",
   "loading-unit-and-associated-project": "loading unit and associated project",
-  "unable-to-load-tokenization-data": "unable to load tokenization data"
+  "unable-to-load-tokenization-data": "unable to load tokenization data",
+  "wallet-address-is-required": "Wallet address is required",
+  "carbon-token-recipient": "carbon token recipient",
+  "wallet-address": "Wallet Address",
+  "wallet-addresses-start-with-xch-and-are-62-characters-long": "Wallet addresses start with 'xch' and are 62 characters long",
+  "quantity-of-credits": "quantity of credits",
+  "unit-block-start": "unit block start",
+  "unit-block-end": "unit block end",
+  "unit-owner": "unit owner",
+  "not-specified": "not specified",
+  "vintage-year": "vintage year",
+  "project-id": "project id",
+  "an-error-occurred-while-trying-to-tokenize": "an error occurred while trying to tokenize"
 }

@@ -7,7 +7,7 @@ interface ComponentCenteredSpinnerProps {
 
 const ComponentCenteredSpinner: React.FC<ComponentCenteredSpinnerProps> = ({ label }) => {
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
+    <div className="flex justify-center items-center w-full h-full">
       <Spinner />
       {label && (
         <div className="ml-4">
