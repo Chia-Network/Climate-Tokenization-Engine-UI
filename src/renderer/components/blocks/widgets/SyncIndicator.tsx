@@ -20,7 +20,7 @@ const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }: SyncIndicator
   const dispatch = useDispatch();
   const location = useLocation();
   const { data: homeOrg } = useGetHomeOrgQuery(null, {
-    pollingInterval: 5000,
+    pollingInterval: 10000,
   });
 
   const [isSynced, setIsSynced] = useState(true);
