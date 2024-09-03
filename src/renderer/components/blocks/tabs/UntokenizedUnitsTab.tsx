@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl';
-import { UntokenizedUnitListTable, SkeletonTable } from '@/components';
+import { SkeletonTable, UntokenizedUnitListTable } from '@/components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useColumnOrderHandler, useQueryParamState } from '@/hooks';
 import { debounce } from 'lodash';
-import { GetUnitsResponse, useLazyGetProjectsByIdsQuery, useGetUntokenizedUnitsQuery } from '@/api';
+import { GetUnitsResponse, useGetUntokenizedUnitsQuery, useLazyGetProjectsByIdsQuery } from '@/api';
 import { Unit } from '@/schemas/Unit.schema';
 import { Project } from '@/schemas/Project.schema';
 
@@ -15,9 +15,15 @@ interface PageTabProps {
   search: string;
   order: string;
   setOrder: (order: string) => void;
+  setShowTokenizationModal?: (show: boolean, urlHash: string | undefined) => void;
 }
 
-const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }: PageTabProps) => {
+const UntokenizedUnitsTab: React.FC<PageTabProps> = ({
+  search,
+  order,
+  setOrder,
+  setShowTokenizationModal,
+}: PageTabProps) => {
   const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
   const handleSetOrder = useColumnOrderHandler(order, setOrder);
 
@@ -118,7 +124,7 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }
       ) : (
         <UntokenizedUnitListTable
           data={unifiedResult.data || []}
-          rowActions="tokenize"
+          setShowTokenizationModal={setShowTokenizationModal}
           isLoading={untokenizedUnitsLoading}
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}

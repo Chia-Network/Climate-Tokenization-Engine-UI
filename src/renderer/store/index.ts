@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, REGISTER, persistStore } from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, REGISTER, REHYDRATE } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 // @ts-ignore
 import { rtkQueryErrorLogger } from './middleware/rtkQueryErrorLogger';
-import { cadtApi } from '@/api/cadt/v1';
+import { tokenizationEngineApi } from '@/api/tokenization-engine';
 import { appReducer } from './slices';
 import { PersistState } from 'redux-persist/es/types';
 import { AppState } from './slices/app/app.initialstate';
@@ -20,7 +20,7 @@ const store = configureStore({
   reducer: {
     // @ts-ignore
     app: persistReducer(persistAppsConfig, appReducer),
-    [cadtApi.reducerPath]: cadtApi.reducer,
+    [tokenizationEngineApi.reducerPath]: tokenizationEngineApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -29,7 +29,7 @@ const store = configureStore({
       },
     })
       .concat(rtkQueryErrorLogger)
-      .concat(cadtApi.middleware),
+      .concat(tokenizationEngineApi.middleware),
 });
 
 const persistor = persistStore(store);
@@ -39,7 +39,7 @@ window.store = store;
 
 export type RootState = {
   app: AppState & PersistState;
-  [cadtApi.reducerPath]: ReturnType<typeof cadtApi.reducer>;
+  [tokenizationEngineApi.reducerPath]: ReturnType<typeof tokenizationEngineApi.reducer>;
 };
 
 export { store, persistor };

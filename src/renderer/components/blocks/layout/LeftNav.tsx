@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { Card, Sidebar } from '@/components';
+import { Card, NoHomeOrgModal, Sidebar } from '@/components';
 import ROUTES from '@/routes/route-constants';
 import { RiTokenSwapLine } from 'react-icons/ri';
-import { NoHomeOrgModal } from '@/components/blocks/modals/NoHomeOrgModal';
 
 const LeftNav = () => {
   const navigate = useNavigate();

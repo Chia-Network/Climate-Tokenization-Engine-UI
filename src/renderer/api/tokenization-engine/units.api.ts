@@ -1,8 +1,8 @@
 import {
-  cadtApi,
   projectsByIdsTag,
   projectsTag,
   RECORDS_PER_PAGE,
+  tokenizationEngineApi,
   tokenizedUnitsTag,
   untokenizedUnitsTag,
 } from './index';
@@ -28,7 +28,7 @@ export interface GetUnitsResponse {
   data: Unit[];
 }
 
-const unitsApi = cadtApi.injectEndpoints({
+const unitsApi = tokenizationEngineApi.injectEndpoints({
   endpoints: (builder) => ({
     getUntokenizedUnits: builder.query<GetUnitsResponse, GetUnitsParams>({
       query: ({ page, search, order, filter }: GetUnitsParams) => {

@@ -22,7 +22,8 @@ function App() {
   useEffect(() => {
     if (appStore.locale) {
       const processTranslationTokens = async () => {
-        setTranslationTokens(await loadLocaleData(appStore.locale));
+        const tokens = loadLocaleData(appStore.locale);
+        setTranslationTokens(tokens);
       };
 
       processTranslationTokens();

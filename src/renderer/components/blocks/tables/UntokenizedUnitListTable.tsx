@@ -1,15 +1,14 @@
 import { DebouncedFunc } from 'lodash';
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button, Column, CreateTokenModal, DataTable, PageCounter, Pagination } from '@/components';
+import { Button, Column, DataTable, PageCounter, Pagination } from '@/components';
 import { Project } from '@/schemas/Project.schema';
 import { Badge } from 'flowbite-react';
-import { useWildCardUrlHash } from '@/hooks';
 import { Unit } from '@/schemas/Unit.schema';
 
 interface TableProps {
   data: (Unit & Project)[];
-  rowActions?: 'tokenize';
+  setShowTokenizationModal?: (show: boolean, urlHash: string | undefined) => void;
   isLoading: boolean;
   currentPage: number;
   onPageChange: DebouncedFunc<(page: any) => void>;
@@ -22,7 +21,7 @@ interface TableProps {
 
 const UntokenizedUnitListTable: React.FC<TableProps> = ({
   data,
-  rowActions,
+  setShowTokenizationModal,
   isLoading,
   currentPage,
   onPageChange,
@@ -32,8 +31,6 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
   totalPages,
   totalCount,
 }) => {
-  const [tokenizeModalFragment, tokenizeModalActive, setTokenizeModalActive] = useWildCardUrlHash('tokenize');
-
   const columns = useMemo(() => {
     const actionColumn: Column[] = [
       {
@@ -42,10 +39,10 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
         ignoreChildEvents: true,
         ignoreOrderChange: true,
         render: (row: Unit & Project) => {
-          if (rowActions === 'tokenize') {
+          if (setShowTokenizationModal) {
             const urlHashValue = row.warehouseUnitId + '^' + row.warehouseProjectId || undefined;
             return (
-              <Button onClick={() => setTokenizeModalActive(true, urlHashValue)}>
+              <Button onClick={() => setShowTokenizationModal(true, urlHashValue)}>
                 <p className="capitalize">
                   <FormattedMessage id="tokenize" />
                 </p>
@@ -133,8 +130,8 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
       },
     ];
 
-    return rowActions ? actionColumn.concat(staticColumns) : staticColumns;
-  }, [rowActions, setTokenizeModalActive]);
+    return setShowTokenizationModal ? actionColumn.concat(staticColumns) : staticColumns;
+  }, [setShowTokenizationModal]);
 
   return (
     <>
@@ -160,9 +157,6 @@ const UntokenizedUnitListTable: React.FC<TableProps> = ({
           </>
         }
       />
-      {tokenizeModalActive && (
-        <CreateTokenModal onClose={() => setTokenizeModalActive(false)} tokenizeUrlFragment={tokenizeModalFragment} />
-      )}
     </>
   );
 };

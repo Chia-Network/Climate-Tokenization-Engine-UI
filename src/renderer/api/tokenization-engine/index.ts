@@ -42,9 +42,9 @@ const baseQueryWithDynamicHost = async (args, api, extraOptions) => {
   return await baseQuery(modifiedArgs, api, extraOptions);
 };
 
-export const cadtApi = createApi({
+export const tokenizationEngineApi = createApi({
   baseQuery: baseQueryWithDynamicHost,
-  reducerPath: 'cadtApi',
+  reducerPath: 'tokenizationEngineApi',
   endpoints: () => ({}),
   tagTypes: [projectsTag, untokenizedUnitsTag, tokenizedUnitsTag, projectsByIdsTag],
 });

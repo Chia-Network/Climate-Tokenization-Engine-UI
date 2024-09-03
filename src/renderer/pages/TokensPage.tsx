@@ -1,7 +1,14 @@
 import React, { useCallback, useState } from 'react';
-import { useQueryParamState } from '@/hooks';
+import { useQueryParamState, useWildCardUrlHash } from '@/hooks';
 import { debounce } from 'lodash';
-import { SearchBox, SyncIndicator, Tabs, UntokenizedUnitsTab } from '@/components';
+import {
+  CreateTokenModal,
+  SearchBox,
+  SyncIndicator,
+  Tabs,
+  TokenizationSuccessModal,
+  UntokenizedUnitsTab,
+} from '@/components';
 import { FormattedMessage } from 'react-intl';
 
 enum TabTypes {
@@ -13,6 +20,9 @@ const TokensPage: React.FC = () => {
   const [search, setSearch] = useQueryParamState('search', undefined);
   const [order, setOrder] = useQueryParamState('order', undefined);
   const [activeTab, setActiveTab] = useState<TabTypes>(TabTypes.UNTOKENIZED);
+
+  const [, tokenizeModalActive, setTokenizeModalActive] = useWildCardUrlHash('tokenize');
+  const [showTokenizationSuccessModal, setShowTokenizationSuccessModal] = useState(false);
 
   const handleSearchChange = useCallback(
     debounce((event: any) => {
@@ -48,11 +58,25 @@ const TokensPage: React.FC = () => {
         </div>
         <div id="tabs content">
           {activeTab === TabTypes.UNTOKENIZED && (
-            <UntokenizedUnitsTab search={search} order={order} setOrder={setOrder} />
+            <UntokenizedUnitsTab
+              search={search}
+              order={order}
+              setOrder={setOrder}
+              setShowTokenizationModal={setTokenizeModalActive}
+            />
           )}
           {activeTab === TabTypes.TOKENIZED && <p>tokenized units</p>}
         </div>
       </div>
+      {tokenizeModalActive && (
+        <CreateTokenModal
+          onTokenizationSuccess={() => setShowTokenizationSuccessModal(true)}
+          onClose={() => setTokenizeModalActive(false)}
+        />
+      )}
+      {showTokenizationSuccessModal && (
+        <TokenizationSuccessModal onClose={() => setShowTokenizationSuccessModal(false)} />
+      )}
     </>
   );
 };

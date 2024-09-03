@@ -10,9 +10,7 @@ const LANGUAGE_CODES = Object.freeze({
 const loadLocaleData = (locale: string) => {
   switch (locale) {
     case LANGUAGE_CODES.ENGLISH_US:
-      return en;
     case LANGUAGE_CODES.ENGLISH:
-      return en;
     default:
       return en;
   }

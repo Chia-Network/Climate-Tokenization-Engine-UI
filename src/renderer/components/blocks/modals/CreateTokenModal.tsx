@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ComponentCenteredSpinner, CreateTokenForm, Modal, Table } from '@/components';
 import { FormattedMessage } from 'react-intl';
 import { useGetProjectQuery, useGetUnitQuery, useTokenizeUnitMutation } from '@/api';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
+import { useWildCardUrlHash } from '@/hooks';
 
 interface UpsertModalProps {
-  tokenizeUrlFragment: string;
+  onTokenizationSuccess: () => void;
   onClose: () => void;
 }
 
-const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, tokenizeUrlFragment }: UpsertModalProps) => {
+const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationSuccess }: UpsertModalProps) => {
+  const [tokenizeUrlFragment] = useWildCardUrlHash('tokenize');
   const urlHashValues: string[] = tokenizeUrlFragment?.replace('tokenize-', '')?.split('^');
   const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
   const warehouseProjectId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
-  const { data: unit, isFetching: unitLoading } = useGetUnitQuery({ warehouseUnitId });
-  const { data: project, isFetching: projectLoading } = useGetProjectQuery({ warehouseProjectId });
-  const [triggerTokenizeUnit, { isLoading: tokenizationLoading, error: tokenizationError }] = useTokenizeUnitMutation();
-  const [showTokenizationFailure, setShowTokenizationFailure] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (tokenizationError) {
-      setShowTokenizationFailure(true);
-    } else if (tokenizationLoading) {
-      setShowTokenizationFailure(false);
-    }
-  }, [tokenizationError, tokenizationLoading]);
+  const [showTokenizationFailure, setShowTokenizationFailure] = useState<boolean>(false);
+  const { data: unit, isLoading: unitLoading } = useGetUnitQuery(
+    { warehouseUnitId },
+    { skip: showTokenizationFailure },
+  );
+  const { data: project, isLoading: projectLoading } = useGetProjectQuery(
+    { warehouseProjectId },
+    { skip: showTokenizationFailure },
+  );
+  const [triggerTokenizeUnit, { error: tokenizationError }] = useTokenizeUnitMutation();
 
   const requiredFieldsPresent =
     unit &&
@@ -38,7 +39,9 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, tokenizeUrlFrag
     unit?.unitBlockEnd &&
     unit?.unitCount;
 
-  const onSumbitTokenization = async (walletAddress: string) => {
+  const onSubmitTokenization = async (walletAddress: string) => {
+    setShowTokenizationFailure(false);
+
     if (unit && project) {
       const submitData = {
         org_uid: unit?.orgUid,
@@ -51,8 +54,11 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, tokenizeUrlFrag
       };
 
       const result = await triggerTokenizeUnit(submitData);
-      if (result?.error) {
+      if (result?.error || tokenizationError) {
         setShowTokenizationFailure(true);
+      } else {
+        onClose();
+        onTokenizationSuccess();
       }
     }
   };
@@ -162,7 +168,7 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, tokenizeUrlFrag
             </Table>
           </div>
           <div>
-            <CreateTokenForm onSubmit={onSumbitTokenization} />
+            <CreateTokenForm onSubmit={onSubmitTokenization} />
           </div>
         </div>
       );
