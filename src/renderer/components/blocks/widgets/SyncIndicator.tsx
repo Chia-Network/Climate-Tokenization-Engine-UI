@@ -4,7 +4,7 @@ import { BiRefresh } from 'react-icons/bi';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { projectsByIdsTag, projectsTag, tokenizedUnitsTag, untokenizedUnitsTag } from '@/api/cadt/v1';
+import { projectsByIdsTag, projectsTag, tokenizedUnitsTag, untokenizedUnitsTag } from '@/api/tokenization-engine';
 
 interface SyncIndicatorProps {
   detailed: boolean;

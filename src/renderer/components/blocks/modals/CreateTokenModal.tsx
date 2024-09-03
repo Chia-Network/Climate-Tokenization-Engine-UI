@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
 import { ComponentCenteredSpinner, CreateTokenForm, Modal, Table } from '@/components';
 import { FormattedMessage } from 'react-intl';
-import { useGetProjectQuery, useGetUnitQuery } from '@/api';
+import { useGetProjectQuery, useGetUnitQuery, useTokenizeUnitMutation } from '@/api';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useWildCardUrlHash } from '@/hooks';
 
 interface UpsertModalProps {
+  onTokenizationSuccess: () => void;
   onClose: () => void;
 }
 
-const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose }: UpsertModalProps) => {
+const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationSuccess }: UpsertModalProps) => {
   const [tokenizeUrlFragment] = useWildCardUrlHash('tokenize');
   const urlHashValues: string[] = tokenizeUrlFragment?.replace('tokenize-', '')?.split('^');
   const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
   const warehouseProjectId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
 
   const [showTokenizationFailure, setShowTokenizationFailure] = useState<boolean>(false);
-  const [showTokenizationSuccess, setShowTokenizationSuccess] = useState<boolean>(false);
-
-  const skip = showTokenizationFailure || showTokenizationSuccess;
-  const { data: unit, isLoading: unitLoading } = useGetUnitQuery({ warehouseUnitId }, { skip });
-  const { data: project, isLoading: projectLoading } = useGetProjectQuery({ warehouseProjectId }, { skip });
+  const { data: unit, isLoading: unitLoading } = useGetUnitQuery(
+    { warehouseUnitId },
+    { skip: showTokenizationFailure },
+  );
+  const { data: project, isLoading: projectLoading } = useGetProjectQuery(
+    { warehouseProjectId },
+    { skip: showTokenizationFailure },
+  );
+  const [triggerTokenizeUnit, { error: tokenizationError }] = useTokenizeUnitMutation();
 
   const requiredFieldsPresent =
     unit &&
@@ -34,6 +39,30 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose }: UpsertModalPr
     unit?.unitBlockEnd &&
     unit?.unitCount;
 
+  const onSubmitTokenization = async (walletAddress: string) => {
+    setShowTokenizationFailure(false);
+
+    if (unit && project) {
+      const submitData = {
+        org_uid: unit?.orgUid,
+        warehouse_project_id: project?.warehouseProjectId,
+        vintage_year: unit?.vintageYear,
+        sequence_num: 0,
+        warehouseUnitId: unit?.warehouseUnitId,
+        to_address: walletAddress,
+        amount: unit?.unitCount,
+      };
+
+      const result = await triggerTokenizeUnit(submitData);
+      if (result?.error || tokenizationError) {
+        setShowTokenizationFailure(true);
+      } else {
+        onClose();
+        onTokenizationSuccess();
+      }
+    }
+  };
+
   const modalBody = () => {
     if (unitLoading || projectLoading) {
       return (
@@ -41,18 +70,7 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose }: UpsertModalPr
           <ComponentCenteredSpinner label={<FormattedMessage id="loading-unit-and-associated-project" />} />
         </div>
       );
-    } else if (showTokenizationSuccess) {
-      return <div className="h-72">tokenization succeeded</div>;
     } else if (unit && project && requiredFieldsPresent) {
-      const tokenData = {
-        org_uid: unit.orgUid as string,
-        warehouse_project_id: project.warehouseProjectId as string,
-        vintage_year: unit.vintageYear as number,
-        sequence_num: 0,
-        warehouseUnitId: unit.warehouseUnitId as string,
-        amount: unit.unitCount as number,
-      };
-
       return (
         <div className="space-y-5">
           <div className="border-2 rounded-lg" id="tokenizeInfo">
@@ -150,11 +168,7 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose }: UpsertModalPr
             </Table>
           </div>
           <div>
-            <CreateTokenForm
-              tokenData={tokenData}
-              setApiFailure={setShowTokenizationFailure}
-              setApiSuccess={setShowTokenizationSuccess}
-            />
+            <CreateTokenForm onSubmit={onSubmitTokenization} />
           </div>
         </div>
       );

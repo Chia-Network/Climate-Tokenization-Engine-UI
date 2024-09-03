@@ -4,7 +4,6 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { FloatingLabel, FormButton, HelperText, Spacer } from '@/components';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
-import { useTokenizeUnitMutation } from '@/api';
 
 export interface TokenData {
   org_uid: string;
@@ -16,15 +15,12 @@ export interface TokenData {
 }
 
 interface FormProps {
-  tokenData: TokenData;
-  setApiFailure: (failure: boolean) => void;
-  setApiSuccess: (failure: boolean) => void;
+  onSubmit: (walletAddress: string) => Promise<void>;
   onClearError?: () => void;
 }
 
-const CreateTokenForm: React.FC<FormProps> = ({ tokenData, setApiFailure, setApiSuccess, onClearError = noop }) => {
+const CreateTokenForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop }) => {
   const intl: IntlShape = useIntl();
-  const [triggerTokenizeUnit, { error: tokenizationError }] = useTokenizeUnitMutation();
 
   const validationSchema = yup.object({
     walletAddress: yup
@@ -38,15 +34,10 @@ const CreateTokenForm: React.FC<FormProps> = ({ tokenData, setApiFailure, setApi
 
   const handleSubmit = useCallback(
     async (values: { walletAddress: string }, { setSubmitting }) => {
-      const result = await triggerTokenizeUnit({ ...tokenData, to_address: values.walletAddress });
-      if (result?.error || tokenizationError) {
-        setApiFailure(true);
-      } else {
-        setApiSuccess(true);
-      }
+      await onSubmit(values.walletAddress);
       setSubmitting(false);
     },
-    [setApiFailure, setApiSuccess, tokenData, tokenizationError, triggerTokenizeUnit],
+    [onSubmit],
   );
 
   const handleChange = useCallback(

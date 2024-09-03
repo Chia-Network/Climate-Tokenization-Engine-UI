@@ -1,4 +1,4 @@
-import { cadtApi, projectsByIdsTag, projectsTag, RECORDS_PER_PAGE } from './index';
+import { projectsByIdsTag, projectsTag, RECORDS_PER_PAGE, tokenizationEngineApi } from './index';
 import { Project } from '@/schemas/Project.schema';
 
 interface GetProjectsParams {
@@ -22,7 +22,7 @@ interface GetProjectsResponse {
   data: Project[];
 }
 
-const projectsApi = cadtApi.injectEndpoints({
+const projectsApi = tokenizationEngineApi.injectEndpoints({
   endpoints: (builder) => ({
     getProjects: builder.query<GetProjectsResponse, GetProjectsParams>({
       query: ({ page, orgUid, search, order }: GetProjectsParams) => {

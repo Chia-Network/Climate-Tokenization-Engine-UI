@@ -1,4 +1,4 @@
-import { cadtApi } from './index';
+import { tokenizationEngineApi } from './index';
 // @ts-ignore
 import { BaseQueryResult } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 import _ from 'lodash';
@@ -22,7 +22,7 @@ export interface Config {
   apiHost?: string;
 }
 
-const systemApi = cadtApi.injectEndpoints({
+const systemApi = tokenizationEngineApi.injectEndpoints({
   endpoints: (builder) => ({
     getHealth: builder.query<ServerHealth, GetHealthParams>({
       query: ({ apiHost = '', apiKey }) => ({
@@ -35,6 +35,7 @@ const systemApi = cadtApi.injectEndpoints({
         const readOnly = meta?.response?.headers.get('cw-readonly') === 'true';
         return { isHealthy, readOnly };
       },
+      keepUnusedDataFor: 0,
     }),
     getHealthImmediate: builder.mutation<boolean, GetHealthParams>({
       query: ({ apiHost = '', apiKey }) => ({

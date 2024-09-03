@@ -44,5 +44,9 @@
   "not-specified": "not specified",
   "vintage-year": "vintage year",
   "project-id": "project id",
-  "an-error-occurred-while-trying-to-tokenize": "an error occurred while trying to tokenize"
+  "an-error-occurred-while-trying-to-tokenize": "an error occurred while trying to tokenize",
+  "unit-tokenization-success": "unit tokenization success",
+  "the-unit-has-been-successfully-submitted-for-tokenization-and-is-pending-confirmation-on-the-blockchain": "the unit has been successfully submitted for tokenization and is pending confirmation on the blockchain",
+  "this-process-will-take-a-few-minutes": "this process will take a few minutes",
+  "please-check-your-wallet-for-transactions-and-refresh-this-page-when-a-new-transaction-is-confirmed": "please check your wallet for transactions and refresh this page when a new transaction is confirmed"
 }
