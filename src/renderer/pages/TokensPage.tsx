@@ -7,6 +7,7 @@ import {
   SyncIndicator,
   Tabs,
   TokenizationSuccessModal,
+  TokenizedUnitsTab,
   UntokenizedUnitsTab,
 } from '@/components';
 import { FormattedMessage } from 'react-intl';
@@ -65,7 +66,7 @@ const TokensPage: React.FC = () => {
               setShowTokenizationModal={setTokenizeModalActive}
             />
           )}
-          {activeTab === TabTypes.TOKENIZED && <p>tokenized units</p>}
+          {activeTab === TabTypes.TOKENIZED && <TokenizedUnitsTab search={search} order={order} setOrder={setOrder} />}
         </div>
       </div>
       {tokenizeModalActive && (

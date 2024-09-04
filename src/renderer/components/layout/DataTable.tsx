@@ -1,4 +1,4 @@
-import { noop } from 'lodash';
+import _, { noop } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Tooltip } from '@/components';
 import SimpleBar from 'simplebar-react';
@@ -151,7 +151,17 @@ const DataTable: React.FC<DataTableProps> = ({
                             {column.render ? (
                               column.render(row)
                             ) : (
-                              <Tooltip content={row[column.key]}>{row[column.key]}</Tooltip>
+                              <Tooltip content={row[column.key]}>
+                                {_.isString(row[column.key]) ? (
+                                  <div style={{ maxWidth: '310px' }}>
+                                    <p className="text-left text-ellipsis w-full overflow-hidden whitespace-nowrap">
+                                      {row[column.key]}
+                                    </p>
+                                  </div>
+                                ) : (
+                                  row[column.key]
+                                )}
+                              </Tooltip>
                             )}
                           </div>
                         </div>
