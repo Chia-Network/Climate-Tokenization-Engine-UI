@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl';
-import { SkeletonTable, UntokenizedUnitListTable } from '@/components';
+import { SkeletonTable, TokenizedUnitListTable } from '@/components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useColumnOrderHandler, useQueryParamState } from '@/hooks';
 import { debounce } from 'lodash';
-import { GetUnitsResponse, useGetUntokenizedUnitsQuery, useLazyGetProjectsByIdsQuery } from '@/api';
+import { GetUnitsResponse, useGetTokenizedUnitsQuery, useLazyGetProjectsByIdsQuery } from '@/api';
 import { Unit } from '@/schemas/Unit.schema';
 import { Project } from '@/schemas/Project.schema';
 
@@ -15,52 +15,43 @@ interface PageTabProps {
   search: string;
   order: string;
   setOrder: (order: string) => void;
-  setShowTokenizationModal?: (show: boolean, urlHash: string | undefined) => void;
 }
 
-const UntokenizedUnitsTab: React.FC<PageTabProps> = ({
-  search,
-  order,
-  setOrder,
-  setShowTokenizationModal,
-}: PageTabProps) => {
+const TokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }: PageTabProps) => {
   const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
   const handleSetOrder = useColumnOrderHandler(order, setOrder);
 
   const [dataLoading, setDataLoading] = useState<boolean>();
   const {
-    data: untokenizedUnitsResponse,
-    isFetching: untokenizedUnitsLoading,
-    error: untokenizedUnitsError,
-  } = useGetUntokenizedUnitsQuery({ page: Number(currentPage), search, order }, { refetchOnMountOrArgChange: true });
+    data: tokenizedUnitsResponse,
+    isFetching: tokenizedUnitsLoading,
+    error: tokenizedUnitsError,
+  } = useGetTokenizedUnitsQuery({ page: Number(currentPage), search, order }, { refetchOnMountOrArgChange: true });
   const [triggerGetProjects, { data: projectsResponse, isLoading: projectsLoading, error: projectsError }] =
     useLazyGetProjectsByIdsQuery();
 
   useEffect(() => {
-    if (untokenizedUnitsLoading) {
+    if (tokenizedUnitsLoading) {
       setDataLoading(true);
     } else if (
       dataLoading &&
-      !untokenizedUnitsLoading &&
-      untokenizedUnitsResponse &&
+      !tokenizedUnitsLoading &&
+      tokenizedUnitsResponse &&
       !projectsLoading &&
       !projectsResponse
     ) {
-      const projectIds: string[] = untokenizedUnitsResponse.data.reduce<string[]>(
-        (projectIds: string[], unit: Unit) => {
-          if (unit?.issuance?.warehouseProjectId) {
-            projectIds.push(unit?.issuance?.warehouseProjectId);
-          }
-          return projectIds;
-        },
-        [],
-      );
+      const projectIds: string[] = tokenizedUnitsResponse.data.reduce<string[]>((projectIds: string[], unit: Unit) => {
+        if (unit?.issuance?.warehouseProjectId) {
+          projectIds.push(unit?.issuance?.warehouseProjectId);
+        }
+        return projectIds;
+      }, []);
       triggerGetProjects({ projectIds });
     } else if (
       dataLoading &&
-      !untokenizedUnitsLoading &&
+      !tokenizedUnitsLoading &&
       !projectsLoading &&
-      untokenizedUnitsResponse &&
+      tokenizedUnitsResponse &&
       projectsResponse
     ) {
       setDataLoading(false);
@@ -70,14 +61,14 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({
     projectsResponse,
     projectsLoading,
     triggerGetProjects,
-    untokenizedUnitsResponse,
-    untokenizedUnitsLoading,
+    tokenizedUnitsResponse,
+    tokenizedUnitsLoading,
   ]);
 
   const unifiedResult = useMemo<UnitAndProjectResult | undefined>(() => {
-    if (projectsResponse && untokenizedUnitsResponse) {
-      const result: UnitAndProjectResult = { ...untokenizedUnitsResponse, data: [] };
-      untokenizedUnitsResponse.data.forEach((unit: Unit) => {
+    if (projectsResponse && tokenizedUnitsResponse) {
+      const result: UnitAndProjectResult = { ...tokenizedUnitsResponse, data: [] };
+      tokenizedUnitsResponse.data.forEach((unit: Unit) => {
         const associatedProject = projectsResponse.find(
           (project) => project.warehouseProjectId === unit.issuance?.warehouseProjectId,
         );
@@ -91,14 +82,14 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({
     } else {
       return undefined;
     }
-  }, [projectsResponse, untokenizedUnitsResponse]);
+  }, [projectsResponse, tokenizedUnitsResponse]);
 
   const handlePageChange = useCallback(
     debounce((page) => setCurrentPage(page), 800),
     [setCurrentPage],
   );
 
-  if (untokenizedUnitsError || projectsError) {
+  if (tokenizedUnitsError || projectsError) {
     return <FormattedMessage id={'unable-to-load-contents'} />;
   }
 
@@ -112,13 +103,12 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({
 
   return (
     <>
-      {untokenizedUnitsLoading ? (
+      {tokenizedUnitsLoading ? (
         <SkeletonTable />
       ) : (
-        <UntokenizedUnitListTable
+        <TokenizedUnitListTable
           data={unifiedResult.data || []}
-          setShowTokenizationModal={setShowTokenizationModal}
-          isLoading={untokenizedUnitsLoading}
+          isLoading={tokenizedUnitsLoading}
           currentPage={Number(currentPage)}
           onPageChange={handlePageChange}
           setOrder={handleSetOrder}
@@ -131,4 +121,4 @@ const UntokenizedUnitsTab: React.FC<PageTabProps> = ({
   );
 };
 
-export { UntokenizedUnitsTab };
+export { TokenizedUnitsTab };

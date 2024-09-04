@@ -48,5 +48,8 @@
   "unit-tokenization-success": "unit tokenization success",
   "the-unit-has-been-successfully-submitted-for-tokenization-and-is-pending-confirmation-on-the-blockchain": "the unit has been successfully submitted for tokenization and is pending confirmation on the blockchain",
   "this-process-will-take-a-few-minutes": "this process will take a few minutes",
-  "please-check-your-wallet-for-transactions-and-refresh-this-page-when-a-new-transaction-is-confirmed": "please check your wallet for transactions and refresh this page when a new transaction is confirmed"
+  "please-check-your-wallet-for-transactions-and-refresh-this-page-when-a-new-transaction-is-confirmed": "please check your wallet for transactions and refresh this page when a new transaction is confirmed",
+  "marketplace": "marketplace",
+  "marketplace-identifier": "marketplace identifier",
+  "marketplace-link": "marketplace link"
 }
