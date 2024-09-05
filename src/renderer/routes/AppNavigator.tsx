@@ -16,6 +16,7 @@ const AppNavigator: React.FC = () => {
           <Route path="" element={<Template />}>
             <Route path="/" element={<Navigate to={ROUTES.CREATE_TOKENS} />} />
             <Route path={ROUTES.CREATE_TOKENS} element={<Pages.TokensPage />} />
+            <Route path={ROUTES.REVERT_TOKENS} element={<Pages.RevertTokensPage />} />
             <Route path="*" element={<Navigate replace to={ROUTES.CREATE_TOKENS} />} />
           </Route>
         </Routes>

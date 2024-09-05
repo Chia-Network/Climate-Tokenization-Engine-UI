@@ -33,6 +33,15 @@ const LeftNav = () => {
                   <FormattedMessage id="create-tokens" />
                 </p>
               </Sidebar.Item>
+              <Sidebar.Item
+                style={{ cursor: 'pointer' }}
+                active={isActive(ROUTES.REVERT_TOKENS)}
+                onClick={() => navigate(ROUTES.REVERT_TOKENS)}
+              >
+                <p className="capitalize">
+                  <FormattedMessage id="revert-tokens" />
+                </p>
+              </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>
