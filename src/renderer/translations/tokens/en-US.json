@@ -56,5 +56,11 @@
   "detokenize-unit": "detokenize unit",
   "revert-unit-tokenization-by-detokenizing-carbon-tokens": "revert unit tokenization by detokenizing carbon tokens",
   "click-to-upload-or-drag-and-drop-detokenization-file": "click to upload or drag and drop detokenization file",
-  "files-only": "files only"
+  "files-only": "files only",
+  "detokenization-file-is-required": "detokenization file is required",
+  "detokenization-file-is-invalid": "detokenization file is invalid",
+  "detokenization-file-password-is-required": "detokenization file password is required",
+  "detokenization-file-password": "Detokenization File Password",
+  "please-upload-a-different-file": "please upload a different file",
+  "missing-file-name": "missing file name"
 }

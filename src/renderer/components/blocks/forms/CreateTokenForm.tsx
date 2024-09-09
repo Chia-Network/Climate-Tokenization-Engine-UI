@@ -5,15 +5,6 @@ import * as yup from 'yup';
 import { FloatingLabel, FormButton, HelperText, Spacer } from '@/components';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 
-export interface TokenData {
-  org_uid: string;
-  warehouse_project_id: string;
-  vintage_year: number;
-  sequence_num: number;
-  warehouseUnitId: string;
-  amount: number;
-}
-
 interface FormProps {
   onSubmit: (walletAddress: string) => Promise<void>;
   onClearError?: () => void;
