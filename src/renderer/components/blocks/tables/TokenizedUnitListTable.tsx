@@ -55,11 +55,11 @@ const TokenizedUnitListTable: React.FC<TableProps> = ({
       title: <FormattedMessage id="marketplace" />,
       key: 'marketplace',
       render: (row: Unit) => {
-        const color: string = row.marketplace === 'Tokenized on Chia' ? 'lime' : 'info';
+        const color: string = row.marketplace === 'Tokenized on Chia' ? 'success' : 'info';
         return (
           <div className="flex">
             <Badge color={color} size="sm">
-              {row.unitStatus}
+              {row.marketplace}
             </Badge>
           </div>
         );

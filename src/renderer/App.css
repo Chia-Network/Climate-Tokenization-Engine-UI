@@ -12,7 +12,7 @@
  */
 :root {
     --color-leftNavBg: #F0F2F5;
-    --color-leftNavText: #ffffff;
+    --color-leftNavText: #000000;
     --color-leftNavItemActive: #14D863;
 }
 
