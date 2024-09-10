@@ -1,19 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DetokenizeUnitForm, DetokFormValues, Modal } from '@/components';
 import { FormattedMessage } from 'react-intl';
+import { extractPasswordProtectedZip } from '@/utils/zip-utils';
+import { Alert } from 'flowbite-react';
+import { HiInformationCircle } from 'react-icons/hi';
 
 interface UpsertModalProps {
   onDetokenizationSuccess: () => void;
   onClose: () => void;
 }
 
-const DetokenizeUnitModal: React.FC<UpsertModalProps> = ({ onClose, onDetokenizationSuccess }: UpsertModalProps) => {
-  onDetokenizationSuccess();
+const ZIP_BAD_PASSWORD_TOKEN = 'invalid-zip-file-password';
+const ZIP_CANNOT_EXTRACT_TOKEN = 'cannot-extract-detokenization-data-from-zip-file';
 
-  const handleSubmitDetokenization = async (values: DetokFormValues): Promise<string> => {
-    console.log(values.password);
-    console.log(values.detokenizationFile?.name);
-    return '';
+const DetokenizeUnitModal: React.FC<UpsertModalProps> = ({ onClose, onDetokenizationSuccess }: UpsertModalProps) => {
+  const [failureAlertMessageToken, setFailureAlertMessageToken] = useState<string>('');
+
+  const handleSubmitDetokenization = async (values: DetokFormValues): Promise<void> => {
+    if (!values.detokenizationFile) {
+      setFailureAlertMessageToken(ZIP_CANNOT_EXTRACT_TOKEN);
+      return;
+    }
+
+    const unzipResult = await extractPasswordProtectedZip(
+      values.detokenizationFile,
+      values.detokenizationFile.name.replace('.zip', '.detok'),
+      values.password,
+    );
+
+    console.log(unzipResult);
+
+    if (!unzipResult.success && unzipResult.badPassword) {
+      setFailureAlertMessageToken(ZIP_BAD_PASSWORD_TOKEN);
+      return;
+    } else if (!unzipResult.success) {
+      setFailureAlertMessageToken(ZIP_CANNOT_EXTRACT_TOKEN);
+    }
+
+    onDetokenizationSuccess();
   };
 
   return (
@@ -24,7 +48,19 @@ const DetokenizeUnitModal: React.FC<UpsertModalProps> = ({ onClose, onDetokeniza
         </p>
       </Modal.Header>
       <Modal.Body>
-        <div className="flex w-full items-center justify-center">
+        {failureAlertMessageToken && (
+          <Alert color="failure" icon={HiInformationCircle} onDismiss={() => setFailureAlertMessageToken('')}>
+            <div className="flex space-x-1">
+              <p className="capitalize font-bold">
+                <FormattedMessage id="failed-to-detokenize" />:
+              </p>
+              <p className="sentence-case">
+                <FormattedMessage id={failureAlertMessageToken} />
+              </p>
+            </div>
+          </Alert>
+        )}
+        <div className="flex w-full items-center justify-center pt-4">
           <DetokenizeUnitForm onSubmit={handleSubmitDetokenization} />
         </div>
       </Modal.Body>

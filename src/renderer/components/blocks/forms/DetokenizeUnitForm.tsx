@@ -10,7 +10,7 @@ import { BsFileEarmarkZip } from 'react-icons/bs';
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 interface FormProps {
-  onSubmit: (values: DetokFormValues) => Promise<string>;
+  onSubmit: (values: DetokFormValues) => Promise<void>;
   onClearError?: () => void;
 }
 
@@ -100,7 +100,7 @@ const DetokenizeUnitForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop
     event.preventDefault();
     if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
       setFieldTouched('detokenizationFile', true);
-      setFieldValue('detokenizationFile', event.dataTransfer.files[0], true);
+      setFieldValue('detokenizationFile', event.dataTransfer.files[0] || undefined, true);
       event.dataTransfer.clearData();
     }
   };
@@ -157,11 +157,13 @@ const DetokenizeUnitForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop
                   </div>
                   <input
                     name="detokenizationFile"
-                    className="hidden"
+                    className="sr-only"
                     type="file"
                     id="detokenizationFile"
                     disabled={isSubmitting}
-                    required
+                    required={
+                      !values.detokenizationFile // allow form submission if file is selected via drag and drop
+                    }
                     onChange={(event) => handleFileChange({ event, setFieldValue, setFieldTouched })}
                   />
                 </Label>

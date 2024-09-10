@@ -62,5 +62,10 @@
   "detokenization-file-password-is-required": "detokenization file password is required",
   "detokenization-file-password": "Detokenization File Password",
   "please-upload-a-different-file": "please upload a different file",
-  "missing-file-name": "missing file name"
+  "missing-file-name": "missing file name",
+  "testnet-wallet-addresses-start-with-txch-and-are-63-characters-long": "testnet wallet addresses start with 'txch' and are 63 characters long",
+  "wallet-address-must-start-with-xch-or-txch": "wallet address must start with 'xch' or 'txch'",
+  "failed-to-detokenize": "failed to detokenize",
+  "cannot-extract-detokenization-data-from-zip-file": "cannot extract detokenization data from zip file",
+  "invalid-zip-file-password": "invalid zip file password"
 }
