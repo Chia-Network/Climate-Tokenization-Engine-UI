@@ -1,12 +1,16 @@
 import { FormattedMessage } from 'react-intl';
-import { Button, DetokenizeUnitModal } from '@/components';
-import React from 'react';
+import { Button, DetokenizationSuccessModal, DetokenizeUnitModal } from '@/components';
+import React, { useState } from 'react';
 import { useUrlHash } from '@/hooks';
 
 const DetokenizeUnitButton: React.FC = () => {
   const [showDetokenizationModal, setShowDetokenizationModal] = useUrlHash('detokenize');
+  const [showDetokenizationSuccessModal, setShowDetokenizationSuccessModal] = useState<boolean>(true);
 
-  const onDetokenizationSuccess = () => {};
+  const onDetokenizationSuccess = () => {
+    setShowDetokenizationModal(false);
+    setShowDetokenizationSuccessModal(true);
+  };
 
   return (
     <>
@@ -20,6 +24,9 @@ const DetokenizeUnitButton: React.FC = () => {
           onClose={() => setShowDetokenizationModal(false)}
           onDetokenizationSuccess={onDetokenizationSuccess}
         />
+      )}
+      {showDetokenizationSuccessModal && (
+        <DetokenizationSuccessModal onClose={() => setShowDetokenizationSuccessModal(false)} />
       )}
     </>
   );

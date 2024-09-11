@@ -106,7 +106,7 @@ const DetokenizeUnitForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop
   };
 
   return (
-    <Formik
+    <Formik<DetokFormValues>
       initialValues={{
         detokenizationFile: undefined,
         password: '',
@@ -131,10 +131,7 @@ const DetokenizeUnitForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop
                       <div className="space-y-0.5 w-full flex flex-col items-center">
                         <BsFileEarmarkZip size={40} color="rgb(107 114 128)" />
                         <p className="p-2 text-sm text-gray-500 dark:text-gray-400">
-                          {
-                            // @ts-ignore
-                            values.detokenizationFile?.name || <FormattedMessage id="missing-file-name" />
-                          }
+                          {values.detokenizationFile?.name || <FormattedMessage id="missing-file-name" />}
                         </p>
                       </div>
                     ) : (

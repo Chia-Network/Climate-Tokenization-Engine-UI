@@ -72,7 +72,11 @@ const CreateTokenForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop })
   );
 
   return (
-    <Formik initialValues={{ walletAddress: '' }} validationSchema={validationSchema} onSubmit={handleSubmit}>
+    <Formik<{ walletAddress: string }>
+      initialValues={{ walletAddress: '' }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
       {({ errors, touched, isSubmitting }) => (
         <Form>
           <div className="mb-4">

@@ -54,7 +54,7 @@
   "marketplace-link": "marketplace link",
   "revert-tokens": "revert tokens",
   "detokenize-unit": "detokenize unit",
-  "revert-unit-tokenization-by-detokenizing-carbon-tokens": "revert unit tokenization by detokenizing carbon tokens",
+  "revert-carbon-unit-tokenization": "revert carbon unit tokenization",
   "click-to-upload-or-drag-and-drop-detokenization-file": "click to upload or drag and drop detokenization file",
   "files-only": "files only",
   "detokenization-file-is-required": "detokenization file is required",
@@ -67,5 +67,8 @@
   "wallet-address-must-start-with-xch-or-txch": "wallet address must start with 'xch' or 'txch'",
   "failed-to-detokenize": "failed to detokenize",
   "cannot-extract-detokenization-data-from-zip-file": "cannot extract detokenization data from zip file",
-  "invalid-zip-file-password": "invalid zip file password"
+  "invalid-zip-file-password": "invalid zip file password",
+  "unit-detokenization-success": "unit detokenization success",
+  "the-unit-has-been-successfully-submitted-for-detokenization": "the unit has been successfully submitted for detokenization",
+  "an-error-occured-while-processing-detokenization": "an error occurred while processing detokenization"
 }

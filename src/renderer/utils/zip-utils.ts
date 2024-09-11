@@ -10,7 +10,7 @@ export const extractPasswordProtectedZip = async (
   zipFile: File,
   fileNameToRetrieve: string,
   password: string = '',
-): Promise<{ success: boolean; fileContent?: string; badPassword?: boolean }> => {
+): Promise<{ success: boolean; fileContent: string; badPassword?: boolean }> => {
   try {
     const reader = new ZipReader(new BlobReader(zipFile), password ? { password } : {});
     const entries = await reader.getEntries();
@@ -22,14 +22,14 @@ export const extractPasswordProtectedZip = async (
         }
         return {
           success: true,
-          fileContent: await entry.getData(new TextWriter()),
+          fileContent: await entry.getData(new TextWriter('utf8')),
         };
       }
     }
 
-    return { success: false };
+    return { success: false, fileContent: '' };
   } catch (error: any) {
-    console.error('Error extracting from password-protected ZIP:', error);
+    console.error('Error extracting from ZIP archive:', error);
 
     const errorMessage: string = (() => {
       if (error instanceof Error) {
@@ -42,8 +42,8 @@ export const extractPasswordProtectedZip = async (
     })();
 
     if (errorMessage?.includes('password')) {
-      return { success: false, badPassword: true };
+      return { success: false, fileContent: '', badPassword: true };
     }
-    return { success: false };
+    return { success: false, fileContent: '' };
   }
 };

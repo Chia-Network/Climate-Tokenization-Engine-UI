@@ -20,7 +20,15 @@ interface GetUnitParams {
   warehouseUnitId: string;
 }
 
-interface TokenizeParams {}
+interface TokenizeParams {
+  org_uid: string;
+  warehouse_project_id: string;
+  vintage_year: number;
+  sequence_num: number;
+  warehouseUnitId: string;
+  to_address: string;
+  amount: number;
+}
 
 export interface GetUnitsResponse {
   page: number;
@@ -100,6 +108,16 @@ const unitsApi = tokenizationEngineApi.injectEndpoints({
       }),
       invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
     }),
+
+    detokenizeUnit: builder.mutation<any, string>({
+      query: (detokString) => ({
+        url: '/parse-detok-file',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { detokString },
+      }),
+      invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
+    }),
   }),
 });
 
@@ -111,4 +129,5 @@ export const {
   useLazyGetUnitQuery,
   useGetUnitQuery,
   useTokenizeUnitMutation,
+  useDetokenizeUnitMutation,
 } = unitsApi;
