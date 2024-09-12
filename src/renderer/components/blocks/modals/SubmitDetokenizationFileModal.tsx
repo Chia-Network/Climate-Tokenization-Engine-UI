@@ -5,21 +5,25 @@ import { extractPasswordProtectedZip } from '@/utils/zip-utils';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useDetokenizeUnitMutation } from '@/api';
+import { Unit } from '@/schemas/Unit.schema';
 
-interface UpsertModalProps {
-  onDetokenizationSuccess: () => void;
+interface SubimitDetokenizationFileModalProps {
+  onDetokenizationParseSuccess: (unit: Unit) => void;
   onClose: () => void;
 }
 
 const ZIP_BAD_PASSWORD_TOKEN = 'invalid-zip-file-password';
 const ZIP_CANNOT_EXTRACT_TOKEN = 'cannot-extract-detokenization-data-from-zip-file';
-const API_FAILURE_TOKEN = 'an-error-occured-while-processing-detokenization';
+const API_DETOKENIZATION_PARSE_FAILURE_TOKEN = 'an-error-occured-while-processing-unzipped-detokenization-data';
 
-const DetokenizeUnitModal: React.FC<UpsertModalProps> = ({ onClose, onDetokenizationSuccess }: UpsertModalProps) => {
+const SubmitDetokenizationFileModal: React.FC<SubimitDetokenizationFileModalProps> = ({
+  onClose,
+  onDetokenizationParseSuccess,
+}) => {
   const [triggerDetokenizeUnit, { error: detokenizationError }] = useDetokenizeUnitMutation();
   const [failureAlertMessageToken, setFailureAlertMessageToken] = useState<string>('');
 
-  const handleSubmitDetokenization = async (values: DetokFormValues): Promise<void> => {
+  const handleSubmitDetokenizationFile = async (values: DetokFormValues): Promise<void> => {
     if (!values.detokenizationFile) {
       setFailureAlertMessageToken(ZIP_CANNOT_EXTRACT_TOKEN);
       return;
@@ -45,12 +49,12 @@ const DetokenizeUnitModal: React.FC<UpsertModalProps> = ({ onClose, onDetokeniza
 
     const detokenizeResult = await triggerDetokenizeUnit(unzipResult.fileContent);
 
-    if (detokenizeResult?.error || detokenizationError) {
-      setFailureAlertMessageToken(API_FAILURE_TOKEN);
+    if (detokenizeResult?.error || detokenizationError || !detokenizeResult?.data) {
+      setFailureAlertMessageToken(API_DETOKENIZATION_PARSE_FAILURE_TOKEN);
       return;
     }
 
-    onDetokenizationSuccess();
+    onDetokenizationParseSuccess(detokenizeResult.data.unit);
   };
 
   return (
@@ -63,9 +67,9 @@ const DetokenizeUnitModal: React.FC<UpsertModalProps> = ({ onClose, onDetokeniza
       <Modal.Body>
         {failureAlertMessageToken && (
           <Alert color="failure" icon={HiInformationCircle} onDismiss={() => setFailureAlertMessageToken('')}>
-            <div className="flex space-x-1">
-              <p className="capitalize font-bold">
-                <FormattedMessage id="failed-to-detokenize" />:
+            <div className="flex space-x-3 items-center">
+              <p className="capitalize font-bold text-nowrap">
+                <FormattedMessage id="failed-to-parse-detokenization" />:
               </p>
               <p className="sentence-case">
                 <FormattedMessage id={failureAlertMessageToken} />
@@ -74,11 +78,11 @@ const DetokenizeUnitModal: React.FC<UpsertModalProps> = ({ onClose, onDetokeniza
           </Alert>
         )}
         <div className="flex w-full items-center justify-center pt-4">
-          <DetokenizeUnitForm onSubmit={handleSubmitDetokenization} />
+          <DetokenizeUnitForm onSubmit={handleSubmitDetokenizationFile} />
         </div>
       </Modal.Body>
     </Modal>
   );
 };
 
-export { DetokenizeUnitModal };
+export { SubmitDetokenizationFileModal };

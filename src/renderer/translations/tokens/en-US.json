@@ -65,10 +65,13 @@
   "missing-file-name": "missing file name",
   "testnet-wallet-addresses-start-with-txch-and-are-63-characters-long": "testnet wallet addresses start with 'txch' and are 63 characters long",
   "wallet-address-must-start-with-xch-or-txch": "wallet address must start with 'xch' or 'txch'",
-  "failed-to-detokenize": "failed to detokenize",
+  "failed-to-parse-detokenization": "failed to parse detokenization",
   "cannot-extract-detokenization-data-from-zip-file": "cannot extract detokenization data from zip file",
   "invalid-zip-file-password": "invalid zip file password",
   "unit-detokenization-success": "unit detokenization success",
   "the-unit-has-been-successfully-submitted-for-detokenization": "the unit has been successfully submitted for detokenization",
-  "an-error-occured-while-processing-detokenization": "an error occurred while processing detokenization"
+  "an-error-occured-while-processing-unzipped-detokenization-data": "an error occurred while processing unzipped detokenization data",
+  "this-action-cannot-be-undone": "this action cannot be undone",
+  "confirm-detokenization": "confirm detokenization",
+  "review-and-confirm-detokenization": "review and confirm detokenization"
 }

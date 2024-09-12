@@ -20,6 +20,23 @@ interface GetUnitParams {
   warehouseUnitId: string;
 }
 
+interface TokenData {
+  org_uid: string;
+  project_id: string;
+  vintage_year: number;
+  sequence_num: number;
+  index: string;
+  public_key: string;
+  asset_id: string;
+  warehouse_project_id: string;
+}
+
+interface DetokenizationResponse {
+  token: TokenData;
+  content: string;
+  unit: Unit;
+}
+
 interface TokenizeParams {
   org_uid: string;
   warehouse_project_id: string;
@@ -109,7 +126,7 @@ const unitsApi = tokenizationEngineApi.injectEndpoints({
       invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
     }),
 
-    detokenizeUnit: builder.mutation<any, string>({
+    detokenizeUnit: builder.mutation<DetokenizationResponse, string>({
       query: (detokString) => ({
         url: '/parse-detok-file',
         method: 'POST',

@@ -1,28 +1,47 @@
 import { FormattedMessage } from 'react-intl';
-import { Button, DetokenizationSuccessModal, DetokenizeUnitModal } from '@/components';
+import {
+  Button,
+  ConfirmUnitDetokenizationDataModal,
+  DetokenizationSuccessModal,
+  SubmitDetokenizationFileModal,
+} from '@/components';
 import React, { useState } from 'react';
 import { useUrlHash } from '@/hooks';
+import { Unit } from '@/schemas/Unit.schema';
 
 const DetokenizeUnitButton: React.FC = () => {
-  const [showDetokenizationModal, setShowDetokenizationModal] = useUrlHash('detokenize');
-  const [showDetokenizationSuccessModal, setShowDetokenizationSuccessModal] = useState<boolean>(true);
+  const [showSubmitDetokenizationFileModal, setShowSubmitDetokenizationFileModal] = useUrlHash('detokenize');
+  const [unitToDetokenizeData, setUnitToDetokenizeData] = useState<Unit | undefined>(undefined);
+  const [showDetokenizationSuccessModal, setShowDetokenizationSuccessModal] = useState<boolean>(false);
 
-  const onDetokenizationSuccess = () => {
-    setShowDetokenizationModal(false);
+  const handleDetokenizationFileParseSuccess = (unit: Unit) => {
+    setShowSubmitDetokenizationFileModal(false);
+    setUnitToDetokenizeData(unit);
+  };
+
+  const handleDetokenizationSuccess = () => {
+    setUnitToDetokenizeData(undefined);
     setShowDetokenizationSuccessModal(true);
   };
 
   return (
     <>
-      <Button onClick={() => setShowDetokenizationModal(true)}>
+      <Button onClick={() => setShowSubmitDetokenizationFileModal(true)}>
         <p className="capitalize">
           <FormattedMessage id="detokenize-unit" />
         </p>
       </Button>
-      {showDetokenizationModal && (
-        <DetokenizeUnitModal
-          onClose={() => setShowDetokenizationModal(false)}
-          onDetokenizationSuccess={onDetokenizationSuccess}
+      {showSubmitDetokenizationFileModal && (
+        <SubmitDetokenizationFileModal
+          onClose={() => setShowSubmitDetokenizationFileModal(false)}
+          onDetokenizationParseSuccess={handleDetokenizationFileParseSuccess}
+        />
+      )}
+      {unitToDetokenizeData && (
+        <ConfirmUnitDetokenizationDataModal
+          onClose={() => setUnitToDetokenizeData(undefined)}
+          unitToDetokenize={unitToDetokenizeData}
+          onDetokenizationSuccess={handleDetokenizationSuccess}
         />
       )}
       {showDetokenizationSuccessModal && (
