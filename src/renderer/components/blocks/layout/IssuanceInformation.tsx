@@ -31,7 +31,7 @@ const IssuanceInformation: React.FC<{ issuance: Issuance }> = ({ issuance }) => 
           name="verificationBody"
           label={intl.formatMessage({ id: 'verification-body' })}
           type="text"
-          value={issuance.verificationBody || ''}
+          value={issuance.verificationBody}
         />
         <InformationDisplayField
           name="verificationReportDate"

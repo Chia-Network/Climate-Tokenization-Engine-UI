@@ -13,14 +13,23 @@ interface FieldProps {
 
 const InformationDisplayField: React.FC<FieldProps> = ({ name, label, type, value }) => {
   const renderReadOnlyField = () => {
-    if (value === undefined || value === null) {
-      return <FormattedMessage id="not-specified" />;
+    if (!value) {
+      return (
+        <p className="capitalize">
+          <FormattedMessage id="not-specified" />
+        </p>
+      );
     }
 
     switch (type) {
       case 'link':
         return (
-          <a href={value} target="_blank" rel="noreferrer" className="text-blue-500 break-words">
+          <a
+            href={value}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-500 break-words hover:underline overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400"
+          >
             {value}
           </a>
         );
@@ -29,13 +38,15 @@ const InformationDisplayField: React.FC<FieldProps> = ({ name, label, type, valu
       case 'tag':
         return <TagInput defaultValue={value} onChange={() => {}} readonly={true} />;
       default:
-        return <p className="dark:text-white">{value}</p>;
+        return <p className="dark:text-white overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400">{value}</p>;
     }
   };
   return (
-    <div className="mb-4">
-      <Label htmlFor={name}>{label}</Label>
-      <div id={name} className="py-2 rounded">
+    <div className="mb-4 max-w-full">
+      <Label htmlFor={name} className="capitalize">
+        {label}
+      </Label>
+      <div id={name} className="p-2 rounded-lg bg-gray-100 max-w-fit">
         {renderReadOnlyField()}
       </div>
     </div>

@@ -31,7 +31,7 @@ interface TokenData {
   warehouse_project_id: string;
 }
 
-interface DetokenizationResponse {
+export interface DetokenizationData {
   token: TokenData;
   content: string;
   unit: Unit;
@@ -126,12 +126,21 @@ const unitsApi = tokenizationEngineApi.injectEndpoints({
       invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
     }),
 
-    detokenizeUnit: builder.mutation<DetokenizationResponse, string>({
+    parseDetokenizationFile: builder.mutation<DetokenizationData, string>({
       query: (detokString) => ({
         url: '/parse-detok-file',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: { detokString },
+      }),
+    }),
+
+    detokenizeUnit: builder.mutation<any, DetokenizationData>({
+      query: (detokenizationData) => ({
+        url: '/confirm-detokenization',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: detokenizationData,
       }),
       invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
     }),
@@ -146,5 +155,6 @@ export const {
   useLazyGetUnitQuery,
   useGetUnitQuery,
   useTokenizeUnitMutation,
+  useParseDetokenizationFileMutation,
   useDetokenizeUnitMutation,
 } = unitsApi;

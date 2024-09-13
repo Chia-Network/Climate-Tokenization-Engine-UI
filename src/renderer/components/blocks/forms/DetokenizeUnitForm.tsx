@@ -204,7 +204,7 @@ const DetokenizeUnitForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop
           <div className="flex gap-4">
             <FormButton isSubmitting={isSubmitting} formikErrors={errors}>
               <p className="capitalize">
-                <FormattedMessage id="create-token" />
+                <FormattedMessage id="submit-detokenization-file" />
               </p>
             </FormButton>
           </div>

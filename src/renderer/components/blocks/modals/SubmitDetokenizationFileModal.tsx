@@ -4,23 +4,22 @@ import { FormattedMessage } from 'react-intl';
 import { extractPasswordProtectedZip } from '@/utils/zip-utils';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
-import { useDetokenizeUnitMutation } from '@/api';
-import { Unit } from '@/schemas/Unit.schema';
+import { DetokenizationData, useParseDetokenizationFileMutation } from '@/api';
 
 interface SubimitDetokenizationFileModalProps {
-  onDetokenizationParseSuccess: (unit: Unit) => void;
+  onDetokenizationParseSuccess: (detokenizationData: DetokenizationData) => void;
   onClose: () => void;
 }
 
 const ZIP_BAD_PASSWORD_TOKEN = 'invalid-zip-file-password';
 const ZIP_CANNOT_EXTRACT_TOKEN = 'cannot-extract-detokenization-data-from-zip-file';
-const API_DETOKENIZATION_PARSE_FAILURE_TOKEN = 'an-error-occured-while-processing-unzipped-detokenization-data';
+const API_DETOKENIZATION_PARSE_FAILURE_TOKEN = 'an-error-occurred-while-processing-unzipped-detokenization-data';
 
 const SubmitDetokenizationFileModal: React.FC<SubimitDetokenizationFileModalProps> = ({
   onClose,
   onDetokenizationParseSuccess,
 }) => {
-  const [triggerDetokenizeUnit, { error: detokenizationError }] = useDetokenizeUnitMutation();
+  const [triggerDetokenizeUnit, { error: detokenizationError }] = useParseDetokenizationFileMutation();
   const [failureAlertMessageToken, setFailureAlertMessageToken] = useState<string>('');
 
   const handleSubmitDetokenizationFile = async (values: DetokFormValues): Promise<void> => {
@@ -54,7 +53,7 @@ const SubmitDetokenizationFileModal: React.FC<SubimitDetokenizationFileModalProp
       return;
     }
 
-    onDetokenizationParseSuccess(detokenizeResult.data.unit);
+    onDetokenizationParseSuccess(detokenizeResult.data);
   };
 
   return (
