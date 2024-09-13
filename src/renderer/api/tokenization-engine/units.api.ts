@@ -20,7 +20,32 @@ interface GetUnitParams {
   warehouseUnitId: string;
 }
 
-interface TokenizeParams {}
+interface TokenData {
+  org_uid: string;
+  project_id: string;
+  vintage_year: number;
+  sequence_num: number;
+  index: string;
+  public_key: string;
+  asset_id: string;
+  warehouse_project_id: string;
+}
+
+export interface DetokenizationData {
+  token: TokenData;
+  content: string;
+  unit: Unit;
+}
+
+interface TokenizeParams {
+  org_uid: string;
+  warehouse_project_id: string;
+  vintage_year: number;
+  sequence_num: number;
+  warehouseUnitId: string;
+  to_address: string;
+  amount: number;
+}
 
 export interface GetUnitsResponse {
   page: number;
@@ -100,6 +125,25 @@ const unitsApi = tokenizationEngineApi.injectEndpoints({
       }),
       invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
     }),
+
+    parseDetokenizationFile: builder.mutation<DetokenizationData, string>({
+      query: (detokString) => ({
+        url: '/parse-detok-file',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { detokString },
+      }),
+    }),
+
+    detokenizeUnit: builder.mutation<any, DetokenizationData>({
+      query: (detokenizationData) => ({
+        url: '/confirm-detokenization',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: detokenizationData,
+      }),
+      invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
+    }),
   }),
 });
 
@@ -111,4 +155,6 @@ export const {
   useLazyGetUnitQuery,
   useGetUnitQuery,
   useTokenizeUnitMutation,
+  useParseDetokenizationFileMutation,
+  useDetokenizeUnitMutation,
 } = unitsApi;

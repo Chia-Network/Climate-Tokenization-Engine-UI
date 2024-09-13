@@ -57,7 +57,11 @@ const ConnectForm: React.FC<FormProps> = ({ onSubmit, hasServerError, onClearErr
   }, [setIsActive]);
 
   return (
-    <Formik initialValues={{ apiHost, apiKey }} validationSchema={validationSchema} onSubmit={handleSubmit}>
+    <Formik<{ apiHost: string; apiKey: string }>
+      initialValues={{ apiHost, apiKey }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
       {({ errors, touched, isSubmitting }) => (
         <Form>
           {hasServerError && (

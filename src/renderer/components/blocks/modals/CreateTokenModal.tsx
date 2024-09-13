@@ -42,15 +42,15 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
   const onSubmitTokenization = async (walletAddress: string) => {
     setShowTokenizationFailure(false);
 
-    if (unit && project) {
+    if (unit && project && requiredFieldsPresent) {
       const submitData = {
-        org_uid: unit?.orgUid,
-        warehouse_project_id: project?.warehouseProjectId,
-        vintage_year: unit?.vintageYear,
+        org_uid: (unit?.orgUid ? unit.orgUid : project.orgUid) as string,
+        warehouse_project_id: warehouseProjectId as string,
+        vintage_year: unit.vintageYear as number,
         sequence_num: 0,
-        warehouseUnitId: unit?.warehouseUnitId,
-        to_address: walletAddress,
-        amount: unit?.unitCount,
+        warehouseUnitId: warehouseUnitId as string,
+        to_address: walletAddress as string,
+        amount: unit.unitCount as number,
       };
 
       const result = await triggerTokenizeUnit(submitData);
@@ -60,6 +60,8 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
         onClose();
         onTokenizationSuccess();
       }
+    } else {
+      setShowTokenizationFailure(true);
     }
   };
 
