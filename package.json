@@ -100,7 +100,7 @@
     "eslint-plugin-mocha": "^9.0.0",
     "eslint-plugin-react": "^7.33.2",
     "git-authors-cli": "^1.0.49",
-    "husky": "^7.0.4",
+    "husky": "^9.1.6",
     "lint-staged": "^11.2.6",
     "mocha": "^9.2.2",
     "mock-local-storage": "^1.1.24",
