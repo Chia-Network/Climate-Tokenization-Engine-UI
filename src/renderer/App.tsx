@@ -4,9 +4,9 @@ import { IntlProvider } from 'react-intl';
 import { loadLocaleData } from '@/translations';
 import '@/App.css';
 import { AppNavigator } from '@/routes';
-import { resetApiHost, setConfigFileLoaded, setHost, setLocale } from '@/store/slices/app';
+import { resetApiHost, setConfigFileLoaded, setCoreRegistryMode, setHost, setLocale } from '@/store/slices/app';
 import { ComponentCenteredSpinner } from '@/components';
-import { useGetThemeColorsQuery, useGetUiConfigQuery } from '@/api';
+import { useGetHealthQuery, useGetThemeColorsQuery, useGetUiConfigQuery } from '@/api';
 
 /**
  * @returns app react component to be rendered by electron as the UI
@@ -18,6 +18,19 @@ function App() {
   const [appLoading, setAppLoading] = useState(true);
   const { data: fetchedConfig, isLoading: configFileLoading } = useGetUiConfigQuery();
   const { data: fetchedThemeColors, isLoading: themeColorsFileLoading } = useGetThemeColorsQuery();
+  const { data: healthData } = useGetHealthQuery(
+    {
+      apiHost: appStore?.apiHost,
+      apiKey: appStore?.apiKey,
+    },
+    { skip: !appStore?.apiHost },
+  );
+
+  useEffect(() => {
+    if (Boolean(healthData?.coreRegistryMode) != appStore.coreRegistryMode) {
+      dispatch(setCoreRegistryMode(Boolean(healthData?.coreRegistryMode)));
+    }
+  }, [appStore.coreRegistryMode, dispatch, healthData?.coreRegistryMode]);
 
   useEffect(() => {
     if (appStore.locale) {
@@ -57,7 +70,7 @@ function App() {
     if (!configFileLoading) setTimeout(() => setAppLoading(false), 400);
   }, [configFileLoading]);
 
-  if (!translationTokens || configFileLoading || themeColorsFileLoading || appLoading) {
+  if (!translationTokens || configFileLoading || themeColorsFileLoading || !healthData || appLoading) {
     return <ComponentCenteredSpinner />;
   }
 

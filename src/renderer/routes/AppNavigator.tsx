@@ -3,8 +3,11 @@ import { BrowserRouter as Router, Navigate, redirect, Route, Routes } from 'reac
 import ROUTES from '@/routes/route-constants';
 import * as Pages from '@/pages';
 import { Template } from '@/components';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const AppNavigator: React.FC = () => {
+  const coreRegistryMode: boolean = useSelector((state: RootState) => state.app.coreRegistryMode);
   return (
     <>
       <Router>
@@ -16,7 +19,7 @@ const AppNavigator: React.FC = () => {
           <Route path="" element={<Template />}>
             <Route path="/" element={<Navigate to={ROUTES.CREATE_TOKENS} />} />
             <Route path={ROUTES.CREATE_TOKENS} element={<Pages.TokensPage />} />
-            <Route path={ROUTES.REVERT_TOKENS} element={<Pages.RevertTokensPage />} />
+            {!coreRegistryMode && <Route path={ROUTES.REVERT_TOKENS} element={<Pages.RevertTokensPage />} />}
             <Route path="*" element={<Navigate replace to={ROUTES.CREATE_TOKENS} />} />
           </Route>
         </Routes>

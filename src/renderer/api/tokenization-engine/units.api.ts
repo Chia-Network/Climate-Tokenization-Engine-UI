@@ -1,11 +1,4 @@
-import {
-  projectsByIdsTag,
-  projectsTag,
-  RECORDS_PER_PAGE,
-  tokenizationEngineApi,
-  tokenizedUnitsTag,
-  untokenizedUnitsTag,
-} from './index';
+import { RECORDS_PER_PAGE, tokenizationEngineApi, tokenizedUnitsTag, untokenizedUnitsTag } from './index';
 import { Unit } from '@/schemas/Unit.schema';
 
 interface GetUnitsParams {
@@ -123,7 +116,6 @@ const unitsApi = tokenizationEngineApi.injectEndpoints({
         headers: { 'Content-Type': 'application/json' },
         body: tokenizeParams,
       }),
-      invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
     }),
 
     parseDetokenizationFile: builder.mutation<DetokenizationData, string>({
@@ -142,7 +134,6 @@ const unitsApi = tokenizationEngineApi.injectEndpoints({
         headers: { 'Content-Type': 'application/json' },
         body: detokenizationData,
       }),
-      invalidatesTags: [untokenizedUnitsTag, tokenizedUnitsTag, projectsTag, projectsByIdsTag],
     }),
   }),
 });

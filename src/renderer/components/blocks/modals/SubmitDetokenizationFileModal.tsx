@@ -34,8 +34,6 @@ const SubmitDetokenizationFileModal: React.FC<SubimitDetokenizationFileModalProp
       values.password,
     );
 
-    console.log(unzipResult);
-
     if (!unzipResult.success && unzipResult?.badPassword) {
       setFailureAlertMessageToken(ZIP_BAD_PASSWORD_TOKEN);
       return;
