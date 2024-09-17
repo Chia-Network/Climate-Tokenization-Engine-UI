@@ -16,6 +16,7 @@ interface GetHealthParams {
 interface ServerHealth {
   isHealthy: boolean;
   readOnly: boolean;
+  coreRegistryMode: boolean;
 }
 
 export interface Config {
@@ -32,8 +33,9 @@ const systemApi = tokenizationEngineApi.injectEndpoints({
       }),
       transformResponse: (response: BaseQueryResult<Health>, meta): ServerHealth => {
         const isHealthy = response?.message === 'OK';
-        const readOnly = meta?.response?.headers.get('cw-readonly') === 'true';
-        return { isHealthy, readOnly };
+        const readOnly = meta?.response?.headers.get('cw-read-only') === 'true';
+        const coreRegistryMode = meta?.response?.headers.get('x-core-registry-mode') === 'true';
+        return { isHealthy, readOnly, coreRegistryMode };
       },
       keepUnusedDataFor: 0,
     }),

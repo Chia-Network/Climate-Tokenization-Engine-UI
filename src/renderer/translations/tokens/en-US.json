@@ -100,5 +100,6 @@
   "crediting-period-end-date": "crediting period end date",
   "unit-quantity": "unit quantity",
   "failed-to-detokenize-unit": "failed to detokenize unit",
-  "submit-detokenization-file": "submit detokenization file"
+  "submit-detokenization-file": "submit detokenization file",
+  "not-available-in-core-registry-mode": "not available in core registry mode"
 }
