@@ -1,5 +1,5 @@
 {
-  "name": "cadt-ui",
+  "name": "climate-tokenization-engine-ui",
   "private": true,
   "version": "0.0.10",
   "type": "module",
@@ -89,7 +89,7 @@
   },
   "build": {
     "appId": "org.worldbank.climate-action-data-trust",
-    "productName": "cadt-ui",
+    "productName": "climate-tokenization-engine-ui",
     "files": [
       "build/renderer/**/*",
       "build/**/*",
@@ -115,7 +115,7 @@
     },
     "linux": {
       "target": "deb",
-      "description": "Climate Action Data Trust User Interface",
+      "description": "Climate Tokenization Engine User Interface",
       "maintainer": "Chia Network Inc. <hello@chia.net>",
       "vendor": "https://climateactiondata.org/",
       "publish": null,

@@ -18,7 +18,7 @@ function App() {
   const [appLoading, setAppLoading] = useState(true);
   const { data: fetchedConfig, isLoading: configFileLoading } = useGetUiConfigQuery();
   const { data: fetchedThemeColors, isLoading: themeColorsFileLoading } = useGetThemeColorsQuery();
-  const { data: healthData } = useGetHealthQuery(
+  const { data: healthData, isLoading: healthDataLoading } = useGetHealthQuery(
     {
       apiHost: appStore?.apiHost,
       apiKey: appStore?.apiKey,
@@ -67,10 +67,11 @@ function App() {
   }, [appStore.apiHost, appStore.configFileLoaded, fetchedConfig, configFileLoading, dispatch]);
 
   useEffect(() => {
+    // give the setConfigFileLoaded action time to dispatch
     if (!configFileLoading) setTimeout(() => setAppLoading(false), 400);
   }, [configFileLoading]);
 
-  if (!translationTokens || configFileLoading || themeColorsFileLoading || !healthData || appLoading) {
+  if (!translationTokens || configFileLoading || themeColorsFileLoading || healthDataLoading || appLoading) {
     return <ComponentCenteredSpinner />;
   }
 
