@@ -101,5 +101,7 @@
   "unit-quantity": "unit quantity",
   "failed-to-detokenize-unit": "failed to detokenize unit",
   "submit-detokenization-file": "submit detokenization file",
-  "not-available-in-core-registry-mode": "not available in core registry mode"
+  "not-available-in-core-registry-mode": "not available in core registry mode",
+  "cannot-connect-to-registry-api-with-current-settings": "Cannot connect to registry API with current settings",
+  "please-disconnect-to-edit-the-api-url-and-api-key": "Please disconnect to edit the API URL and API key"
 }

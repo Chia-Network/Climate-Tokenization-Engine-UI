@@ -3,3 +3,4 @@ export * from './useQueryParamState';
 export * from './useColumnOrder';
 export * from './useWildCardUrlHash';
 export * from './useGetProjectOptionsList';
+export * from './useManageSavedLocation';

@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { projectsByIdsTag, projectsTag, tokenizedUnitsTag, untokenizedUnitsTag } from '@/api/tokenization-engine';
+import { reloadApplication } from '@/utils/unified-ui-utils';
 
 interface SyncIndicatorProps {
   detailed: boolean;
@@ -44,6 +45,7 @@ const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }: SyncIndicator
   const handleRefreshClick = () => {
     // Trigger hard refresh of the app here
     window.location.reload();
+    reloadApplication();
   };
 
   return (

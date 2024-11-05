@@ -8,6 +8,7 @@ import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { useUrlHash } from '@/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { reloadApplication } from '@/utils/unified-ui-utils';
 
 const validationSchema = yup.object({
   apiHost: yup
@@ -53,7 +54,7 @@ const ConnectForm: React.FC<FormProps> = ({ onSubmit, hasServerError, onClearErr
 
   const handleRetry = useCallback(() => {
     setIsActive(false);
-    window.location.reload();
+    reloadApplication();
   }, [setIsActive]);
 
   return (
