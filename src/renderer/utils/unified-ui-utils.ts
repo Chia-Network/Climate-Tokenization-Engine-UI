@@ -26,8 +26,8 @@ export const getParentSettings = (): ParentSettings => {
   // local storage keys set as constants in parent app
   const colorsFromStorage = localStorage.getItem('themeColors');
   const selectedLanguageCode = localStorage.getItem('selectedLanguageCode');
-  const apiHost = localStorage.getItem('cadtApiHost');
-  const apiKey = localStorage.getItem('cadtApiKey');
+  const apiHost = localStorage.getItem('tokenizationApiHost');
+  const apiKey = localStorage.getItem('tokenizationApiKey');
 
   try {
     return {

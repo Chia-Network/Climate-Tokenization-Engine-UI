@@ -26,7 +26,7 @@ import {
  * @returns app react component to be rendered by electron as the UI
  */
 function App() {
-  const isCoreRegistryUiChildApp = Boolean(isIframe());
+  const isCoreRegistryUiChildApp = isIframe();
   let settingsFromParentApp: ParentSettings | null = null;
   if (isCoreRegistryUiChildApp) {
     notifyParentOfAppLoad();
@@ -107,6 +107,7 @@ function App() {
       if (event.origin === window.origin) {
         const message = event.data;
         if (message?.selectedLocale && message.selectedLocale !== appStore.locale) {
+          console.log('selected locale', message.selectedLocale);
           dispatch(setLocale(message.selectedLocale));
         }
       }

@@ -9,7 +9,6 @@ import { reloadApplication } from '@/utils/unified-ui-utils';
 
 interface SyncIndicatorProps {
   detailed: boolean;
-  orgUid?: string;
 }
 
 /**
@@ -44,7 +43,6 @@ const SyncIndicator: React.FC<SyncIndicatorProps> = ({ detailed }: SyncIndicator
 
   const handleRefreshClick = () => {
     // Trigger hard refresh of the app here
-    window.location.reload();
     reloadApplication();
   };
 
