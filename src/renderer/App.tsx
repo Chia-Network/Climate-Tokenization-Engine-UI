@@ -29,7 +29,6 @@ function App() {
   const isCoreRegistryUiChildApp = isIframe();
   let settingsFromParentApp: ParentSettings | null = null;
   if (isCoreRegistryUiChildApp) {
-    notifyParentOfAppLoad();
     settingsFromParentApp = getParentSettings();
   }
 
@@ -77,6 +76,8 @@ function App() {
       dispatch(setConfigLoaded({ configLoaded: false }));
     }
   };
+
+  useEffect(() => notifyParentOfAppLoad(), []);
 
   useEffect(() => {
     if (Boolean(healthData?.coreRegistryMode) != appStore.coreRegistryMode) {
