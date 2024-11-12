@@ -29,7 +29,7 @@ const LeftNav = () => {
               <Sidebar.Item
                 style={{ cursor: 'pointer' }}
                 active={isActive(ROUTES.CREATE_TOKENS)}
-                onClick={() => navigate(ROUTES.CREATE_TOKENS)}
+                onClick={() => !isActive(ROUTES.CREATE_TOKENS) && navigate(ROUTES.CREATE_TOKENS)}
               >
                 <p className="capitalize">
                   <FormattedMessage id="create-tokens" />
@@ -56,7 +56,7 @@ const LeftNav = () => {
                 <Sidebar.Item
                   style={{ cursor: 'pointer' }}
                   active={isActive(ROUTES.REVERT_TOKENS)}
-                  onClick={() => navigate(ROUTES.REVERT_TOKENS)}
+                  onClick={() => !isActive(ROUTES.REVERT_TOKENS) && navigate(ROUTES.REVERT_TOKENS)}
                 >
                   <p className="capitalize">
                     <FormattedMessage id="revert-tokens" />

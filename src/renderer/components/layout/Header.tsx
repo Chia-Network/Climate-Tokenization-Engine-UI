@@ -1,7 +1,21 @@
 import React from 'react';
 import { AppLogo, ConnectButton } from '@/components';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const Header: React.FC = () => {
+  const isCoreRegistryUiApp = useSelector((state: RootState) => state.app.isCoreRegistryUiApp);
+
+  if (isCoreRegistryUiApp) {
+    // if running as a child app, the parent app provides the header.
+    // return hidden connect button to show connect message if unable to connect
+    return (
+      <div className="hidden">
+        <ConnectButton />
+      </div>
+    );
+  }
+
   return (
     <div style={{ height: '64px' }}>
       <div className="pt-1 pb-1 w-screen h-16 bg-[#6e7d7f] dark:bg-gray-800 dark:border-gray-600">

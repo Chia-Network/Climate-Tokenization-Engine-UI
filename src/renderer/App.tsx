@@ -4,20 +4,40 @@ import { IntlProvider } from 'react-intl';
 import { loadLocaleData } from '@/translations';
 import '@/App.css';
 import { AppNavigator } from '@/routes';
-import { resetApiHost, setConfigFileLoaded, setCoreRegistryMode, setHost, setLocale } from '@/store/slices/app';
+import {
+  resetApiHost,
+  setConfigLoaded,
+  setCoreRegistryMode,
+  setHost,
+  setIsCoreRegistryUiApp,
+  setLocale,
+} from '@/store/slices/app';
 import { ComponentCenteredSpinner } from '@/components';
 import { useGetHealthQuery, useGetThemeColorsQuery, useGetUiConfigQuery } from '@/api';
+import {
+  getParentSettings,
+  isIframe,
+  notifyParentOfAppLoad,
+  ParentSettings,
+  reconcileSavedUrl,
+} from '@/utils/unified-ui-utils';
 
 /**
  * @returns app react component to be rendered by electron as the UI
  */
 function App() {
+  const isCoreRegistryUiChildApp = isIframe();
+  let settingsFromParentApp: ParentSettings | null = null;
+  if (isCoreRegistryUiChildApp) {
+    settingsFromParentApp = getParentSettings();
+  }
+
+  reconcileSavedUrl();
+
   const dispatch = useDispatch();
   const appStore = useSelector((state: any) => state.app);
   const [translationTokens, setTranslationTokens] = useState<object>();
   const [appLoading, setAppLoading] = useState(true);
-  const { data: fetchedConfig, isLoading: configFileLoading } = useGetUiConfigQuery();
-  const { data: fetchedThemeColors, isLoading: themeColorsFileLoading } = useGetThemeColorsQuery();
   const { data: healthData, isLoading: healthDataLoading } = useGetHealthQuery(
     {
       apiHost: appStore?.apiHost,
@@ -25,6 +45,39 @@ function App() {
     },
     { skip: !appStore?.apiHost },
   );
+  const { data: fetchedConfig, isLoading: configFileLoading } = useGetUiConfigQuery(undefined, {
+    skip: isCoreRegistryUiChildApp,
+  });
+  const { data: fetchedThemeColors, isLoading: themeColorsFileLoading } = useGetThemeColorsQuery(undefined, {
+    skip: isCoreRegistryUiChildApp,
+  });
+
+  if (isCoreRegistryUiChildApp !== appStore.isCoreRegistryUiApp) {
+    dispatch(setIsCoreRegistryUiApp({ isCoreRegistryUiApp: isCoreRegistryUiChildApp }));
+  }
+
+  const setThemeColors = (colors: any) => {
+    // apply loaded theme colors via changing css property values (see App.css)
+    Object.entries(colors).forEach(([key, value]) => {
+      document.documentElement.style.setProperty(`--color-${key}`, value as string);
+    });
+  };
+
+  const setConfig = ({ apiHost, apiKey }: { apiHost: string; apiKey?: string }) => {
+    if (apiHost) {
+      if (apiKey) {
+        dispatch(setHost({ apiHost, apiKey }));
+      } else {
+        dispatch(setHost({ apiHost }));
+      }
+      dispatch(setConfigLoaded({ configLoaded: true }));
+    } else if (appStore.configFileLoaded) {
+      dispatch(resetApiHost());
+      dispatch(setConfigLoaded({ configLoaded: false }));
+    }
+  };
+
+  useEffect(() => notifyParentOfAppLoad(), []);
 
   useEffect(() => {
     if (Boolean(healthData?.coreRegistryMode) != appStore.coreRegistryMode) {
@@ -34,12 +87,7 @@ function App() {
 
   useEffect(() => {
     if (appStore.locale) {
-      const processTranslationTokens = async () => {
-        const tokens = loadLocaleData(appStore.locale);
-        setTranslationTokens(tokens);
-      };
-
-      processTranslationTokens();
+      setTranslationTokens(loadLocaleData(appStore.locale));
     } else {
       dispatch(setLocale(navigator.language));
     }
@@ -54,22 +102,68 @@ function App() {
     }
   }, [fetchedThemeColors]);
 
+  // handle messages from parent
   useEffect(() => {
-    if (fetchedConfig) {
-      if (fetchedConfig?.apiHost) {
-        dispatch(setHost({ apiHost: fetchedConfig.apiHost }));
+    const parentAppMessageListener = (event: MessageEvent) => {
+      if (event.origin === window.origin) {
+        const message = event.data;
+        if (message?.selectedLocale && message.selectedLocale !== appStore.locale) {
+          console.log('selected locale', message.selectedLocale);
+          dispatch(setLocale(message.selectedLocale));
+        }
       }
-      dispatch(setConfigFileLoaded({ configFileLoaded: true }));
-    } else if (!configFileLoading && !fetchedConfig && appStore.configFileLoaded) {
-      dispatch(resetApiHost());
-      dispatch(setConfigFileLoaded({ configFileLoaded: false }));
+    };
+
+    window.addEventListener('message', parentAppMessageListener);
+
+    return () => window.removeEventListener('message', parentAppMessageListener);
+  }, [appStore.locale, dispatch]);
+
+  /*
+   2 different loading scenarios:
+   - as a stand-alone app fetching files
+   - as a child app getting connection settings from parent local storage. in this case the config file is ignored
+   */
+
+  // handle setting the theme colors when fetched as standalone app
+  useEffect(() => {
+    if (fetchedThemeColors && !isCoreRegistryUiChildApp) {
+      setThemeColors(fetchedThemeColors);
     }
-  }, [appStore.apiHost, appStore.configFileLoaded, fetchedConfig, configFileLoading, dispatch]);
+  }, [fetchedThemeColors, isCoreRegistryUiChildApp]);
+
+  // handle setting the config when fetched as standalone app
+  useEffect(() => {
+    if (!configFileLoading && fetchedConfig?.apiHost && !isCoreRegistryUiChildApp) {
+      setConfig({ apiHost: fetchedConfig?.apiHost });
+    }
+  }, [configFileLoading, fetchedConfig /* do not add setConfig */]);
+
+  //handle setting theme colors when loaded as child app
+  useEffect(() => {
+    if (isCoreRegistryUiChildApp && settingsFromParentApp?.colors) {
+      setThemeColors(settingsFromParentApp.colors);
+    }
+  }, [isCoreRegistryUiChildApp, settingsFromParentApp?.colors]);
+
+  //handle setting config when loaded as child app
+  useEffect(() => {
+    if (isCoreRegistryUiChildApp && settingsFromParentApp?.apiHost) {
+      setConfig({ apiHost: settingsFromParentApp?.apiHost, apiKey: settingsFromParentApp.apiKey });
+    }
+  }, [
+    isCoreRegistryUiChildApp,
+    settingsFromParentApp?.apiHost,
+    settingsFromParentApp?.apiKey,
+    /* do not add setConfig */
+  ]);
 
   useEffect(() => {
     // give the setConfigFileLoaded action time to dispatch
-    if (!configFileLoading) setTimeout(() => setAppLoading(false), 400);
-  }, [configFileLoading]);
+    if (!configFileLoading || isCoreRegistryUiChildApp) {
+      setTimeout(() => setAppLoading(false), 400);
+    }
+  }, [configFileLoading, isCoreRegistryUiChildApp]);
 
   if (!translationTokens || configFileLoading || themeColorsFileLoading || healthDataLoading || appLoading) {
     return <ComponentCenteredSpinner />;

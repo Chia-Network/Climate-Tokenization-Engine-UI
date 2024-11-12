@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // Define a TypeScript type for the setActive callback function
@@ -23,6 +23,10 @@ const useUrlHash = (name: string): UseUrlHashReturnType => {
       } else {
         window.history.pushState({}, '', decodeURIComponent(window.location.href.replace(window.location.hash, '')));
       }
+
+      // Dispatch a synthetic popstate event to trigger React Router's location update
+      window.dispatchEvent(new PopStateEvent('popstate'));
+
       // Use a random number to trigger a re-render
       setHash(Math.random());
     },

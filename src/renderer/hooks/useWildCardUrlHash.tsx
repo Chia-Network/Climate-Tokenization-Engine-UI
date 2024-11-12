@@ -22,6 +22,10 @@ const useWildCardUrlHash = (prefix: string): UseUrlHashReturnType => {
       } else {
         window.history.pushState({}, '', decodeURIComponent(window.location.href.replace(window.location.hash, '')));
       }
+
+      // Dispatch a synthetic popstate event to trigger React Router's location update
+      window.dispatchEvent(new PopStateEvent('popstate'));
+
       // Use a random number to trigger a re-render
       setHash(Math.random());
     },

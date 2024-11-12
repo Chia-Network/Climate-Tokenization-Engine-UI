@@ -26,6 +26,9 @@ const useQueryParamState: QueryParamState<string> = (name, defaultValue = '') =>
 
       window.history.pushState({}, '', decodeURIComponent(`${newPath}${window.location.hash}`));
       setParam(value);
+
+      // Trigger a popstate event so React Router updates the location
+      window.dispatchEvent(new PopStateEvent('popstate'));
     },
     [name, location],
   );
@@ -37,10 +40,13 @@ const useQueryParamState: QueryParamState<string> = (name, defaultValue = '') =>
 
   // Ensure default value is set in URL on initial mount if it's missing
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search || window.location.hash.replace(/#.*\?/, ''));
-    if (!params.has(name) && defaultValue) {
-      setQueryStringParameter(defaultValue);
-    }
+    setTimeout(() => {
+      // delay setting the default value to give the last saved location time to load if needed
+      const params = new URLSearchParams(window.location.search || window.location.hash.replace(/#.*\?/, ''));
+      if (!params.has(name) && defaultValue) {
+        setQueryStringParameter(defaultValue);
+      }
+    }, 300);
   }, [name, defaultValue, setQueryStringParameter]);
 
   return [value, setQueryStringParameter];
