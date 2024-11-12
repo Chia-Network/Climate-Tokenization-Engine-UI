@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 
 const Header: React.FC = () => {
-  const appStore = useSelector((state: RootState) => state.app);
+  const isCoreRegistryUiApp = useSelector((state: RootState) => state.app.isCoreRegistryUiApp);
 
-  if (appStore.isCoreRegistryUiApp) {
+  if (isCoreRegistryUiApp) {
     // if running as a child app, the parent app provides the header.
     // return hidden connect button to show connect message if unable to connect
     return (

@@ -3,8 +3,11 @@ import { LeftNav } from './LeftNav';
 import { Outlet } from 'react-router-dom';
 import { Header } from '@/components';
 import { useManageSavedLocation } from '@/hooks';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const Template = () => {
+  const isCoreRegistryUiApp = useSelector((state: RootState) => state.app.isCoreRegistryUiApp);
   useManageSavedLocation();
 
   return (
@@ -15,7 +18,7 @@ const Template = () => {
           <LeftNav />
           <div id="content" className="w-full relative dark:text-white">
             <ErrorBoundary>
-              <div style={{ height: 'calc(100vh - 64px)' }}>
+              <div style={{ height: isCoreRegistryUiApp ? '100vh' : 'calc(100vh - 64px)' }}>
                 <Outlet />
               </div>
             </ErrorBoundary>
