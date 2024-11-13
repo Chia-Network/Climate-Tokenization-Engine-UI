@@ -6,7 +6,7 @@
   "main": "build/main.js",
   "engineStrict": true,
   "author": "Chia Network Inc. <hello@chia.net>",
-  "description": "Climate Action Data Trust User Interface",
+  "description": "Climate Tokenization Engine User Interface",
   "engines": {
     "node": ">=20.0"
   },
@@ -88,7 +88,7 @@
     "*.+(js|ts|tsx)": "npm run lint:prettier-eslint"
   },
   "build": {
-    "appId": "org.worldbank.climate-action-data-trust",
+    "appId": "org.chia.climate-tokenization-engine-ui",
     "productName": "climate-tokenization-engine-ui",
     "files": [
       "build/renderer/**/*",
@@ -106,22 +106,22 @@
         ]
       },
       "publish": null,
-      "icon": "src/assets/img/CADT_Icon.png"
+      "icon": "src/renderer/assets/img/tokenization-engine-logo.png"
     },
     "win": {
       "target": "nsis",
       "publish": null,
-      "icon": "src/assets/img/CADT_Icon.png"
+      "icon": "src/renderer/assets/img/tokenization-engine-logo.png"   
     },
     "linux": {
       "target": "deb",
       "description": "Climate Tokenization Engine User Interface",
       "maintainer": "Chia Network Inc. <hello@chia.net>",
-      "vendor": "https://climateactiondata.org/",
+      "vendor": "https://www.chia.net/",
       "publish": null,
-      "icon": "src/assets/img/CADT_Icon.png",
+      "icon": "src/renderer/assets/img/tokenization-engine-logo.png",
       "desktop": {
-        "Icon": "/usr/share/icons/hicolor/0x0/apps/cadt-ui.png"
+        "Icon": "src/renderer/assets/img/tokenization-engine-logo.png"
       }
     }
   }
