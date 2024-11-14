@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 env:
-  APP_NAME: core-registry-application
+  APP_NAME: climate-tokenization-engine-ui
 
 jobs:
   build_mac:
@@ -60,7 +60,7 @@ jobs:
 
       - name: Import Apple installer signing certificate
         if: steps.check_secrets.outputs.HAS_SIGNING_SECRET
-        uses: Apple-Actions/import-codesign-certs@v1
+        uses: Apple-Actions/import-codesign-certs@v3
         with:
           p12-file-base64: ${{ secrets.APPLE_DEV_ID_APP }}
           p12-password: ${{ secrets.APPLE_DEV_ID_APP_PASS }}
@@ -82,7 +82,7 @@ jobs:
           "$DMG_FILE"
 
       - name: Upload Mac Installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-mac-installer
           path: ${{ github.workspace }}/dist/*.dmg
@@ -143,7 +143,7 @@ jobs:
           file: "${{ github.workspace }}/${{ env.INSTALLER_FILE }}"
 
       - name: Upload Windows Installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-windows-installer
           path: "${{ github.workspace }}/${{ env.INSTALLER_FILE }}"
@@ -178,7 +178,7 @@ jobs:
           mv $ORIGINAL $MODIFIED
 
       - name: Upload Linux Installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-linux-installer
           path: ${{ github.workspace }}/dist/*.deb
@@ -208,7 +208,7 @@ jobs:
         run: tar -cvzf ${{ env.APP_NAME }}-web-build.tar.gz build
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-web-build
           path: ${{ env.APP_NAME }}-web-build.tar.gz
@@ -223,25 +223,25 @@ jobs:
       - build_web
     steps:
       - name: Download Windows artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-windows-installer
           path: ${{ env.APP_NAME }}-windows-installer
 
       - name: Download MacOS artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-mac-installer
           path: ${{ env.APP_NAME }}-mac-installer
 
       - name: Download Linux artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-linux-installer
           path: ${{ env.APP_NAME }}-linux-installer
 
       - name: Download Web artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-web-build
           path: ${{ env.APP_NAME }}-web-build
@@ -259,7 +259,7 @@ jobs:
           echo "WEB_FILE=$WEB_FILE" >>$GITHUB_ENV
 
       - name: Release
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v2.1.0
         with:
           files: |
             ${{ env.DMG_FILE }}
