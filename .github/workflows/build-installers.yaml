@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 env:
-  APP_NAME: core-registry-application
+  APP_NAME: climate-tokenization-engine-ui
 
 jobs:
   build_mac:
