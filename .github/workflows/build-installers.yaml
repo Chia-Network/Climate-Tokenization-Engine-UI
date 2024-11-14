@@ -223,25 +223,25 @@ jobs:
       - build_web
     steps:
       - name: Download Windows artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-windows-installer
           path: ${{ env.APP_NAME }}-windows-installer
 
       - name: Download MacOS artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-mac-installer
           path: ${{ env.APP_NAME }}-mac-installer
 
       - name: Download Linux artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-linux-installer
           path: ${{ env.APP_NAME }}-linux-installer
 
       - name: Download Web artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.APP_NAME }}-web-build
           path: ${{ env.APP_NAME }}-web-build
