@@ -58,7 +58,7 @@ sudo apt-get install climate-tokenization-engine-ui
 
 The Tokenization Engine UI can be hosted as a web application, either for internal use, or made available to the public.  When operating as a web application, the user's browser must be able to connect to the [Climate Tokenization API](https://github.com/Chia-Network/Climate-Tokenization-Engine).  This means the API must be available on the public internet if the UI is public. 
 
-To host the UI on the web, use the [web-build.tar.gz file from the releases page](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/releases). One of the simplest solutions is to uncompress these files into a [public S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteAccessPermissionsReqd.html). These files could also be served by any webserver, such as Nginx or Apache.  
+To host the UI on the web, use the [climate-tokenization-engine-ui-web-build.tar.gz file from the releases page](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/releases). One of the simplest solutions is to uncompress these files into a [public S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteAccessPermissionsReqd.html). These files could also be served by any webserver, such as Nginx or Apache.  
 
 #### Sample Nginx Config
 
@@ -84,7 +84,6 @@ server {
 }
 
 ```
-
 
 ## Developer Guide
 
