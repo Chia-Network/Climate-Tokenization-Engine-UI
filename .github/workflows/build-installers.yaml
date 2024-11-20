@@ -46,7 +46,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-          
+
       - name: Test for secrets access
         id: check_secrets
         shell: bash
@@ -123,7 +123,7 @@ jobs:
           echo "HAS_SIGNING_SECRET=${HAS_SIGNING_SECRET}" >> "$GITHUB_OUTPUT"
         env:
           SIGNING_SECRET: "${{ secrets.SM_CLIENT_CERT_FILE_B64 }}"
-        
+
       # Windows Code Signing
       - name: Get installer name for signing
         shell: bash
@@ -202,7 +202,7 @@ jobs:
         run: |
           node --version
           npm install
-          npm run build
+          npm run web-build
 
       - name: Create .tar.gz of the web build
         run: tar -cvzf ${{ env.APP_NAME }}-web-build.tar.gz build
