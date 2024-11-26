@@ -1,7 +1,7 @@
 {
   "name": "climate-tokenization-engine-ui",
   "private": true,
-  "version": "1.2.2",
+  "version": "1.2.3",
   "type": "module",
   "main": "build/main.js",
   "engineStrict": true,
