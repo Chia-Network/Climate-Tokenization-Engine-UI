@@ -32,7 +32,7 @@
     "@zip.js/zip.js": "^2.7.53",
     "dayjs": "^1.11.13",
     "flowbite": "^2.5.2",
-    "flowbite-react": "0.7.8",
+    "flowbite-react": "^0.10.2",
     "formik": "^2.4.6",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
