@@ -1,3 +1,19 @@
+## [1.2.3](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.2...1.2.3) (2024-12-05)
+
+
+### Bug Fixes
+
+* CreateTokenForm.tsx testnet address regex ([2211f4c](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/2211f4ca549968474351bde48e1f40c443aef4fd))
+* lock in flowbite-react version ([f3f8338](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/f3f8338aacfc4ae387c489f730bee7da29a6d22f))
+
+
+### Features
+
+* remove revert tokens page when in core-registry mode ([acfdbb7](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/acfdbb7b831ea0f4ba1a684295b9708bd8e9b1c8))
+* removed necessary express server for renderer to load ui ([480411c](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/480411c3e068f10cdb93c74d3e85b7403e0b2ab1))
+
+
+
 ## [1.2.2](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.1...1.2.2) (2024-11-20)
 
 
