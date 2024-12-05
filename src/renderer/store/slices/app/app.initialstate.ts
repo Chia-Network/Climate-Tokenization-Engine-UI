@@ -12,7 +12,7 @@ const initialState: AppState = {
   locale: null,
   apiHost: 'http://localhost:31311',
   apiKey: null,
-  coreRegistryMode: false,
+  coreRegistryMode: true,
   configFileLoaded: false,
   isDarkTheme: false,
   isCoreRegistryUiApp: false,
