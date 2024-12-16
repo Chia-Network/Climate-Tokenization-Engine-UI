@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - develop
-      - dev-releases
+      - rc-release-ci
 
 concurrency:
   group: rc-release-check
