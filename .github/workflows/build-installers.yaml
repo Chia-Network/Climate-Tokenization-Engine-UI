@@ -24,8 +24,6 @@ jobs:
     name: Build Mac Installer
     runs-on: macos-latest
     steps:
-      - uses: Chia-Network/actions/clean-workspace@main
-
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -335,11 +333,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') && !contains( github.ref, '-rc')
         id: tag-name
         run: |
-          echo "TAGNAME=$(echo $GITHUB_REF | cut -d / -f 3)" >>$GITHUB_OUTPUT
-
-      - name: Gets JWT Token from GitHub
-        if: startsWith(github.ref, 'refs/tags/') && !contains( github.ref, '-rc')
-        uses: Chia-Network/actions/github/jwt@main
 
       - name: Trigger apt repo update
         if: startsWith(github.ref, 'refs/tags/') && !contains( github.ref, '-rc')
