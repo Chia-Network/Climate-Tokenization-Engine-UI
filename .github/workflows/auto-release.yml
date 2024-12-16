@@ -21,8 +21,8 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v4
         with:
-          # Need PACKAGE_ADMIN_PAT token so when the tag is created, the tag automation runs
-          token: ${{ secrets.PACKAGE_ADMIN_PAT }}
+          # Need REPO_COMMIT token so when the tag is created, the tag automation runs
+          token: ${{ secrets.REPO_COMMIT }}
           fetch-depth: 0
 
       - name: Setup commit signing for ChiaAutomation
