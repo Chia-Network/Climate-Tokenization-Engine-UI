@@ -5,3 +5,4 @@ export * from './NoHomeOrgModal';
 export * from './SubmitDetokenizationFileModal';
 export * from './DetokenizationSuccessModal';
 export * from './ConfirmUnitDetokenizationDataModal';
+export * from './AddNewAddressModal';
