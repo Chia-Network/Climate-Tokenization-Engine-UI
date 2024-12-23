@@ -6,3 +6,4 @@ export * from './SubmitDetokenizationFileModal';
 export * from './DetokenizationSuccessModal';
 export * from './ConfirmUnitDetokenizationDataModal';
 export * from './AddNewAddressModal';
+export * from './ConfirmDeleteAddressBookItemModal';

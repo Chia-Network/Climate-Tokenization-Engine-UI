@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react';
-import { Column, DataTable, PageCounter, Pagination } from '@/components';
-import { DebouncedFunc } from 'lodash';
+import { AddressBookActions, Column, DataTable, PageCounter, Pagination } from '@/components';
+import { DebouncedFunc, partial } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { AddressBook } from '@/schemas/AddressBook.schemas';
+import { useWildCardUrlHash } from '@/hooks';
 
 interface TableProps {
   data: any;
+  isEditable: boolean;
   isLoading: boolean;
   currentPage: number;
   onPageChange: DebouncedFunc<(page: any) => void>;
@@ -17,6 +20,7 @@ interface TableProps {
 
 const AddressBookTable: React.FC<TableProps> = ({
   data,
+  isEditable,
   isLoading,
   currentPage,
   onPageChange,
@@ -26,7 +30,21 @@ const AddressBookTable: React.FC<TableProps> = ({
   totalPages,
   totalCount,
 }) => {
+  const [, editAddressModalActive, setEditAddressModalActive] = useWildCardUrlHash('edit-address');
+
   const columns = useMemo(() => {
+    const editColumn: Column[] = [
+      {
+        title: '',
+        key: 'actionColumn',
+        ignoreChildEvents: true,
+        ignoreOrderChange: true,
+        render: (row: AddressBook) => (
+          <AddressBookActions uuid={row?.id || ''} openEditModal={partial(setEditAddressModalActive, true)} />
+        ),
+      },
+    ];
+
     const staticColumns: Column[] = [
       {
         title: <FormattedMessage id="name" />,
@@ -38,8 +56,8 @@ const AddressBookTable: React.FC<TableProps> = ({
       },
     ];
 
-    return staticColumns;
-  }, []);
+    return isEditable ? editColumn.concat(staticColumns) : staticColumns;
+  }, [isEditable]);
 
   return (
     <>
@@ -65,6 +83,7 @@ const AddressBookTable: React.FC<TableProps> = ({
           </>
         }
       />
+      {editAddressModalActive && <div>edit modal most probably</div>}
     </>
   );
 };

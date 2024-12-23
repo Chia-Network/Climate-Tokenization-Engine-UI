@@ -57,9 +57,21 @@ const addressBookApi = tokenizationEngineApi.injectEndpoints({
       }),
       invalidatesTags: [addressBookTag],
     }),
+
+    deleteAddressBookItem: builder.mutation<any, { uuid: string }>({
+      query: ({ uuid }) => {
+        return {
+          url: `/address-book`,
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: { id: uuid },
+        };
+      },
+      invalidatesTags: [addressBookTag],
+    }),
   }),
 });
 
 export const invalidateAddressBookApiTag = addressBookApi.util.invalidateTags;
 
-export const { useCreateAddressMutation, useGetAddressBookQuery } = addressBookApi;
+export const { useCreateAddressMutation, useGetAddressBookQuery, useDeleteAddressBookItemMutation } = addressBookApi;
