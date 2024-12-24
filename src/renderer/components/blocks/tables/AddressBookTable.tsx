@@ -1,9 +1,17 @@
-import React, { useMemo } from 'react';
-import { AddressBookActions, Column, DataTable, PageCounter, Pagination } from '@/components';
+import React, { useEffect, useMemo } from 'react';
+import {
+  AddNewAddressButton,
+  AddNewAddressModal,
+  AddressBookActions,
+  Column,
+  DataTable,
+  PageCounter,
+  Pagination,
+} from '@/components';
 import { DebouncedFunc, partial } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { AddressBook } from '@/schemas/AddressBook.schemas';
-import { useWildCardUrlHash } from '@/hooks';
+import { Address } from '@/schemas/AddressBook.schemas';
+import { useUrlHash, useWildCardUrlHash } from '@/hooks';
 
 interface TableProps {
   data: any;
@@ -31,6 +39,12 @@ const AddressBookTable: React.FC<TableProps> = ({
   totalCount,
 }) => {
   const [, editAddressModalActive, setEditAddressModalActive] = useWildCardUrlHash('edit-address');
+  const [createAddressModalActive, setCreateAddressModalActive] = useUrlHash('create-address');
+
+  const handleCloseUpsertModal = () => {
+    setEditAddressModalActive(false);
+    setCreateAddressModalActive(false);
+  };
 
   const columns = useMemo(() => {
     const editColumn: Column[] = [
@@ -39,8 +53,8 @@ const AddressBookTable: React.FC<TableProps> = ({
         key: 'actionColumn',
         ignoreChildEvents: true,
         ignoreOrderChange: true,
-        render: (row: AddressBook) => (
-          <AddressBookActions uuid={row?.id || ''} openEditModal={partial(setEditAddressModalActive, true)} />
+        render: (row: Address) => (
+          <AddressBookActions addressId={row?.id || ''} openEditModal={partial(setEditAddressModalActive, true)} />
         ),
       },
     ];
@@ -59,8 +73,11 @@ const AddressBookTable: React.FC<TableProps> = ({
     return isEditable ? editColumn.concat(staticColumns) : staticColumns;
   }, [isEditable]);
 
+  useEffect(() => console.log(createAddressModalActive), [createAddressModalActive]);
+
   return (
     <>
+      <AddNewAddressButton setActive={setCreateAddressModalActive} />
       <DataTable
         columns={columns}
         onChangeOrder={setOrder}
@@ -83,7 +100,7 @@ const AddressBookTable: React.FC<TableProps> = ({
           </>
         }
       />
-      {editAddressModalActive && <div>edit modal most probably</div>}
+      {(createAddressModalActive || editAddressModalActive) && <AddNewAddressModal onClose={handleCloseUpsertModal} />}
     </>
   );
 };

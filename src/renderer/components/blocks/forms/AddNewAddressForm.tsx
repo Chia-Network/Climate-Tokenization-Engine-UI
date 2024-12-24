@@ -5,15 +5,13 @@ import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import * as yup from 'yup';
 import { TestContext, ValidationError } from 'yup';
 import { noop } from 'lodash';
+import { Address } from '@/schemas/AddressBook.schemas';
 
 interface FormProps {
-  onSubmit: (values: AddNewAddressFormValues) => Promise<void>;
+  onSubmit: (values: Address) => Promise<void>;
   onClearError?: () => void;
-}
-
-export interface AddNewAddressFormValues {
-  name: string;
-  walletAddress: string;
+  data?: Address;
+  onClose: any;
 }
 
 const validateWalletAddress = (value: string, context: TestContext, intl: IntlShape): ValidationError | true => {
@@ -48,7 +46,7 @@ const validateWalletAddress = (value: string, context: TestContext, intl: IntlSh
   }
 };
 
-const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop }) => {
+const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop, data: address, onClose }) => {
   const intl = useIntl();
 
   const validationSchema = yup.object({
@@ -61,9 +59,8 @@ const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop 
   });
 
   const handleSubmit = useCallback(
-    async (values: AddNewAddressFormValues, { setSubmitting }: FormikHelpers<AddNewAddressFormValues>) => {
+    async (values: Address, { setSubmitting }: FormikHelpers<Address>) => {
       try {
-        console.log('values');
         await onSubmit(values);
       } finally {
         setSubmitting(false);
@@ -81,16 +78,38 @@ const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop 
   );
 
   return (
-    <Formik<AddNewAddressFormValues>
-      initialValues={{
-        name: '',
-        walletAddress: '',
-      }}
+    <Formik<Address>
+      initialValues={
+        address
+          ? address
+          : {
+              id: undefined,
+              name: '',
+              walletAddress: '',
+            }
+      }
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting }) => (
         <Form className="w-full">
+          {/* <div className="hidden mb-4">
+            <Field name="id">
+              {({ field }) => (
+                <FloatingLabel
+                  id="id"
+                  label={intl.formatMessage({ id: 'id' })}
+                  color={errors.id && touched.id ? 'error' : undefined}
+                  variant="outlined"
+                  required
+                  type="text"
+                  {...field}
+                  className="capitalize"
+                />
+              )}
+            </Field>
+            {touched.id && <ErrorMessage name="id" component="div" className="text-red-600" />}
+          </div> */}
           <div className="mb-4">
             <Field name="name">
               {({ field }) => (
@@ -129,10 +148,10 @@ const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop 
           <div className="flex gap-4">
             <FormButton isSubmitting={isSubmitting} formikErrors={errors}>
               <p className="capitalize">
-                <FormattedMessage id="add-address" />
+                <FormattedMessage id={address ? 'edit-address' : 'add-address'} />
               </p>
             </FormButton>
-            <Button color="light" type="button">
+            <Button color="light" type="button" onClick={onClose}>
               <p className="capitalize">
                 <FormattedMessage id="cancel" />
               </p>

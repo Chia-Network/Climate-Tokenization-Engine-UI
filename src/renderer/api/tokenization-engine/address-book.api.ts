@@ -25,6 +25,10 @@ interface GetAddressBookResponse {
   data: Address[];
 }
 
+interface GetAddressParams {
+  id: string;
+}
+
 const addressBookApi = tokenizationEngineApi.injectEndpoints({
   endpoints: (builder) => ({
     getAddressBook: builder.query<GetAddressBookResponse, GetAddressBookParams>({
@@ -48,6 +52,15 @@ const addressBookApi = tokenizationEngineApi.injectEndpoints({
       providesTags: [addressBookTag],
     }),
 
+    getAddress: builder.query<Address, GetAddressParams>({
+      query: ({ id }: GetAddressParams) => ({
+        url: `/address-book`,
+        params: { id },
+        method: 'GET',
+      }),
+      providesTags: (_response, _error, { id }) => [{ type: addressBookTag, id: id }],
+    }),
+
     createAddress: builder.mutation<any, CreateAddressParams>({
       query: (createAddressParams: CreateAddressParams) => ({
         url: '/address-book',
@@ -69,9 +82,30 @@ const addressBookApi = tokenizationEngineApi.injectEndpoints({
       },
       invalidatesTags: [addressBookTag],
     }),
+
+    editAddressBookItem: builder.mutation<any, { id: string; name?: string; walletAddress?: string }>({
+      query: (data) => {
+        const body: any = {};
+        if (data.id) body.id = data.id;
+        if (data.name) body.name = data.name;
+        if (data.walletAddress) body.walletAddress = data.walletAddress;
+        return {
+          url: `/address-book`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: [addressBookTag],
+    }),
   }),
 });
 
 export const invalidateAddressBookApiTag = addressBookApi.util.invalidateTags;
 
-export const { useCreateAddressMutation, useGetAddressBookQuery, useDeleteAddressBookItemMutation } = addressBookApi;
+export const {
+  useCreateAddressMutation,
+  useGetAddressQuery,
+  useGetAddressBookQuery,
+  useDeleteAddressBookItemMutation,
+  useEditAddressBookItemMutation,
+} = addressBookApi;

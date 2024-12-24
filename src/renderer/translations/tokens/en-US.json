@@ -112,5 +112,9 @@
   "name": "name",
   "delete": "delete",
   "edit": "edit",
-  "cancel": "cancel"
+  "cancel": "cancel",
+  "confirm-delete": "confirm delete",
+  "are-you-sure-you-want-to-delete-this-address": "are you sure you want to delete this address?",
+  "id": "id",
+  "edit-address": "edit address"
 }

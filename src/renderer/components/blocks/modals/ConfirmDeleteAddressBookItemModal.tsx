@@ -31,7 +31,7 @@ const ConfirmDeleteAddressBookItemModal: React.FC<ConfirmDeleteModalProps> = ({
       </Modal.Header>
       <Modal.Body>
         <p>
-          <FormattedMessage id="deleting-a-staged-item-is-a-permanent-action" />.
+          <FormattedMessage id="are-you-sure-you-want-to-delete-this-address" />.
         </p>
       </Modal.Body>
       <Modal.Footer>

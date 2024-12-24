@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { AddNewAddressButton, AddressBookTable, SkeletonTable } from '@/components';
+import { AddressBookTable, SkeletonTable } from '@/components';
 import { useGetAddressBookQuery } from '@/api';
 import { useColumnOrderHandler, useQueryParamState } from '@/hooks';
 import { FormattedMessage } from 'react-intl';
@@ -40,7 +40,7 @@ const AddressBookPage: React.FC = () => {
   return (
     <>
       <div className="h-full pt-2 pl-2 pr-2">
-        <AddNewAddressButton />
+        {/* <AddNewAddressButton /> */}
         <AddressBookTable
           isEditable={true}
           data={addressBookResponse.data || []}

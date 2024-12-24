@@ -5,13 +5,12 @@ import { Button, ConfirmDeleteAddressBookItemModal, Tooltip } from '@/components
 import { FormattedMessage } from 'react-intl';
 
 interface AddressBookActionProps {
-  uuid: string;
-  openEditModal: (warehouseId: string) => void;
-  openSplitModal?: (warehouseId: string) => void;
+  addressId: string;
+  openEditModal: (addressId: string) => void;
 }
 
 const AddressBookActions: React.FC<AddressBookActionProps> = ({
-  uuid,
+  addressId,
   openEditModal = noop,
 }: AddressBookActionProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -21,7 +20,7 @@ const AddressBookActions: React.FC<AddressBookActionProps> = ({
   };
 
   const handleClickEdit = () => {
-    openEditModal(uuid);
+    openEditModal(addressId);
   };
 
   return (
@@ -43,7 +42,9 @@ const AddressBookActions: React.FC<AddressBookActionProps> = ({
       >
         <HiDotsVertical size="25" />
       </Tooltip>
-      {showDeleteModal && <ConfirmDeleteAddressBookItemModal uuid={uuid} onClose={() => setShowDeleteModal(false)} />}
+      {showDeleteModal && (
+        <ConfirmDeleteAddressBookItemModal uuid={addressId} onClose={() => setShowDeleteModal(false)} />
+      )}
     </>
   );
 };

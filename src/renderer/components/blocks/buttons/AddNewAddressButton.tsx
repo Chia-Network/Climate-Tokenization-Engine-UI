@@ -1,19 +1,22 @@
 import React from 'react';
-import { AddNewAddressModal, Button } from '@/components';
+import { Button } from '@/components';
 import { FormattedMessage } from 'react-intl';
-import { useUrlHash } from '@/hooks';
+// import { useUrlHash } from '@/hooks';
 
-const AddNewAddressButton: React.FC = () => {
-  const [showAddNewAddressModal, setShowAddNewAddressModal] = useUrlHash('addAddress');
+interface AddNewAddressButtonProps {
+  setActive: (active: boolean) => void;
+}
+
+const AddNewAddressButton: React.FC<AddNewAddressButtonProps> = ({ setActive }) => {
+  // const [showAddNewAddressModal, setShowAddNewAddressModal] = useUrlHash('add-address');
 
   return (
     <>
-      <Button onClick={() => setShowAddNewAddressModal(true)}>
+      <Button onClick={() => setActive(true)}>
         <p className="capitalize">
-          <FormattedMessage id="add-new" />
+          <FormattedMessage id="add-new-address" />
         </p>
       </Button>
-      {showAddNewAddressModal && <AddNewAddressModal onClose={() => setShowAddNewAddressModal(false)} />}
     </>
   );
 };
