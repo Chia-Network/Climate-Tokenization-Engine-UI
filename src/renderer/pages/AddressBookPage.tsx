@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { AddressBookTable, SkeletonTable } from '@/components';
 import { useGetAddressBookQuery } from '@/api';
 import { useColumnOrderHandler, useQueryParamState } from '@/hooks';
@@ -14,23 +14,19 @@ const AddressBookPage: React.FC = () => {
     data: addressBookResponse,
     isFetching: addressBookLoading,
     error: addressBookError,
-  } = useGetAddressBookQuery({ page: Number(currentPage) });
-
-  useEffect(() => {
-    addressBookResponse;
-  }, [addressBookResponse]);
+  } = useGetAddressBookQuery({ page: Number(currentPage), order });
 
   const handlePageChange = useCallback(
     debounce((page) => setCurrentPage(page), 800),
     [setCurrentPage],
   );
 
-  if (addressBookError) {
-    return <FormattedMessage id={'unable-to-load-contents'} />;
-  }
-
   if (addressBookLoading) {
     return <SkeletonTable />;
+  }
+
+  if (addressBookError) {
+    return <FormattedMessage id={'unable-to-load-contents'} />;
   }
 
   if (!addressBookResponse) {

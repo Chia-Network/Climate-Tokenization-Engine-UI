@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   AddAddressButton,
   AddressBookActions,
@@ -61,7 +61,7 @@ const AddressBookTable: React.FC<TableProps> = ({
 
     const staticColumns: Column[] = [
       {
-        title: <FormattedMessage id="developer-name" />,
+        title: <FormattedMessage id="project-developer" />,
         key: 'name',
       },
       {
@@ -73,18 +73,16 @@ const AddressBookTable: React.FC<TableProps> = ({
     return isEditable ? editColumn.concat(staticColumns) : staticColumns;
   }, [isEditable]);
 
-  useEffect(() => console.log(createAddressModalActive), [createAddressModalActive]);
-
   return (
     <>
       <AddAddressButton setActive={setCreateAddressModalActive} />
       <DataTable
         columns={columns}
+        data={data}
         onChangeOrder={setOrder}
         onRowClick={onRowClick}
         order={order}
-        data={data}
-        primaryKey="addressBookId"
+        primaryKey="id"
         isLoading={isLoading}
         tableHeightOffsetPx={320}
         footer={

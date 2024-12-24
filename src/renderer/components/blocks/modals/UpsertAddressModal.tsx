@@ -26,7 +26,6 @@ const UpsertAddressModal: React.FC<UpsertAddressModalProps> = ({ onClose }) => {
   );
 
   const handleSubmitAddNewAddress = async (data: Address): Promise<void> => {
-    console.log('Data Received', data);
     if (data?.name && data?.walletAddress) {
       if (addressId && !data?.id) {
         setShowAddressCreationFailure(true);
@@ -58,7 +57,9 @@ const UpsertAddressModal: React.FC<UpsertAddressModalProps> = ({ onClose }) => {
 
     return (
       <Modal.Header>
-        <FormattedMessage id={title} />
+        <p className="capitalize">
+          <FormattedMessage id={title} />
+        </p>
       </Modal.Header>
     );
   };

@@ -99,7 +99,7 @@ const UpsertAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop,
               {({ field }) => (
                 <FloatingLabel
                   id="name"
-                  label={intl.formatMessage({ id: 'developer-name' })}
+                  label={intl.formatMessage({ id: 'project-developer' })}
                   color={errors.name && touched.name ? 'error' : undefined}
                   variant="outlined"
                   required

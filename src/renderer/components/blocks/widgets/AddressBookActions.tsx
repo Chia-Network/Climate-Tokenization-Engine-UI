@@ -32,10 +32,14 @@ const AddressBookActions: React.FC<AddressBookActionProps> = ({
         content={
           <Button.Group>
             <Button onClick={handleClickEdit} outline>
-              <FormattedMessage id="edit" />
+              <p className="sentence-case">
+                <FormattedMessage id="edit" />
+              </p>
             </Button>
             <Button onClick={handleClickDelete} outline>
-              <FormattedMessage id="delete" />
+              <p className="sentence-case">
+                <FormattedMessage id="delete" />
+              </p>
             </Button>
           </Button.Group>
         }
