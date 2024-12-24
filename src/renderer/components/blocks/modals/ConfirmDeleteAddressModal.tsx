@@ -4,15 +4,18 @@ import { FormattedMessage } from 'react-intl';
 import { useDeleteAddressMutation } from '@/api';
 
 interface ConfirmDeleteModalProps {
-  uuid: string;
+  addressId: string;
   onClose: () => void;
 }
 
-const ConfirmDeleteAddressModal: React.FC<ConfirmDeleteModalProps> = ({ uuid, onClose }: ConfirmDeleteModalProps) => {
-  const [triggerDeleteAddressBookItem, { isLoading: addressBookItemDeletionLoading }] = useDeleteAddressMutation();
+const ConfirmDeleteAddressModal: React.FC<ConfirmDeleteModalProps> = ({
+  addressId,
+  onClose,
+}: ConfirmDeleteModalProps) => {
+  const [triggerDeleteAddress, { isLoading: deleteAddressLoading }] = useDeleteAddressMutation();
 
   const handleConfirm = async () => {
-    await triggerDeleteAddressBookItem({ uuid });
+    await triggerDeleteAddress({ uuid: addressId });
     onClose();
   };
 
@@ -23,23 +26,25 @@ const ConfirmDeleteAddressModal: React.FC<ConfirmDeleteModalProps> = ({ uuid, on
   return (
     <Modal show={true} onClose={onClose}>
       <Modal.Header>
-        <FormattedMessage id="confirm-delete" />
+        <p className="capitalize">
+          <FormattedMessage id="confirm-delete" />
+        </p>
       </Modal.Header>
       <Modal.Body>
-        <p>
-          <FormattedMessage id="are-you-sure-you-want-to-delete-this-address" />.
+        <p className="sentence-case">
+          <FormattedMessage id="are-you-sure-you-want-to-delete-this-address" />
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button color="gray" onClick={handleClickClose} disabled={addressBookItemDeletionLoading}>
-          <FormattedMessage id="cancel" />
+        <Button color="gray" onClick={handleClickClose} disabled={deleteAddressLoading}>
+          <p className="sentence-case">
+            <FormattedMessage id="cancel" />
+          </p>
         </Button>
-        <Button
-          onClick={handleConfirm}
-          isProcessing={addressBookItemDeletionLoading}
-          disabled={addressBookItemDeletionLoading}
-        >
-          <FormattedMessage id="delete" />
+        <Button onClick={handleConfirm} isProcessing={deleteAddressLoading} disabled={deleteAddressLoading}>
+          <p className="sentence-case">
+            <FormattedMessage id="delete" />
+          </p>
         </Button>
       </Modal.Footer>
     </Modal>

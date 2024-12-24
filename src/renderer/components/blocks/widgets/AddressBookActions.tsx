@@ -42,7 +42,7 @@ const AddressBookActions: React.FC<AddressBookActionProps> = ({
       >
         <HiDotsVertical size="25" />
       </Tooltip>
-      {showDeleteModal && <ConfirmDeleteAddressModal uuid={addressId} onClose={() => setShowDeleteModal(false)} />}
+      {showDeleteModal && <ConfirmDeleteAddressModal addressId={addressId} onClose={() => setShowDeleteModal(false)} />}
     </>
   );
 };
