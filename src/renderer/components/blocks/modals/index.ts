@@ -5,5 +5,5 @@ export * from './NoHomeOrgModal';
 export * from './SubmitDetokenizationFileModal';
 export * from './DetokenizationSuccessModal';
 export * from './ConfirmUnitDetokenizationDataModal';
-export * from './AddNewAddressModal';
+export * from './UpsertAddressModal';
 export * from './ConfirmDeleteAddressModal';

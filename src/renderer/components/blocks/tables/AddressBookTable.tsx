@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
 import {
-  AddNewAddressButton,
-  AddNewAddressModal,
+  AddAddressButton,
   AddressBookActions,
   Column,
   DataTable,
   PageCounter,
   Pagination,
+  UpsertAddressModal,
 } from '@/components';
 import { DebouncedFunc, partial } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -61,7 +61,7 @@ const AddressBookTable: React.FC<TableProps> = ({
 
     const staticColumns: Column[] = [
       {
-        title: <FormattedMessage id="name" />,
+        title: <FormattedMessage id="developer-name" />,
         key: 'name',
       },
       {
@@ -77,7 +77,7 @@ const AddressBookTable: React.FC<TableProps> = ({
 
   return (
     <>
-      <AddNewAddressButton setActive={setCreateAddressModalActive} />
+      <AddAddressButton setActive={setCreateAddressModalActive} />
       <DataTable
         columns={columns}
         onChangeOrder={setOrder}
@@ -100,7 +100,7 @@ const AddressBookTable: React.FC<TableProps> = ({
           </>
         }
       />
-      {(createAddressModalActive || editAddressModalActive) && <AddNewAddressModal onClose={handleCloseUpsertModal} />}
+      {(createAddressModalActive || editAddressModalActive) && <UpsertAddressModal onClose={handleCloseUpsertModal} />}
     </>
   );
 };

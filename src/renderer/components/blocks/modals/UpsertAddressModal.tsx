@@ -1,5 +1,5 @@
 import { useCreateAddressMutation, useEditAddressMutation, useGetAddressQuery } from '@/api';
-import { AddNewAddressForm, ComponentCenteredSpinner, Modal } from '@/components';
+import { ComponentCenteredSpinner, Modal, UpsertAddressForm } from '@/components';
 import { useUrlHash, useWildCardUrlHash } from '@/hooks';
 import { Address } from '@/schemas/AddressBook.schemas';
 import { Alert } from 'flowbite-react';
@@ -7,11 +7,11 @@ import React, { useMemo, useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { FormattedMessage } from 'react-intl';
 
-interface AddNewAddressModalProps {
+interface UpsertAddressModalProps {
   onClose: () => void;
 }
 
-const AddNewAddressModal: React.FC<AddNewAddressModalProps> = ({ onClose }) => {
+const UpsertAddressModal: React.FC<UpsertAddressModalProps> = ({ onClose }) => {
   const [showAddressCreationFailure, setShowAddressCreationFailure] = useState<boolean>(false);
   const [triggerAddressCreation, { error: addressCreationError }] = useCreateAddressMutation();
   const [triggerAddressUpdate] = useEditAddressMutation();
@@ -78,21 +78,21 @@ const AddNewAddressModal: React.FC<AddNewAddressModalProps> = ({ onClose }) => {
     <Modal onClose={onClose} show={true} size={'2xl'}>
       <Modal.Header>
         <p className="capitalize">
-          <FormattedMessage id={addressId ? 'edit-address' : 'add-new-address'} />
+          <FormattedMessage id={addressId ? 'edit-address' : 'add-address'} />
         </p>
       </Modal.Header>
       <Modal.Body>
         {showAddressCreationFailure && (
           <Alert color="failure" icon={HiInformationCircle} onDismiss={() => setShowAddressCreationFailure(false)}>
             <p className="sentence-case">
-              <FormattedMessage id="an-error-occurred-while-trying-to-tokenize" />
+              <FormattedMessage id="an-error-occurred-while-trying-to-update-address" />
             </p>
           </Alert>
         )}
-        <AddNewAddressForm onSubmit={handleSubmitAddNewAddress} data={addressData} onClose={onClose} />
+        <UpsertAddressForm onSubmit={handleSubmitAddNewAddress} data={addressData} onClose={onClose} />
       </Modal.Body>
     </Modal>
   );
 };
 
-export { AddNewAddressModal };
+export { UpsertAddressModal };

@@ -46,10 +46,11 @@ const validateWalletAddress = (value: string, context: TestContext, intl: IntlSh
   }
 };
 
-const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop, data: address, onClose }) => {
+const UpsertAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop, data: address, onClose }) => {
   const intl = useIntl();
 
   const validationSchema = yup.object({
+    name: yup.string().required('The name must be at least 3 characters').min(3),
     walletAddress: yup
       .string()
       .required(intl.formatMessage({ id: 'wallet-address-is-required' }))
@@ -93,35 +94,17 @@ const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop,
     >
       {({ errors, touched, isSubmitting }) => (
         <Form className="w-full">
-          {/* <div className="hidden mb-4">
-            <Field name="id">
-              {({ field }) => (
-                <FloatingLabel
-                  id="id"
-                  label={intl.formatMessage({ id: 'id' })}
-                  color={errors.id && touched.id ? 'error' : undefined}
-                  variant="outlined"
-                  required
-                  type="text"
-                  {...field}
-                  className="capitalize"
-                />
-              )}
-            </Field>
-            {touched.id && <ErrorMessage name="id" component="div" className="text-red-600" />}
-          </div> */}
           <div className="mb-4">
             <Field name="name">
               {({ field }) => (
                 <FloatingLabel
                   id="name"
-                  label={intl.formatMessage({ id: 'name' })}
+                  label={intl.formatMessage({ id: 'developer-name' })}
                   color={errors.name && touched.name ? 'error' : undefined}
                   variant="outlined"
                   required
                   type="text"
                   {...field}
-                  className="capitalize"
                 />
               )}
             </Field>
@@ -163,4 +146,4 @@ const AddNewAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop,
   );
 };
 
-export { AddNewAddressForm };
+export { UpsertAddressForm };
