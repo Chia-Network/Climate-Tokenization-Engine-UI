@@ -8,10 +8,7 @@ interface ConfirmDeleteModalProps {
   onClose: () => void;
 }
 
-const ConfirmDeleteAddressBookItemModal: React.FC<ConfirmDeleteModalProps> = ({
-  uuid,
-  onClose,
-}: ConfirmDeleteModalProps) => {
+const ConfirmDeleteAddressModal: React.FC<ConfirmDeleteModalProps> = ({ uuid, onClose }: ConfirmDeleteModalProps) => {
   const [triggerDeleteAddressBookItem, { isLoading: addressBookItemDeletionLoading }] = useDeleteAddressMutation();
 
   const handleConfirm = async () => {
@@ -49,4 +46,4 @@ const ConfirmDeleteAddressBookItemModal: React.FC<ConfirmDeleteModalProps> = ({
   );
 };
 
-export { ConfirmDeleteAddressBookItemModal };
+export { ConfirmDeleteAddressModal };
