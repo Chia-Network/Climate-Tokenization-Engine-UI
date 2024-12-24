@@ -1,4 +1,4 @@
-import { useCreateAddressMutation, useEditAddressBookItemMutation, useGetAddressQuery } from '@/api';
+import { useCreateAddressMutation, useEditAddressMutation, useGetAddressQuery } from '@/api';
 import { AddNewAddressForm, ComponentCenteredSpinner, Modal } from '@/components';
 import { useUrlHash, useWildCardUrlHash } from '@/hooks';
 import { Address } from '@/schemas/AddressBook.schemas';
@@ -14,7 +14,7 @@ interface AddNewAddressModalProps {
 const AddNewAddressModal: React.FC<AddNewAddressModalProps> = ({ onClose }) => {
   const [showAddressCreationFailure, setShowAddressCreationFailure] = useState<boolean>(false);
   const [triggerAddressCreation, { error: addressCreationError }] = useCreateAddressMutation();
-  const [triggerAddressUpdate] = useEditAddressBookItemMutation();
+  const [triggerAddressUpdate] = useEditAddressMutation();
 
   const [createAddressModalActive] = useUrlHash('create-address');
   const [addressUpsertFragment, editAddressModalActive] = useWildCardUrlHash('edit-address');

@@ -76,7 +76,7 @@ const addressBookApi = tokenizationEngineApi.injectEndpoints({
       invalidatesTags: [addressBookTag],
     }),
 
-    editAddressBookItem: builder.mutation<any, { id: string; name?: string; walletAddress?: string }>({
+    editAddress: builder.mutation<any, { id: string; name?: string; walletAddress?: string }>({
       query: (data) => {
         const body: any = {};
         if (data.id) body.id = data.id;
@@ -100,5 +100,5 @@ export const {
   useGetAddressQuery,
   useGetAddressBookQuery,
   useDeleteAddressMutation,
-  useEditAddressBookItemMutation,
+  useEditAddressMutation,
 } = addressBookApi;
