@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal } from '@/components';
 import { FormattedMessage } from 'react-intl';
-import { useDeleteAddressBookItemMutation } from '@/api';
+import { useDeleteAddressMutation } from '@/api';
 
 interface ConfirmDeleteModalProps {
   uuid: string;
@@ -12,8 +12,7 @@ const ConfirmDeleteAddressBookItemModal: React.FC<ConfirmDeleteModalProps> = ({
   uuid,
   onClose,
 }: ConfirmDeleteModalProps) => {
-  const [triggerDeleteAddressBookItem, { isLoading: addressBookItemDeletionLoading }] =
-    useDeleteAddressBookItemMutation();
+  const [triggerDeleteAddressBookItem, { isLoading: addressBookItemDeletionLoading }] = useDeleteAddressMutation();
 
   const handleConfirm = async () => {
     await triggerDeleteAddressBookItem({ uuid });

@@ -1,17 +1,5 @@
+import { Address } from '@/schemas/Address.schema';
 import { addressBookTag, RECORDS_PER_PAGE, tokenizationEngineApi } from './index';
-
-interface Address {
-  id: string;
-  name: string;
-  walletAddress: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface CreateAddressParams {
-  name: string;
-  walletAddress?: string;
-}
 
 interface GetAddressBookParams {
   page?: number;
@@ -27,6 +15,11 @@ interface GetAddressBookResponse {
 
 interface GetAddressParams {
   id: string;
+}
+
+interface CreateAddressParams {
+  name: string;
+  walletAddress?: string;
 }
 
 const addressBookApi = tokenizationEngineApi.injectEndpoints({
@@ -71,7 +64,7 @@ const addressBookApi = tokenizationEngineApi.injectEndpoints({
       invalidatesTags: [addressBookTag],
     }),
 
-    deleteAddressBookItem: builder.mutation<any, { uuid: string }>({
+    deleteAddress: builder.mutation<any, { uuid: string }>({
       query: ({ uuid }) => {
         return {
           url: `/address-book`,
@@ -106,6 +99,6 @@ export const {
   useCreateAddressMutation,
   useGetAddressQuery,
   useGetAddressBookQuery,
-  useDeleteAddressBookItemMutation,
+  useDeleteAddressMutation,
   useEditAddressBookItemMutation,
 } = addressBookApi;
