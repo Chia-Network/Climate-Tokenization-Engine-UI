@@ -4,6 +4,7 @@ import { useGetAddressBookQuery } from '@/api';
 import { useColumnOrderHandler, useQueryParamState } from '@/hooks';
 import { FormattedMessage } from 'react-intl';
 import { debounce } from 'lodash';
+import { RECORDS_PER_PAGE } from '../api/tokenization-engine/index';
 
 const AddressBookPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useQueryParamState('page', '1');
@@ -14,7 +15,7 @@ const AddressBookPage: React.FC = () => {
     data: addressBookResponse,
     isFetching: addressBookLoading,
     error: addressBookError,
-  } = useGetAddressBookQuery({ page: Number(currentPage), order });
+  } = useGetAddressBookQuery({ page: Number(currentPage), order, limit: RECORDS_PER_PAGE });
 
   const handlePageChange = useCallback(
     debounce((page) => setCurrentPage(page), 800),

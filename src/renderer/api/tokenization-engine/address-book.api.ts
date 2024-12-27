@@ -5,6 +5,7 @@ interface GetAddressBookParams {
   page?: number;
   search?: string | null;
   order?: string | null;
+  limit?: number;
 }
 
 interface GetAddressBookResponse {
@@ -25,8 +26,8 @@ interface CreateAddressParams {
 const addressBookApi = tokenizationEngineApi.injectEndpoints({
   endpoints: (builder) => ({
     getAddressBook: builder.query<GetAddressBookResponse, GetAddressBookParams>({
-      query: ({ page, search, order }: GetAddressBookParams) => {
-        const params: GetAddressBookParams & { limit: number } = { page, limit: RECORDS_PER_PAGE };
+      query: ({ page, search, order, limit }: GetAddressBookParams) => {
+        const params: GetAddressBookParams = { page, limit: limit || RECORDS_PER_PAGE };
 
         if (search) {
           params.search = search.replace(/[^a-zA-Z0-9 _.-]+/, '');

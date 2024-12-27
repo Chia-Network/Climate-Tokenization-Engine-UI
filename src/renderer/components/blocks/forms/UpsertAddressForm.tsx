@@ -28,7 +28,7 @@ const validateWalletAddress = (value: string, context: TestContext, intl: IntlSh
       });
     }
   } else if (value.startsWith('txch')) {
-    if (/^txch[a-zA-Z0-9]{60}$/.test(value)) {
+    if (/^txch[a-zA-Z0-9]{59}$/.test(value)) {
       return true;
     } else {
       return context.createError({

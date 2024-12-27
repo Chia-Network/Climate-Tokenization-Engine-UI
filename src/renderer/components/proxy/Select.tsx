@@ -99,19 +99,19 @@ const Select: React.FC<SelectProps> = ({
           </button>
         </div>
         {dropdownVisible && (
-          <ul className="absolute top-full left-0 w-full z-50 bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-auto">
+          <ul className="absolute left-0 z-50 w-full overflow-auto bg-white border border-gray-300 rounded shadow-lg top-full max-h-60">
             {filteredOptions.map((option, index) => (
               <li
                 key={index}
                 onClick={() => {
-                  setInputValue(typeof option === 'object' ? option.value : option);
+                  setInputValue(typeof option === 'object' ? option.label : option);
                   setFilteredOptions(options);
                   setDropdownVisible(false);
                   if (onChange) {
                     onChange(typeof option === 'object' ? option.value : option);
                   }
                 }}
-                className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
               >
                 {typeof option === 'object' ? option.label : option}
               </li>
