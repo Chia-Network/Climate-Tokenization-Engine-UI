@@ -5,7 +5,7 @@ import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import * as yup from 'yup';
 import { TestContext, ValidationError } from 'yup';
 import { noop } from 'lodash';
-import { Address } from '@/schemas/AddressBook.schemas';
+import { Address } from '@/schemas/Address.schema';
 
 interface FormProps {
   onSubmit: (values: Address) => Promise<void>;

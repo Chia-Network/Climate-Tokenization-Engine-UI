@@ -1,7 +1,7 @@
 import { useCreateAddressMutation, useEditAddressMutation, useGetAddressQuery } from '@/api';
 import { ComponentCenteredSpinner, Modal, UpsertAddressForm } from '@/components';
 import { useUrlHash, useWildCardUrlHash } from '@/hooks';
-import { Address } from '@/schemas/AddressBook.schemas';
+import { Address } from '@/schemas/Address.schema';
 import { Alert } from 'flowbite-react';
 import React, { useMemo, useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
@@ -33,7 +33,7 @@ const UpsertAddressModal: React.FC<UpsertAddressModalProps> = ({ onClose }) => {
       }
       const result = addressId
         ? await triggerAddressUpdate({ ...data, id: data.id! })
-        : await triggerAddressCreation(data);
+        : await triggerAddressCreation({ ...data, name: data.name! });
       if (result?.error || addressCreationError) {
         setShowAddressCreationFailure(true);
       } else {

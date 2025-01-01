@@ -10,7 +10,7 @@ import {
 } from '@/components';
 import { DebouncedFunc, partial } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Address } from '@/schemas/AddressBook.schemas';
+import { Address } from '@/schemas/Address.schema';
 import { useUrlHash, useWildCardUrlHash } from '@/hooks';
 
 interface TableProps {
