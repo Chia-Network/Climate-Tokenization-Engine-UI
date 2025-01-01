@@ -1,4 +1,4 @@
 export * from './ConnectForm';
 export * from './CreateTokenForm';
 export * from './DetokenizeUnitForm';
-export * from './UpsertAddressForm';
+export * from './UpsertWalletAddressForm';

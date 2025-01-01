@@ -46,7 +46,7 @@ const validateWalletAddress = (value: string, context: TestContext, intl: IntlSh
   }
 };
 
-const UpsertAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop, data: address, onClose }) => {
+const UpsertWalletAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop, data: address, onClose }) => {
   const intl = useIntl();
 
   const validationSchema = yup.object({
@@ -146,4 +146,4 @@ const UpsertAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop,
   );
 };
 
-export { UpsertAddressForm };
+export { UpsertWalletAddressForm };

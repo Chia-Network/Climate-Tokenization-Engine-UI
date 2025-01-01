@@ -1,5 +1,5 @@
 import { useCreateAddressMutation, useEditAddressMutation, useGetAddressQuery } from '@/api';
-import { ComponentCenteredSpinner, Modal, UpsertAddressForm } from '@/components';
+import { ComponentCenteredSpinner, Modal, UpsertWalletAddressForm } from '@/components';
 import { useUrlHash, useWildCardUrlHash } from '@/hooks';
 import { Address } from '@/schemas/Address.schema';
 import { Alert } from 'flowbite-react';
@@ -90,7 +90,7 @@ const UpsertWalletAddressModal: React.FC<UpsertWalletAddressModalProps> = ({ onC
             </p>
           </Alert>
         )}
-        <UpsertAddressForm onSubmit={handleWalletAddress} data={addressData} onClose={onClose} />
+        <UpsertWalletAddressForm onSubmit={handleWalletAddress} data={addressData} onClose={onClose} />
       </Modal.Body>
     </Modal>
   );
