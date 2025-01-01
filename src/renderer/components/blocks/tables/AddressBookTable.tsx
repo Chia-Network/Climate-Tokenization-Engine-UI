@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import {
-  AddAddressButton,
+  AddWalletAddressButton,
   AddressBookActions,
   Column,
   DataTable,
@@ -75,7 +75,7 @@ const AddressBookTable: React.FC<TableProps> = ({
 
   return (
     <>
-      <AddAddressButton setActive={setCreateAddressModalActive} />
+      <AddWalletAddressButton setActive={setCreateAddressModalActive} />
       <DataTable
         columns={columns}
         data={data}

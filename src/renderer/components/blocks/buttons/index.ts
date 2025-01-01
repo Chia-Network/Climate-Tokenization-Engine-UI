@@ -1,4 +1,4 @@
 export * from './ConnectButton';
 export * from './FormButton';
 export * from './DetokenizeUnitButton';
-export * from './AddAddressButton';
+export * from './AddWalletAddressButton';

@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from '@/components';
 import { FormattedMessage } from 'react-intl';
 
-interface AddAddressButtonProps {
+interface AddWalletAddressButtonProps {
   setActive: (active: boolean) => void;
 }
 
-const AddAddressButton: React.FC<AddAddressButtonProps> = ({ setActive }) => {
+const AddWalletAddressButton: React.FC<AddWalletAddressButtonProps> = ({ setActive }) => {
   return (
     <>
       <Button onClick={() => setActive(true)}>
@@ -18,4 +18,4 @@ const AddAddressButton: React.FC<AddAddressButtonProps> = ({ setActive }) => {
   );
 };
 
-export { AddAddressButton };
+export { AddWalletAddressButton };
