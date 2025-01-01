@@ -6,7 +6,7 @@ import {
   DataTable,
   PageCounter,
   Pagination,
-  UpsertAddressModal,
+  UpsertWalletAddressModal,
 } from '@/components';
 import { DebouncedFunc, partial } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -98,7 +98,9 @@ const AddressBookTable: React.FC<TableProps> = ({
           </>
         }
       />
-      {(createAddressModalActive || editAddressModalActive) && <UpsertAddressModal onClose={handleCloseUpsertModal} />}
+      {(createAddressModalActive || editAddressModalActive) && (
+        <UpsertWalletAddressModal onClose={handleCloseUpsertModal} />
+      )}
     </>
   );
 };

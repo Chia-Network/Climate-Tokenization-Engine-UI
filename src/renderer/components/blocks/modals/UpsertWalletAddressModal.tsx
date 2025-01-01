@@ -7,11 +7,11 @@ import React, { useMemo, useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { FormattedMessage } from 'react-intl';
 
-interface UpsertAddressModalProps {
+interface UpsertWalletAddressModalProps {
   onClose: () => void;
 }
 
-const UpsertAddressModal: React.FC<UpsertAddressModalProps> = ({ onClose }) => {
+const UpsertWalletAddressModal: React.FC<UpsertWalletAddressModalProps> = ({ onClose }) => {
   const [showAddressCreationFailure, setShowAddressCreationFailure] = useState<boolean>(false);
   const [triggerAddressCreation, { error: addressCreationError }] = useCreateAddressMutation();
   const [triggerAddressUpdate] = useEditAddressMutation();
@@ -25,7 +25,7 @@ const UpsertAddressModal: React.FC<UpsertAddressModalProps> = ({ onClose }) => {
     { skip: !addressId },
   );
 
-  const handleSubmitAddNewAddress = async (data: Address): Promise<void> => {
+  const handleWalletAddress = async (data: Address): Promise<void> => {
     if (data?.name && data?.walletAddress) {
       if (addressId && !data?.id) {
         setShowAddressCreationFailure(true);
@@ -90,10 +90,10 @@ const UpsertAddressModal: React.FC<UpsertAddressModalProps> = ({ onClose }) => {
             </p>
           </Alert>
         )}
-        <UpsertAddressForm onSubmit={handleSubmitAddNewAddress} data={addressData} onClose={onClose} />
+        <UpsertAddressForm onSubmit={handleWalletAddress} data={addressData} onClose={onClose} />
       </Modal.Body>
     </Modal>
   );
 };
 
-export { UpsertAddressModal };
+export { UpsertWalletAddressModal };
