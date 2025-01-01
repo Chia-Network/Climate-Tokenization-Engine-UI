@@ -1,7 +1,7 @@
 import { noop } from 'lodash';
 import React, { useState } from 'react';
 import { HiDotsVertical } from 'react-icons/hi';
-import { Button, ConfirmDeleteAddressModal, Tooltip } from '@/components';
+import { Button, ConfirmDeleteWalletAddressModal, Tooltip } from '@/components';
 import { FormattedMessage } from 'react-intl';
 
 interface AddressBookActionProps {
@@ -46,7 +46,9 @@ const AddressBookActions: React.FC<AddressBookActionProps> = ({
       >
         <HiDotsVertical size="25" />
       </Tooltip>
-      {showDeleteModal && <ConfirmDeleteAddressModal addressId={addressId} onClose={() => setShowDeleteModal(false)} />}
+      {showDeleteModal && (
+        <ConfirmDeleteWalletAddressModal addressId={addressId} onClose={() => setShowDeleteModal(false)} />
+      )}
     </>
   );
 };

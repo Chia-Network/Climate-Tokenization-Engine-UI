@@ -6,4 +6,4 @@ export * from './SubmitDetokenizationFileModal';
 export * from './DetokenizationSuccessModal';
 export * from './ConfirmUnitDetokenizationDataModal';
 export * from './UpsertWalletAddressModal';
-export * from './ConfirmDeleteAddressModal';
+export * from './ConfirmDeleteWalletAddressModal';

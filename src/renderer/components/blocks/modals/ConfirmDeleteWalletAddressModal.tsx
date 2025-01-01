@@ -3,15 +3,15 @@ import { Button, Modal } from '@/components';
 import { FormattedMessage } from 'react-intl';
 import { useDeleteAddressMutation } from '@/api';
 
-interface ConfirmDeleteModalProps {
+interface ConfirmDeleteWalletAddressModalProps {
   addressId: string;
   onClose: () => void;
 }
 
-const ConfirmDeleteAddressModal: React.FC<ConfirmDeleteModalProps> = ({
+const ConfirmDeleteWalletAddressModal: React.FC<ConfirmDeleteWalletAddressModalProps> = ({
   addressId,
   onClose,
-}: ConfirmDeleteModalProps) => {
+}: ConfirmDeleteWalletAddressModalProps) => {
   const [triggerDeleteAddress, { isLoading: deleteAddressLoading }] = useDeleteAddressMutation();
 
   const handleConfirm = async () => {
@@ -51,4 +51,4 @@ const ConfirmDeleteAddressModal: React.FC<ConfirmDeleteModalProps> = ({
   );
 };
 
-export { ConfirmDeleteAddressModal };
+export { ConfirmDeleteWalletAddressModal };
