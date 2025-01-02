@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { ComponentCenteredSpinner, CreateTokenForm, Modal, Table } from '@/components';
+import React, { useRef, useState } from 'react';
+import { Button, ComponentCenteredSpinner, CreateTokenForm, CreateTokenFormRef, Modal, Table } from '@/components';
 import { FormattedMessage } from 'react-intl';
-import { useGetProjectQuery, useGetUnitQuery, useTokenizeUnitMutation } from '@/api';
+import { useGetAddressBookQuery, useGetProjectQuery, useGetUnitQuery, useTokenizeUnitMutation } from '@/api';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useWildCardUrlHash } from '@/hooks';
+import { isEmpty } from 'lodash';
 
 interface UpsertModalProps {
   onTokenizationSuccess: () => void;
@@ -27,6 +28,8 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
     { skip: showTokenizationFailure },
   );
   const [triggerTokenizeUnit, { error: tokenizationError }] = useTokenizeUnitMutation();
+  const createTokenFormRef = useRef<CreateTokenFormRef>(null);
+  const { data: addressBookData } = useGetAddressBookQuery({ page: 1, limit: 1000 });
 
   const requiredFieldsPresent =
     unit &&
@@ -63,6 +66,24 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
     } else {
       setShowTokenizationFailure(true);
     }
+  };
+
+  const handleSubmit = () => {
+    createTokenFormRef.current
+      ?.submitForm()
+      .then(async ([errors, values]) => {
+        if (!isEmpty(errors)) {
+          console.error('Form submission error:', errors);
+          return;
+        }
+
+        if (values) {
+          onSubmitTokenization(values.walletAddress);
+        }
+      })
+      .catch((error) => {
+        console.error('Form submission error:', error);
+      });
   };
 
   const modalBody = () => {
@@ -170,7 +191,10 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
             </Table>
           </div>
           <div>
-            <CreateTokenForm onSubmit={onSubmitTokenization} />
+            <CreateTokenForm ref={createTokenFormRef} data={addressBookData?.data} />
+          </div>
+          <div className="flex">
+            <Button onClick={handleSubmit}>Create Token</Button>
           </div>
         </div>
       );

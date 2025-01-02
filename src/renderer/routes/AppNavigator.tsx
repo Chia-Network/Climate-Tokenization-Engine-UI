@@ -20,6 +20,7 @@ const AppNavigator: React.FC = () => {
             <Route path="/" element={<Navigate to={ROUTES.CREATE_TOKENS} />} />
             <Route path={ROUTES.CREATE_TOKENS} element={<Pages.TokensPage />} />
             {!coreRegistryMode && <Route path={ROUTES.REVERT_TOKENS} element={<Pages.RevertTokensPage />} />}
+            <Route path={ROUTES.ADDRESS_BOOK} element={<Pages.AddressBookPage />} />
             <Route path="*" element={<Navigate replace to={ROUTES.CREATE_TOKENS} />} />
           </Route>
         </Routes>

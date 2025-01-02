@@ -13,8 +13,8 @@ const LeftNav = () => {
   const isActive = useCallback((path: string) => location.pathname === path, [location]);
   const coreRegistryMode: boolean = useSelector((state: RootState) => state.app.coreRegistryMode);
   return (
-    <div className="h-full relative bg-white dark:bg-gray-800">
-      <div className="h-full hidden md:block">
+    <div className="relative h-full bg-white dark:bg-gray-800">
+      <div className="hidden h-full md:block">
         <Sidebar aria-label="App Navigation">
           <Sidebar.Items>
             <Sidebar.ItemGroup>
@@ -46,6 +46,15 @@ const LeftNav = () => {
                   </p>
                 </Sidebar.Item>
               )}
+              <Sidebar.Item
+                style={{ cursor: 'pointer' }}
+                active={isActive(ROUTES.ADDRESS_BOOK)}
+                onClick={() => !isActive(ROUTES.ADDRESS_BOOK) && navigate(ROUTES.ADDRESS_BOOK)}
+              >
+                <p className="capitalize">
+                  <FormattedMessage id="address-book" />
+                </p>
+              </Sidebar.Item>
             </Sidebar.ItemGroup>
           </Sidebar.Items>
         </Sidebar>

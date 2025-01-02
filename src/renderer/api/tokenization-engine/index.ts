@@ -3,6 +3,7 @@ import initialState from '@/store/slices/app/app.initialstate';
 
 export const RECORDS_PER_PAGE = 10;
 export const projectsTag = 'projects';
+export const addressBookTag = 'addressBook';
 export const untokenizedUnitsTag = 'untokenizedUnits';
 export const tokenizedUnitsTag = 'tokenizedUnits';
 export const projectsByIdsTag = 'projectsByIds';
@@ -46,5 +47,5 @@ export const tokenizationEngineApi = createApi({
   baseQuery: baseQueryWithDynamicHost,
   reducerPath: 'tokenizationEngineApi',
   endpoints: () => ({}),
-  tagTypes: [projectsTag, untokenizedUnitsTag, tokenizedUnitsTag, projectsByIdsTag],
+  tagTypes: [projectsTag, untokenizedUnitsTag, tokenizedUnitsTag, projectsByIdsTag, addressBookTag],
 });
