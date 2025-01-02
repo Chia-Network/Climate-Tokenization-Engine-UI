@@ -75,7 +75,9 @@ const AddressBookTable: React.FC<TableProps> = ({
 
   return (
     <>
-      <AddWalletAddressButton setActive={setCreateAddressModalActive} />
+      <div className="my-2.5">
+        <AddWalletAddressButton setActive={setCreateAddressModalActive} />
+      </div>
       <DataTable
         columns={columns}
         data={data}
