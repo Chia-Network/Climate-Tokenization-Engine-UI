@@ -5,7 +5,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import * as yup from 'yup';
 import { Address } from '@/schemas/Address.schema';
 
-interface FormProps {
+interface FormProps extends React.RefAttributes<CreateTokenFormRef> {
   data?: Address[];
 }
 
@@ -49,20 +49,13 @@ const CreateTokenForm: React.FC<FormProps> = forwardRef<CreateTokenFormRef, Form
               type="picklist"
               options={
                 data?.map((d) => ({
-                  label: d.name,
-                  value: d.walletAddress,
+                  label: d.name || '',
+                  value: d.walletAddress || '',
                 })) || []
               }
               freeform={true}
             />
           </div>
-          {/* <div className="flex gap-4">
-            <FormButton isSubmitting={isSubmitting} formikErrors={errors} >
-              <p className="capitalize">
-                <FormattedMessage id="create-token" />
-              </p>
-            </FormButton>
-          </div> */}
         </Form>
       )}
     </Formik>
