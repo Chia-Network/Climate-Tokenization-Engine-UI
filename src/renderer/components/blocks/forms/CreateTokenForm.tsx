@@ -10,7 +10,7 @@ interface FormProps extends React.RefAttributes<CreateTokenFormRef> {
 }
 
 export interface CreateTokenFormRef {
-  submitForm: () => Promise<any>;
+  submitForm: () => Promise<string | undefined>;
 }
 
 const CreateTokenForm: React.FC<FormProps> = forwardRef<CreateTokenFormRef, FormProps>(({ data }, ref) => {
@@ -28,8 +28,9 @@ const CreateTokenForm: React.FC<FormProps> = forwardRef<CreateTokenFormRef, Form
         if (formik) {
           const errors = await formik.validateForm(formik.values);
           formik.setTouched(Object.keys(errors).reduce((acc, key) => ({ ...acc, [key]: true }), {}));
-
-          return [errors, formik.values];
+          if (formik.values?.walletAddress) {
+            return formik.values.walletAddress;
+          }
         }
       }
     },
@@ -48,9 +49,9 @@ const CreateTokenForm: React.FC<FormProps> = forwardRef<CreateTokenFormRef, Form
               name="walletAddress"
               type="picklist"
               options={
-                data?.map((d) => ({
-                  label: d.name || '',
-                  value: d.walletAddress || '',
+                data?.map((addressData) => ({
+                  label: addressData.name || '',
+                  value: addressData.walletAddress || '',
                 })) || []
               }
               freeform={true}

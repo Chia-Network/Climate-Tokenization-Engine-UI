@@ -5,7 +5,6 @@ import { useGetAddressBookQuery, useGetProjectQuery, useGetUnitQuery, useTokeniz
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useWildCardUrlHash } from '@/hooks';
-import { isEmpty } from 'lodash';
 
 interface UpsertModalProps {
   onTokenizationSuccess: () => void;
@@ -17,6 +16,7 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
   const urlHashValues: string[] = tokenizeUrlFragment?.replace('tokenize-', '')?.split('^');
   const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
   const warehouseProjectId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
+  const [tokenizationProcessing, setTokenizationProcessing] = useState<boolean>(false);
 
   const [showTokenizationFailure, setShowTokenizationFailure] = useState<boolean>(false);
   const { data: unit, isLoading: unitLoading } = useGetUnitQuery(
@@ -42,8 +42,15 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
     unit?.unitBlockEnd &&
     unit?.unitCount;
 
-  const onSubmitTokenization = async (walletAddress: string) => {
+  const onSubmitTokenization = async () => {
     setShowTokenizationFailure(false);
+    setTokenizationProcessing(true);
+
+    const walletAddress = await createTokenFormRef.current?.submitForm();
+    if (!walletAddress) {
+      setTokenizationProcessing(false);
+      return;
+    }
 
     if (unit && project && requiredFieldsPresent) {
       const submitData = {
@@ -66,24 +73,8 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
     } else {
       setShowTokenizationFailure(true);
     }
-  };
 
-  const handleSubmit = () => {
-    createTokenFormRef.current
-      ?.submitForm()
-      .then(async ([errors, values]) => {
-        if (!isEmpty(errors)) {
-          console.error('Form submission error:', errors);
-          return;
-        }
-
-        if (values) {
-          onSubmitTokenization(values.walletAddress);
-        }
-      })
-      .catch((error) => {
-        console.error('Form submission error:', error);
-      });
+    setTokenizationProcessing(false);
   };
 
   const modalBody = () => {
@@ -194,7 +185,11 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
             <CreateTokenForm ref={createTokenFormRef} data={addressBookData?.data} />
           </div>
           <div className="flex">
-            <Button onClick={handleSubmit}>Create Token</Button>
+            <Button onClick={onSubmitTokenization} isProcessing={tokenizationProcessing}>
+              <p className="capitalize">
+                <FormattedMessage id="create-token" />
+              </p>
+            </Button>
           </div>
         </div>
       );
