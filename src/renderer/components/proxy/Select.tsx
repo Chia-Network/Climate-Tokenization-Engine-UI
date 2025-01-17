@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import { Select as FlowbiteSelect } from 'flowbite-react';
 import { PiCaretDown } from 'react-icons/pi';
 
@@ -38,10 +38,6 @@ const Select: React.FC<SelectProps> = ({
   useEffect(() => {
     setFilteredOptions(options);
   }, [options]);
-
-  useEffect(() => {
-    setInputValue(initialValue);
-  }, [initialValue, options]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement> | ChangeEventHandler<HTMLSelectElement>) => {
     // @ts-ignore

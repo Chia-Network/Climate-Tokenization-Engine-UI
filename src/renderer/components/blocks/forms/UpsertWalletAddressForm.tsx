@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { Button, FloatingLabel, FormButton } from '@/components';
-import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
+import { Button, FloatingLabel, FormButton, validateWalletAddress } from '@/components';
+import { FormattedMessage, useIntl } from 'react-intl';
 import * as yup from 'yup';
-import { TestContext, ValidationError } from 'yup';
 import { noop } from 'lodash';
 import { Address } from '@/schemas/Address.schema';
 
@@ -13,38 +12,6 @@ interface FormProps {
   data?: Address;
   onClose: any;
 }
-
-const validateWalletAddress = (value: string, context: TestContext, intl: IntlShape): ValidationError | true => {
-  if (!value) return true; // If empty, required will handle it
-
-  if (value.startsWith('xch')) {
-    if (/^xch[a-zA-Z0-9]{59}$/.test(value)) {
-      return true;
-    } else {
-      return context.createError({
-        message: intl.formatMessage({
-          id: 'wallet-addresses-start-with-xch-and-are-62-characters-long',
-        }),
-      });
-    }
-  } else if (value.startsWith('txch')) {
-    if (/^txch[a-zA-Z0-9]{59}$/.test(value)) {
-      return true;
-    } else {
-      return context.createError({
-        message: intl.formatMessage({
-          id: 'testnet-wallet-addresses-start-with-txch-and-are-63-characters-long',
-        }),
-      });
-    }
-  } else {
-    return context.createError({
-      message: intl.formatMessage({
-        id: 'wallet-address-must-start-with-xch-or-txch',
-      }),
-    });
-  }
-};
 
 const UpsertWalletAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError = noop, data: address, onClose }) => {
   const intl = useIntl();
