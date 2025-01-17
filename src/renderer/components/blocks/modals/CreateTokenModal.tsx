@@ -17,6 +17,7 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
   const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
   const warehouseProjectId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
   const [tokenizationProcessing, setTokenizationProcessing] = useState<boolean>(false);
+  const [creatTokenFormValid, setCreateTokenFormValid] = useState<boolean>(false);
 
   const [showTokenizationFailure, setShowTokenizationFailure] = useState<boolean>(false);
   const { data: unit, isLoading: unitLoading } = useGetUnitQuery(
@@ -182,10 +183,18 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
             </Table>
           </div>
           <div>
-            <CreateTokenForm ref={createTokenFormRef} data={addressBookData?.data} />
+            <CreateTokenForm
+              ref={createTokenFormRef}
+              onValidityChange={setCreateTokenFormValid}
+              addressBookRecords={addressBookData?.data || []}
+            />
           </div>
           <div className="flex">
-            <Button onClick={onSubmitTokenization} isProcessing={tokenizationProcessing}>
+            <Button
+              onClick={onSubmitTokenization}
+              isProcessing={tokenizationProcessing}
+              disabled={!creatTokenFormValid}
+            >
               <p className="capitalize">
                 <FormattedMessage id="create-token" />
               </p>
