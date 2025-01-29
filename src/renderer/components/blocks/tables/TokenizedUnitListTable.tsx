@@ -75,14 +75,8 @@ const TokenizedUnitListTable: React.FC<TableProps> = ({
       render: (unit: Unit) => (
         <Tooltip content={unit.marketplaceLink}>
           <div style={{ maxWidth: '310px' }}>
-            <p className="text-left text-ellipsis w-full overflow-hidden whitespace-nowrap">
-              {unit.marketplaceLink ? (
-                unit.marketplaceLink
-              ) : (
-                <p className="capitalize">
-                  <FormattedMessage id="not-specified" />
-                </p>
-              )}
+            <p className="text-left text-ellipsis w-full overflow-hidden whitespace-nowrap capitalize">
+              {unit.marketplaceLink ? unit.marketplaceLink : <FormattedMessage id="not-specified" />}
             </p>
           </div>
         </Tooltip>
