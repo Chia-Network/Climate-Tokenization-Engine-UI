@@ -1,3 +1,45 @@
+## [1.2.5](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.4-rc10...1.2.5) (2025-02-07)
+
+
+
+## [1.2.4](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.4-rc2...1.2.4) (2024-12-17)
+
+
+
+## [1.2.3](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.2...1.2.3) (2024-12-05)
+
+
+
+## [1.2.2](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.1...1.2.2) (2024-11-20)
+
+
+
+## [1.2.1](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.0...1.2.1) (2024-11-14)
+
+
+
+# [1.2.0](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.1.10...1.2.0) (2024-11-14)
+
+
+### Bug Fixes
+
+* connect form wallet address regex ([1f7e203](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/1f7e203381ef71d46181078385a373f67bacb76f))
+* querying for extraneous project Ids ([05e4374](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/05e4374c3451ac8eb759e4ecca84dd46b179d0fd))
+* querying for extraneous project Ids ([1795708](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/17957088afe7e7780c4c77519ec0f3e9d53c705f))
+* resolve type error in CreateTokenForm ([991ea94](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/991ea94834c27d1a11b540aa1607adc625986b9d))
+* tokenization modal wallet address validations ([2343de1](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/2343de148ddadef1129ffd6cd6704bd5129d6314))
+* ts error ([53c6d82](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/53c6d827ab253b8b38251b421a95dd5a1131999e))
+
+
+### Features
+
+* add functionality to delete address book items ([4fa9aa8](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/4fa9aa8ed768718257ec4ee75e3011a3f83ec6e7))
+* add select in create token form ([a90f15f](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/a90f15fce97b7df815306e9e526ae476eefa0964))
+* integrate fucntionality to update address book item ([3de7a7c](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/3de7a7ca1bd0e4040f58b21622ee18463bb1b4f6))
+* integrate get and post req for address book ([4983de6](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/commit/4983de6c634f59d81e6bc046df81ad26c61afa30))
+
+
+
 ## [1.2.4](https://github.com/Chia-Network/Climate-Tokenization-Engine-UI/compare/1.2.4-rc2...1.2.4) (2024-12-17)
 
 
