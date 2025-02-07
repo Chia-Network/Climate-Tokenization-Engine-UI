@@ -108,7 +108,6 @@ function App() {
       if (event.origin === window.origin) {
         const message = event.data;
         if (message?.selectedLocale && message.selectedLocale !== appStore.locale) {
-          console.log('selected locale', message.selectedLocale);
           dispatch(setLocale(message.selectedLocale));
         }
       }

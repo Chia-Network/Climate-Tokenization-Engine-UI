@@ -19,7 +19,7 @@ const useQueryParamState: QueryParamState<string> = (name, defaultValue = '') =>
       if (_.isNil(value) || value === '') {
         params.delete(name);
       } else {
-        params.set(name, value);
+        params.set(name, value ?? '');
       }
 
       const newPath = params.toString() ? `${window.location.pathname}?${params}` : window.location.pathname;

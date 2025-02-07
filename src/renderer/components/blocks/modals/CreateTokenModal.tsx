@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { ComponentCenteredSpinner, CreateTokenForm, Modal, Table } from '@/components';
+import React, { useRef, useState } from 'react';
+import { Button, ComponentCenteredSpinner, CreateTokenForm, CreateTokenFormRef, Modal, Table } from '@/components';
 import { FormattedMessage } from 'react-intl';
-import { useGetProjectQuery, useGetUnitQuery, useTokenizeUnitMutation } from '@/api';
+import { useGetAddressBookQuery, useGetProjectQuery, useGetUnitQuery, useTokenizeUnitMutation } from '@/api';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useWildCardUrlHash } from '@/hooks';
@@ -16,6 +16,8 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
   const urlHashValues: string[] = tokenizeUrlFragment?.replace('tokenize-', '')?.split('^');
   const warehouseUnitId = urlHashValues?.length >= 1 ? urlHashValues[0] : '';
   const warehouseProjectId = urlHashValues?.length >= 2 ? urlHashValues[1] : '';
+  const [tokenizationProcessing, setTokenizationProcessing] = useState<boolean>(false);
+  const [creatTokenFormValid, setCreateTokenFormValid] = useState<boolean>(false);
 
   const [showTokenizationFailure, setShowTokenizationFailure] = useState<boolean>(false);
   const { data: unit, isLoading: unitLoading } = useGetUnitQuery(
@@ -27,6 +29,8 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
     { skip: showTokenizationFailure },
   );
   const [triggerTokenizeUnit, { error: tokenizationError }] = useTokenizeUnitMutation();
+  const createTokenFormRef = useRef<CreateTokenFormRef>(null);
+  const { data: addressBookData } = useGetAddressBookQuery({ page: 1, limit: 1000 });
 
   const requiredFieldsPresent =
     unit &&
@@ -39,8 +43,15 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
     unit?.unitBlockEnd &&
     unit?.unitCount;
 
-  const onSubmitTokenization = async (walletAddress: string) => {
+  const onSubmitTokenization = async () => {
     setShowTokenizationFailure(false);
+    setTokenizationProcessing(true);
+
+    const walletAddress = await createTokenFormRef.current?.submitForm();
+    if (!walletAddress) {
+      setTokenizationProcessing(false);
+      return;
+    }
 
     if (unit && project && requiredFieldsPresent) {
       const submitData = {
@@ -63,6 +74,8 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
     } else {
       setShowTokenizationFailure(true);
     }
+
+    setTokenizationProcessing(false);
   };
 
   const modalBody = () => {
@@ -170,7 +183,22 @@ const CreateTokenModal: React.FC<UpsertModalProps> = ({ onClose, onTokenizationS
             </Table>
           </div>
           <div>
-            <CreateTokenForm onSubmit={onSubmitTokenization} />
+            <CreateTokenForm
+              ref={createTokenFormRef}
+              onValidityChange={setCreateTokenFormValid}
+              addressBookRecords={addressBookData?.data || []}
+            />
+          </div>
+          <div className="flex">
+            <Button
+              onClick={onSubmitTokenization}
+              isProcessing={tokenizationProcessing}
+              disabled={!creatTokenFormValid}
+            >
+              <p className="capitalize">
+                <FormattedMessage id="create-token" />
+              </p>
+            </Button>
           </div>
         </div>
       );
