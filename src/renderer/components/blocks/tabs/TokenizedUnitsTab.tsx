@@ -41,8 +41,9 @@ const TokenizedUnitsTab: React.FC<PageTabProps> = ({ search, order, setOrder }: 
       !projectsResponse
     ) {
       const projectIds: string[] = tokenizedUnitsResponse.data.reduce<string[]>((projectIds: string[], unit: Unit) => {
-        if (unit?.issuance?.warehouseProjectId) {
-          projectIds.push(unit?.issuance?.warehouseProjectId);
+        const warehouseProjectId = unit?.issuance?.warehouseProjectId;
+        if (warehouseProjectId && !projectIds.includes(warehouseProjectId)) {
+          projectIds.push(warehouseProjectId);
         }
         return projectIds;
       }, []);

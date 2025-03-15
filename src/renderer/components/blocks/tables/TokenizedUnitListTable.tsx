@@ -55,7 +55,7 @@ const TokenizedUnitListTable: React.FC<TableProps> = ({
       title: <FormattedMessage id="marketplace" />,
       key: 'marketplace',
       render: (row: Unit) => {
-        const color: string = row.marketplace === 'Tokenized on Chia' ? 'success' : 'info';
+        const color: string = row.marketplace?.toLowerCase() === 'tokenized on chia' ? 'success' : 'info';
         return (
           <div className="flex">
             <Badge color={color} size="sm">
@@ -75,14 +75,8 @@ const TokenizedUnitListTable: React.FC<TableProps> = ({
       render: (unit: Unit) => (
         <Tooltip content={unit.marketplaceLink}>
           <div style={{ maxWidth: '310px' }}>
-            <p className="text-left text-ellipsis w-full overflow-hidden whitespace-nowrap">
-              {unit.marketplaceLink ? (
-                unit.marketplaceLink
-              ) : (
-                <p className="capitalize">
-                  <FormattedMessage id="not-specified" />
-                </p>
-              )}
+            <p className="text-left text-ellipsis w-full overflow-hidden whitespace-nowrap capitalize">
+              {unit.marketplaceLink ? unit.marketplaceLink : <FormattedMessage id="not-specified" />}
             </p>
           </div>
         </Tooltip>
