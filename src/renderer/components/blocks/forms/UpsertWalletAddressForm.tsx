@@ -66,7 +66,7 @@ const UpsertWalletAddressForm: React.FC<FormProps> = ({ onSubmit, onClearError =
               {({ field }) => (
                 <FloatingLabel
                   id="name"
-                  label={intl.formatMessage({ id: 'project-developer' })}
+                  label={intl.formatMessage({ id: 'project-entity' })}
                   color={errors.name && touched.name ? 'error' : undefined}
                   variant="outlined"
                   required

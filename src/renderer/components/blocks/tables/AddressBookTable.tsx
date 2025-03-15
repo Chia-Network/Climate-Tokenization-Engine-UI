@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import {
-  AddWalletAddressButton,
   AddressBookActions,
+  AddWalletAddressButton,
   Column,
   DataTable,
   PageCounter,
@@ -61,7 +61,7 @@ const AddressBookTable: React.FC<TableProps> = ({
 
     const staticColumns: Column[] = [
       {
-        title: <FormattedMessage id="project-developer" />,
+        title: <FormattedMessage id="project-entity" />,
         key: 'name',
       },
       {
@@ -71,7 +71,7 @@ const AddressBookTable: React.FC<TableProps> = ({
     ];
 
     return isEditable ? editColumn.concat(staticColumns) : staticColumns;
-  }, [isEditable]);
+  }, [isEditable, setEditAddressModalActive]);
 
   return (
     <>
