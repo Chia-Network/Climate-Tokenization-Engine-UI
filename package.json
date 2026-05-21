@@ -8,7 +8,7 @@
   "author": "Chia Network Inc. <hello@chia.net>",
   "description": "Climate Tokenization Engine User Interface",
   "engines": {
-    "node": ">=20.0"
+    "node": ">=24.14.1"
   },
   "scripts": {
     "start": "vite",
